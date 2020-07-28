@@ -4,11 +4,11 @@
 
 ## 愛知県・岐阜県
 
-- 2020-07-26（XX 例目表示）\
-https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-07-26_mode0.pdf
+- 2020-07-27（XX 例目表示）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-07-27_mode0.pdf
 
-- 2020-07-26（年代表示）\
-https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-07-26_mode1.pdf
+- 2020-07-27（年代表示）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-07-27_mode1.pdf
 
 ## 福岡県
 
