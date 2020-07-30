@@ -17,11 +17,11 @@ https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-07-28_mode1.p
 
 ## 福岡県
 
-- 2020-07-23（XX 例目表示）\
-https://github.com/akira-okumura/COVID-19/raw/master/PDF/Fukuoka2020-07-23_mode0.pdf
+- 2020-07-25（XX 例目表示）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Fukuoka2020-07-25_mode0.pdf
 
-- 2020-07-23（年代表示）\
-https://github.com/akira-okumura/COVID-19/raw/master/PDF/Fukuoka2020-07-23_mode1.pdf
+- 2020-07-25（年代表示）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Fukuoka2020-07-25_mode1.pdf
 
-- 2020-07-23（職業表示）\
-https://github.com/akira-okumura/COVID-19/raw/master/PDF/Fukuoka2020-07-23_mode2.pdf
+- 2020-07-25（職業表示）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Fukuoka2020-07-25_mode2.pdf
