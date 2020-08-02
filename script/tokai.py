@@ -68,6 +68,11 @@ def register_cases(pref, label_mode=0):
         except:
             age = None
 
+        try:
+            city = description.split('在住')[0]
+        except:
+            city = ''
+
         #note = note[:-2] # commented out on April 21
         node_name = '%s%d' % (pref, idx)
 
@@ -126,7 +131,7 @@ def register_cases(pref, label_mode=0):
             charme = False
 
         cases['%s%d' % (pref, idx)] = {'node_name':node_name, 'date':date, 'note':note,
-                                       'source_idx':source_idx, 'age':age,
+                                       'source_idx':source_idx, 'age':age, 'city':city,
                                        'description':description, 'linked':False, 'charme':charme}
 
 def register_sources():
@@ -354,7 +359,7 @@ def make_date_nodes(date_ranks, label_mode):
                 else:
                     if label_mode == 0: # case number
                         s.node(case['node_name'], label=case['node_name'].replace('aichi', 'A').replace('gifu', 'G'), fontname='Myriad Pro')
-                    else:
+                    elif label_mode == 1: # age
                         if case['age'] == None:
                             label = ''
                         elif case['age'] == 0:
@@ -365,6 +370,8 @@ def make_date_nodes(date_ranks, label_mode):
                             label = '%d代' % case['age']
 
                         s.node(case['node_name'], label=label, fontname='Myriad Pro')
+                    elif label_mode == 2: # city
+                        s.node(case['node_name'], label=case['city'].replace('市', ''), fontname='Myriad Pro')
 
     graph.edge('date', date_nodes[0], style='invis')
     graph.edge('border', 'dummy2020-01-26', style='invis')
@@ -391,7 +398,7 @@ def link_dummy_nodes():
            case['node_name'] not in ('gifu48', 'gifu52', 'gifu54', 'gifu55', 'gifu56', 'gifu57', 'gifu58'):
             graph.edge(dummy_case['node_name'], case['node_name'], style='invis')
 
-for label_mode in range(2):
+for label_mode in range(3):
     fname = 'PDF/Tokai_mode%d' % label_mode
     graph = graphviz.Graph(engine='dot', filename=fname)
     graph.attr('node', fontname='Hiragino UD Sans F StdN', fontsize='14')
