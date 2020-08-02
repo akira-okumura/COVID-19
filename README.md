@@ -25,3 +25,11 @@ https://github.com/akira-okumura/COVID-19/raw/master/PDF/Fukuoka2020-07-25_mode1
 
 - 2020-07-25（職業表示）\
 https://github.com/akira-okumura/COVID-19/raw/master/PDF/Fukuoka2020-07-25_mode2.pdf
+
+## 使い方
+```
+$ git clone https://github.com/akira-okumura/COVID-19.git
+$ cd COVID-19
+$ ipython
+In [1]: %run script/tokai
+```
