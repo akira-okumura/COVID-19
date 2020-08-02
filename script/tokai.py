@@ -26,8 +26,10 @@ def readTSV(pref):
             note = note.replace('No.', '愛知県内').replace(',', '例目、').replace('と接触', '例目と接触')
             if note == '':
                 note = ' '
-            modified_text += '%d例目\t%s\t%s在住の%s（%s代）\t%s\n****' % (n, date, city, sex, age, note)
-
+            if age == '10歳未満':
+                modified_text += '%d例目\t%s\t%s在住の%s（%s）\t%s\n****' % (n, date, city, sex, age, note)
+            else:
+                modified_text += '%d例目\t%s\t%s在住の%s（%s代）\t%s\n****' % (n, date, city, sex, age, note)
         text = modified_text.split('****')[:-1] + text
 
         return text
@@ -40,7 +42,7 @@ def readTSV(pref):
             pub_date, n, pos_date, age, sex, city, abroad, symp_date, note = line[:-1].split('\t')
             if note == '':
                 note = ' '
-            modified_text += '%s\t%s\t%s在住の%s（%s代）\t%s\n****' % (n, pub_date, city, sex, age, note)
+            modified_text += '%s\t%s\t%s在住の%s（%s）\t%s\n****' % (n, pub_date, city, sex, age, note)
 
         text = modified_text.split('****')[:-1] + text
 
@@ -215,7 +217,7 @@ def make_date_nodes(date_ranks, label_mode):
                        + '　' * 45 + '※3 岐阜県飲食店シャルムと潜龍での集団感染は、作図が困難なため線の繋がりを一部省略しています。\n' \
                        + '　' * 33 + '※4 愛知県の合計感染者数は延べ人数です。再陽性となった 6 人を含みます。\n' \
                        + '　' * 16 + '※5 印刷・再配布などご自由にどうぞ。', shape='plaintext', fontsize='48', labeljust='l', height='4')
-                s.node('author', label='　' * 19 + 'データ出典：https://www.ctv.co.jp/covid-19/\n' + '　' * 28 + '作成：@AkiraOkumura（名古屋大学 宇宙地球環境研究所 奥村曉）', shape='plaintext', fontsize='48', height='2.5')
+                s.node('author', label='　' * 30 + 'データ出典：https://www.ctv.co.jp/covid-19/ および自治体公開データ\n' + '　' * 28 + '作成：@AkiraOkumura（名古屋大学 宇宙地球環境研究所 奥村曉）', shape='plaintext', fontsize='48', height='2.5')
 
                 #response = request.urlopen('https://www.ctv.co.jp/covid-19/person.txt')
                 response = request.urlopen('https://www.ctv.co.jp/covid-19/person2.txt') # new file since Apr 21
