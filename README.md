@@ -9,11 +9,14 @@ https://fundexapp.jp/nagoya-u/entry.php?purposeCode=200000&supportCode=200027
 
 ## 愛知県・岐阜県
 
-- 2020-08-01（XX 例目表示）\
-https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-08-01_mode0.pdf
+- 2020-08-04（XX 例目表示）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-08-04_mode0.pdf
 
-- 2020-08-01（年代表示）\
-https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-08-01_mode1.pdf
+- 2020-08-04（年代表示）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-08-04_mode1.pdf
+
+- 2020-08-04（居住地表示）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-08-04_mode2.pdf
 
 ## 福岡県
 
@@ -33,3 +36,7 @@ $ cd COVID-19
 $ ipython
 In [1]: %run script/tokai
 ```
+
+## スクリプトの説明や雑感は blog で
+
+https://oxon.hatenablog.com/entry/2020/04/09/105305
