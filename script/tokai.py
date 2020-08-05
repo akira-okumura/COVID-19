@@ -20,13 +20,20 @@ def readTSV(pref):
             if person.find('10歳未満') >= 0:
                 sex = person.split('10歳未満')[1]
                 age = '10歳未満'
+            elif person.find('調査中') >= 0:
+                age = '調査中'
+                sex = person.split('調査中')[1]
             else:
                 age, sex = person.split('代')
 
-            note = note.replace('No.', '愛知県内').replace(',', '例目、').replace('と接触', '例目と接触')
-            if note == '':
+            if note.find('No.') >= 0 and note.find('と接触') >= 0:
+                note = note.replace('No.', '愛知県内').replace(',', '例目、').replace('と接触', '例目と接触')
+            elif note == '':
                 note = ' '
+
             if age == '10歳未満':
+                modified_text += '%d例目\t%s\t%s在住の%s（%s）\t%s\n****' % (n, date, city, sex, age, note)
+            elif age == '調査中':
                 modified_text += '%d例目\t%s\t%s在住の%s（%s）\t%s\n****' % (n, date, city, sex, age, note)
             else:
                 modified_text += '%d例目\t%s\t%s在住の%s（%s代）\t%s\n****' % (n, date, city, sex, age, note)
@@ -318,6 +325,9 @@ def make_date_nodes(date_ranks, label_mode):
                       case['note'].find('再度') >= 0 or \
                       case['note'].find('愛知県陽性患者の接触者') >= 0 or \
                       case['note'].find('後日感染判明者と接触') >= 0 or \
+                      case['note'].find('名古屋市事例と接触') >= 0 or \
+                      case['note'].find('愛知県内陽性者と接触') >= 0 or \
+                      case['note'].find('愛知県患者の濃厚接触者') >= 0 or \
                       case['node_name'] == 'gifu151' or \
                       case['node_name'] == 'aichi521' or \
                       case['node_name'] in ('gifu210', 'gifu211', 'gifu215', 'gifu216')): # 7/24 Gifu cases not reflected in CTV data
@@ -334,10 +344,12 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('石川県発表の陽性患者の濃厚接触者') >= 0 or \
                      case['note'].find('東京都事例と接触') >= 0 or \
                      case['note'].find('浜松市事例と接触') >= 0 or \
+                     case['note'].find('大阪府事例と接触') >= 0 or \
                      case['note'].find('静岡県熱海市のクラスターが発生したカラオケを伴う飲食店を利用') >= 0 or \
                      case['note'].find('四日市市陽性患者の接触者') >= 0 or \
                      case['note'].find('三重県陽性患者の接触者') >= 0 or \
                      case['note'].find('浜松市患者の濃厚接触者') >= 0 or \
+                     case['note'].find('石川県事例と接触') >= 0 or \
                      case['node_name'] in ('aichi1220', 'aichi1414'):
                     s.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
                 elif case['node_name'] in ('aichi547') or \
