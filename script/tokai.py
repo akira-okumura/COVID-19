@@ -12,7 +12,11 @@ def readTSV(pref):
         lines.reverse()
         modified_text = ''
         for line in lines:
-            n, date, person, notionality, city, note, another_index = line[:-1].split('\t')
+            try:
+                n, date, person, notionality, city, note, another_index = line[:-1].split('\t')
+            except:
+                print(line)
+                raise
             n = int(n)
             if n < 1613:
                 continue
@@ -46,9 +50,15 @@ def readTSV(pref):
         lines.reverse()
         modified_text = ''
         for line in lines:
-            pub_date, n, pos_date, age, sex, city, abroad, symp_date, note = line[:-1].split('\t')
+            try:
+                pub_date, n, pos_date, age, sex, city, abroad, symp_date, note = line[:-1].split('\t')
+            except:
+                print(line)
+                raise
+
             if note == '':
                 note = ' '
+
             modified_text += '%s\t%s\t%s在住の%s（%s）\t%s\n****' % (n, pub_date, city, sex, age, note)
 
         text = modified_text.split('****')[:-1] + text
@@ -70,6 +80,8 @@ def register_cases(pref, label_mode=0):
             age = description.split('（')[-1].split('）')[0].replace('代', '')
             if age == '10歳未満':
                 age = 9
+            elif age == '1歳未満':
+                age = 0
             else:
                 age = int(description.split('（')[-1].split('）')[0].replace('代', ''))
         except:
@@ -344,6 +356,8 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('石川県発表の陽性患者の濃厚接触者') >= 0 or \
                      case['note'].find('東京都事例と接触') >= 0 or \
                      case['note'].find('浜松市事例と接触') >= 0 or \
+                     case['note'].find('富山県事例と接触') >= 0 or \
+                     case['note'].find('三重県事例と接触') >= 0 or \
                      case['note'].find('大阪府事例と接触') >= 0 or \
                      case['note'].find('静岡県熱海市のクラスターが発生したカラオケを伴う飲食店を利用') >= 0 or \
                      case['note'].find('四日市市陽性患者の接触者') >= 0 or \
