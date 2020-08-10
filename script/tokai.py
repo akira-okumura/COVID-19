@@ -720,3 +720,36 @@ for label_mode in range(3):
     graph.view()
     import os
     os.system('open -a Preview %s.pdf' % fname)
+
+import ROOT
+
+ROOT.gStyle.SetOptStat(0)
+
+t0 = ROOT.TDatime(2020, 7, 1, 0, 0, 0)
+nday = 49
+dt = nday * 3600 * 24
+h = ROOT.TH2D('h', ';Date;Age', nday, t0.Convert(), t0.Convert() + dt, 10, 0, 100)
+h.GetXaxis().SetTimeDisplay(1)
+h.GetXaxis().SetTimeFormat('%b %d')
+h.GetXaxis().SetNdivisions(100 + nday/7, 0)
+
+for case in cases.values():
+    if case['node_name'].find('dummy') == 0:
+        continue
+
+    date = case['date']
+    y, m, d = date.year, date.month, date.day
+    t = ROOT.TDatime(y, m, d, 0, 0, 0)
+
+    age = case['age']
+    try:
+        h.Fill(t.Convert(), age + 5 if age >= 10 else 5)
+    except:
+        print('Ignoring age ', age, ' of ', case['node_name'])
+
+h.Draw('colz')
+
+px = ROOT.h.ProfileX()
+px.SetLineColor(2)
+px.SetLineWidth(3)
+px.Draw('same e')
