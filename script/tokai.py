@@ -339,6 +339,7 @@ def make_date_nodes(date_ranks, label_mode):
                       case['note'].find('後日感染判明者と接触') >= 0 or \
                       case['note'].find('名古屋市事例と接触') >= 0 or \
                       case['note'].find('愛知県内陽性者と接触') >= 0 or \
+                      case['note'].find('名古屋市陽性患者の濃厚接触者') >= 0 or \
                       case['note'].find('愛知県患者の濃厚接触者') >= 0 or \
                       case['node_name'] == 'gifu151' or \
                       case['node_name'] == 'aichi521' or \
@@ -397,7 +398,11 @@ def make_date_nodes(date_ranks, label_mode):
 
                         s.node(case['node_name'], label=label, fontname='Myriad Pro')
                     elif label_mode == 2: # city
-                        s.node(case['node_name'], label=case['city'].replace('市', ''), fontname='Myriad Pro')
+                        if case['city'][-1] == '市':
+                            label = case['city'][:-1]
+                        else:
+                            label = case['city']
+                        s.node(case['node_name'], label=label, fontname='Myriad Pro')
 
     graph.edge('date', date_nodes[0], style='invis')
     graph.edge('border', 'dummy2020-01-26', style='invis')
@@ -731,7 +736,7 @@ dt = nday * 3600 * 24
 h = ROOT.TH2D('h', ';Date;Age', nday, t0.Convert(), t0.Convert() + dt, 10, 0, 100)
 h.GetXaxis().SetTimeDisplay(1)
 h.GetXaxis().SetTimeFormat('%b %d')
-h.GetXaxis().SetNdivisions(100 + nday/7, 0)
+h.GetXaxis().SetNdivisions(100 + int(nday/7), 0)
 
 for case in cases.values():
     if case['node_name'].find('dummy') == 0:
