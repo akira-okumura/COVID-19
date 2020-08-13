@@ -340,7 +340,9 @@ def make_date_nodes(date_ranks, label_mode):
                       case['note'].find('名古屋市事例と接触') >= 0 or \
                       case['note'].find('愛知県内陽性者と接触') >= 0 or \
                       case['note'].find('名古屋市陽性患者の濃厚接触者') >= 0 or \
+                      case['note'].find('名古屋市陽性患者の接触者') >= 0 or \
                       case['note'].find('愛知県患者の濃厚接触者') >= 0 or \
+                      case['note'].find('大阪府事例の知人') >= 0 or \
                       case['node_name'] == 'gifu151' or \
                       case['node_name'] == 'aichi521' or \
                       case['node_name'] in ('gifu210', 'gifu211', 'gifu215', 'gifu216')): # 7/24 Gifu cases not reflected in CTV data
