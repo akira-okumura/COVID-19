@@ -8,7 +8,7 @@ cases = {}
 def readTSV(pref):
     if pref == 'aichi':
         text = open('CTV/Aichi.tsv').readlines()
-        lines = open('CTV/Aichi_official.tsv').readlines()[1:]
+        lines = open('CTV/Aichi_unofficial.tsv').readlines()[1:]
         lines.reverse()
         modified_text = ''
         for line in lines:
@@ -359,12 +359,15 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('浜松市事例と接触') >= 0 or \
                      case['note'].find('富山県事例と接触') >= 0 or \
                      case['note'].find('三重県事例と接触') >= 0 or \
+                     case['note'].find('東京都事例の家族') >= 0 or \
                      case['note'].find('大阪府事例と接触') >= 0 or \
+                     case['note'].find('三重県公表231') >= 0 or \
                      case['note'].find('静岡県熱海市のクラスターが発生したカラオケを伴う飲食店を利用') >= 0 or \
                      case['note'].find('四日市市陽性患者の接触者') >= 0 or \
                      case['note'].find('三重県陽性患者の接触者') >= 0 or \
                      case['note'].find('浜松市患者の濃厚接触者') >= 0 or \
                      case['note'].find('石川県事例と接触') >= 0 or \
+                     case['note'].find('東京都事例の知人') >= 0 or \
                      case['node_name'] in ('aichi1220', 'aichi1414'):
                     s.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
                 elif case['node_name'] in ('aichi547') or \
@@ -733,7 +736,7 @@ ROOT.gStyle.SetOptStat(0)
 t0 = ROOT.TDatime(2020, 7, 1, 0, 0, 0)
 nday = 49
 dt = nday * 3600 * 24
-h = ROOT.TH2D('h', ';Date;Age', nday, t0.Convert(), t0.Convert() + dt, 10, 0, 100)
+h = ROOT.TH2D('h', ';Date;Age', nday, t0.Convert(), t0.Convert() + dt, 11, 0, 110)
 h.GetXaxis().SetTimeDisplay(1)
 h.GetXaxis().SetTimeFormat('%b %d')
 h.GetXaxis().SetNdivisions(100 + int(nday/7), 0)
