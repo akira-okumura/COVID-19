@@ -435,7 +435,7 @@ def link_dummy_nodes():
            case['node_name'] not in ('gifu48', 'gifu52', 'gifu54', 'gifu55', 'gifu56', 'gifu57', 'gifu58'):
             graph.edge(dummy_case['node_name'], case['node_name'], style='invis')
 
-for label_mode in range(1):
+for label_mode in range(3):
     fname = 'PDF/Tokai_mode%d' % label_mode
     graph = graphviz.Graph(engine='dot', filename=fname)
     graph.attr('node', fontname='Hiragino UD Sans F StdN', fontsize='14')
