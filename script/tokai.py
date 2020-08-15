@@ -435,7 +435,7 @@ def link_dummy_nodes():
            case['node_name'] not in ('gifu48', 'gifu52', 'gifu54', 'gifu55', 'gifu56', 'gifu57', 'gifu58'):
             graph.edge(dummy_case['node_name'], case['node_name'], style='invis')
 
-for label_mode in range(3):
+for label_mode in range(1):
     fname = 'PDF/Tokai_mode%d' % label_mode
     graph = graphviz.Graph(engine='dot', filename=fname)
     graph.attr('node', fontname='Hiragino UD Sans F StdN', fontsize='14')
@@ -820,13 +820,23 @@ import ROOT
 
 ROOT.gStyle.SetOptStat(0)
 
+can = [ROOT.ExactSizeCanvas('can%d' % i, 'can%d' % i, 800, 600) for i in range(4)]
+
 t0 = ROOT.TDatime(2020, 7, 1, 0, 0, 0)
 nday = 49
 dt = nday * 3600 * 24
-h = ROOT.TH2D('h', ';Date;Age', nday, t0.Convert(), t0.Convert() + dt, 11, 0, 110)
-h.GetXaxis().SetTimeDisplay(1)
-h.GetXaxis().SetTimeFormat('%b %d')
-h.GetXaxis().SetNdivisions(100 + int(nday/7), 0)
+
+h_aichi_wo_nagoya = ROOT.TH1D('h_aichi_wo_nagoya', ';Date;Number of Cases / Day', nday, t0.Convert(), t0.Convert() + dt)
+h_nagoya = ROOT.TH1D('h_nagoya', ';Date;Number of Cases / Day', nday, t0.Convert(), t0.Convert() + dt)
+h_gifu = ROOT.TH1D('h_gifu', ';Date;Number of Cases / Day', nday, t0.Convert(), t0.Convert() + dt)
+
+h_traced = ROOT.TH1D('h_traced', ';Date;Number of Cases / Day', nday, t0.Convert(), t0.Convert() + dt)
+h_untraced = ROOT.TH1D('h_untraced', ';Date;Number of Cases / Day', nday, t0.Convert(), t0.Convert() + dt)
+
+h_age = ROOT.TH2D('h_age', ';Date;Age;Number of Cases / Day / Generation', nday, t0.Convert(), t0.Convert() + dt, 11, 0, 110)
+h_age.GetXaxis().SetTimeDisplay(1)
+h_age.GetXaxis().SetTimeFormat('%b %d')
+h_age.GetXaxis().SetNdivisions(100 + int(nday/7), 0)
 
 for case in cases.values():
     if case['node_name'].find('dummy') == 0:
@@ -836,15 +846,81 @@ for case in cases.values():
     y, m, d = date.year, date.month, date.day
     t = ROOT.TDatime(y, m, d, 0, 0, 0)
 
+    if case['node_name'].find('aichi') == 0:
+        if case['city'] == '名古屋市':
+            h_nagoya.Fill(t.Convert())
+        else:
+            h_aichi_wo_nagoya.Fill(t.Convert())
+    elif case['node_name'].find('gifu') == 0:
+        h_gifu.Fill(t.Convert())
+
+    if len(case['source_idx']) > 0:
+        h_traced.Fill(t.Convert())
+    else:
+        h_untraced.Fill(t.Convert())
+
     age = case['age']
     try:
-        h.Fill(t.Convert(), age + 5 if age >= 10 else 5)
+        h_age.Fill(t.Convert(), age + 5 if age >= 10 else 5)
     except:
         print('Ignoring age ', age, ' of ', case['node_name'])
 
-h.Draw('colz')
+can[0].cd()
+h_age.Draw('colz')
+ROOT.gPad.SetRightMargin(0.15)
+ROOT.gPad.Update()
+pal = ROOT.gPad.GetPrimitive('palette')
+pal.SetX1NDC(0.86)
+pal.SetX2NDC(0.91)
 
-px = ROOT.h.ProfileX()
-px.SetLineColor(2)
-px.SetLineWidth(3)
-px.Draw('same e')
+px_age = ROOT.h_age.ProfileX('px_age')
+px_age.SetLineColor(2)
+px_age.SetLineWidth(3)
+px_age.Draw('same e')
+
+can[1].cd()
+can[1].SetGridx()
+can[1].SetGridy()
+h_aichi_wo_nagoya.SetFillColorAlpha(2, 0.5)
+h_nagoya.SetFillColorAlpha(5, 0.5)
+h_gifu.SetFillColorAlpha(4, 0.5)
+stack = ROOT.THStack('stack', '')
+stack.Add(h_aichi_wo_nagoya)
+stack.Add(h_nagoya)
+stack.Add(h_gifu)
+stack.Draw()
+can[1].Modified()
+stack.GetXaxis().SetTimeDisplay(1)
+stack.GetXaxis().SetTimeFormat('%b %d')
+stack.GetXaxis().SetNdivisions(100 + int(nday/7), 0)
+stack.GetYaxis().SetNdivisions(110, 1)
+stack.SetTitle(';Date;Number of Cases / Day')
+
+leg = ROOT.TLegend(0.15, 0.7, 0.5, 0.85)
+leg.AddEntry(h_gifu, 'Gifu', 'f')
+leg.AddEntry(h_nagoya, 'Aichi (Nagoya)', 'f')
+leg.AddEntry(h_aichi_wo_nagoya, 'Aichi (Other)', 'f')
+leg.SetFillStyle(0)
+leg.Draw()
+
+can[2].cd()
+can[2].SetGridx()
+can[2].SetGridy()
+h_traced.SetFillColorAlpha(1, 0.2)
+h_untraced.SetFillColorAlpha(1, 0.7)
+stack2 = ROOT.THStack('stack2', '')
+stack2.Add(h_untraced)
+stack2.Add(h_traced)
+stack2.Draw()
+can[2].Modified()
+stack2.GetXaxis().SetTimeDisplay(1)
+stack2.GetXaxis().SetTimeFormat('%b %d')
+stack2.GetXaxis().SetNdivisions(100 + int(nday/7), 0)
+stack2.GetYaxis().SetNdivisions(110, 1)
+stack2.SetTitle(';Date;Number of Cases / Day')
+
+leg2 = ROOT.TLegend(0.15, 0.7, 0.7, 0.85)
+leg2.AddEntry(h_traced, 'Traced Infection Source', 'f')
+leg2.AddEntry(h_untraced, 'Unknown Source', 'f')
+leg2.SetFillStyle(0)
+leg2.Draw()
