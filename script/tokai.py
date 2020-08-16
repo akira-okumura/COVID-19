@@ -371,6 +371,7 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('浜松市患者の濃厚接触者') >= 0 or \
                      case['note'].find('石川県事例と接触') >= 0 or \
                      case['note'].find('東京都事例の知人') >= 0 or \
+                     case['note'].find('神奈川県事例の知人') >= 0 or \
                      case['node_name'] in ('aichi1220', 'aichi1414'):
                     s.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
                 elif case['node_name'] in ('aichi547') or \
