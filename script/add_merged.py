@@ -9,19 +9,19 @@ def main(fin1, fin2):
     lines = open(fin1).readlines()
 
     for line in lines:
-        n, date, person, notionality, city, note, another_index = line[:-1].split('\t')
-        data1.append((n, date, person, notionality, city, note, another_index))
+        n, date, person, nationality, city, note, another_index = line[:-1].split('\t')
+        data1.append((n, date, person, nationality, city, note, another_index))
 
     data2= []
     lines = open(fin2).readlines()[1:]
     for line in lines:
-        n, date, person, notionality, city, note, another_index = line[:-1].split('\t')
-        data2.append((n, date, person, notionality, city, note, another_index))
+        n, date, person, nationality, city, note, another_index = line[:-1].split('\t')
+        data2.append((n, date, person, nationality, city, note, another_index))
     
     data12 = data1 + data2
 
     for line in lines:
-        n, date, person, notionality, city, note, another_index = line[:-1].split('\t')
+        n, date, person, nationality, city, note, another_index = line[:-1].split('\t')
         results = re.findall('(愛知県内[,\d]*|豊田市発表[,\d]*|岡崎市発表[,\d]*|豊橋市発表[,\d]*|名古屋市発表[,\d]*|岐阜県内[,\d]*)', note)
         
         indices = ''
@@ -69,11 +69,11 @@ def main(fin1, fin2):
         else:
             note2 = 'No.' + indices + 'と接触'
 
-        data1.append((n, date, person, notionality, city, note2, another_index))
+        data1.append((n, date, person, nationality, city, note2, another_index))
 
     for i in range(len(data1)):
-        n, date, person, notionality, city, note, another_index = data1[i]
-        print(n + '\t' + date + '\t' + person + '\t', notionality + '\t' + city + '\t' + note + '\t' + another_index + '\n', end='')
+        n, date, person, nationality, city, note, another_index = data1[i]
+        print(n + '\t' + date + '\t' + person + '\t' + nationality + '\t' + city + '\t' + note + '\t' + another_index + '\n', end='')
 
 if __name__ == '__main__':
     import sys

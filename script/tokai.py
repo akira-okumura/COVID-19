@@ -321,7 +321,7 @@ def make_date_nodes(date_ranks, label_mode):
                     s.attr('node', shape='circle', style='filled', color=color+'AA', fontcolor='white')
                 elif case['charme']:
                     s.attr('node', shape='doublecircle', style='', color=color, fontcolor='black')
-                elif case['node_name'] not in ('aichi1402', 'aichi1435', 'aichi1722') and \
+                elif case['node_name'] not in ('aichi1402', 'aichi1435', 'aichi1722', 'aichi3768', 'aichi3775') and \
                      (case['note'].find('例目') >= 0 or \
                       case['note'].find('岐阜県で集団感染が発生した合唱団に所属') >= 0 or \
                       case['note'].find('※集団感染が発生した合唱団に参加') >= 0 or \
@@ -343,7 +343,6 @@ def make_date_nodes(date_ranks, label_mode):
                       case['note'].find('名古屋市陽性患者の濃厚接触者') >= 0 or \
                       case['note'].find('名古屋市陽性患者の接触者') >= 0 or \
                       case['note'].find('愛知県患者の濃厚接触者') >= 0 or \
-                      case['note'].find('大阪府事例の知人') >= 0 or \
                       case['node_name'] == 'gifu151' or \
                       case['node_name'] == 'aichi521' or \
                       case['node_name'] in ('gifu210', 'gifu211', 'gifu215', 'gifu216')): # 7/24 Gifu cases not reflected in CTV data
@@ -370,8 +369,11 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('三重県陽性患者の接触者') >= 0 or \
                      case['note'].find('浜松市患者の濃厚接触者') >= 0 or \
                      case['note'].find('石川県事例と接触') >= 0 or \
+                     case['note'].find('大阪府事例の知人') >= 0 or \
                      case['note'].find('東京都事例の知人') >= 0 or \
                      case['note'].find('神奈川県事例の知人') >= 0 or \
+                     case['note'].find('高知県発表86') >= 0 or \
+                     case['note'].find('沖縄県発表1557') >= 0 or \
                      case['node_name'] in ('aichi1220', 'aichi1414'):
                     s.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
                 elif case['node_name'] in ('aichi547') or \
