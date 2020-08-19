@@ -59,6 +59,7 @@ def main(fin1, fin2):
             indices = indices[:-1]
 
         note.replace(' ', '')
+        note2 = ''
         if note != '':
             import sys
             print('WARNING', line, file=sys.stderr, end='')
@@ -66,8 +67,13 @@ def main(fin1, fin2):
             note2 = re.sub('(岐阜県内\d*)', '\\1例目', note).replace('例目,岐阜県内', '例目、')
         elif results == ['']:
             note2 = ''
-        else:
-            note2 = 'No.' + indices + 'と接触'
+
+
+        if indices != '':
+            if note2 == '':
+                note2 = 'No.' + indices + 'と接触'
+            else:
+                note2 += '/No.' + indices + 'と接触'
 
         data1.append((n, date, person, nationality, city, note2, another_index))
 

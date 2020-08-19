@@ -31,7 +31,9 @@ def readTSV(pref):
                 age, sex = person.split('代')
 
             if note.find('No.') >= 0 and note.find('と接触') >= 0:
-                note = note.replace('No.', '愛知県内').replace(',', '例目、').replace('と接触', '例目と接触')
+                import re
+                tmp = re.findall('No\.[,\d]*と接触', note)[0]
+                note = note.replace(tmp, tmp.replace('No.', '愛知県内').replace(',', '例目、').replace('と接触', '例目と接触'))
             elif note == '':
                 note = ' '
 
@@ -321,32 +323,6 @@ def make_date_nodes(date_ranks, label_mode):
                     s.attr('node', shape='circle', style='filled', color=color+'AA', fontcolor='white')
                 elif case['charme']:
                     s.attr('node', shape='doublecircle', style='', color=color, fontcolor='black')
-                elif case['node_name'] not in ('aichi1402', 'aichi1435', 'aichi1722', 'aichi3768', 'aichi3775') and \
-                     (case['note'].find('例目') >= 0 or \
-                      case['note'].find('岐阜県で集団感染が発生した合唱団に所属') >= 0 or \
-                      case['note'].find('※集団感染が発生した合唱団に参加') >= 0 or \
-                      case['note'].find('大阪市内のライブハウスの利用者') >= 0 or \
-                      case['note'].find('岐阜市内の肉料理店（潜龍）') >= 0 or \
-                      case['note'].find('スポーツジムの利用者') >= 0 or \
-                      case['note'].find('※高齢者施設の送迎ドライバーとして勤務') >= 0 or \
-                      case['note'].find('※死亡後に感染を確認<br>※名古屋市緑区のデイサービスを利用') >= 0 or \
-                      case['note'].find('※3月5日に感染確認。3月24日に検査で陰性だったため退院。4月2日に陽性と再度確認') >= 0 or \
-                      case['note'].find('※4月2日に愛知県の陽性患者と接触') >= 0 or \
-                      case['note'].find('※愛知県陽性患者の濃厚接触者') >= 0 or \
-                      case['note'].find('※愛知県発表の陽性患者の濃厚接触者') >= 0 or \
-                      case['note'].find('※名古屋市緑区のデイサービスを利用') >= 0 or \
-                      case['note'].find('再度') >= 0 or \
-                      case['note'].find('愛知県陽性患者の接触者') >= 0 or \
-                      case['note'].find('後日感染判明者と接触') >= 0 or \
-                      case['note'].find('名古屋市事例と接触') >= 0 or \
-                      case['note'].find('愛知県内陽性者と接触') >= 0 or \
-                      case['note'].find('名古屋市陽性患者の濃厚接触者') >= 0 or \
-                      case['note'].find('名古屋市陽性患者の接触者') >= 0 or \
-                      case['note'].find('愛知県患者の濃厚接触者') >= 0 or \
-                      case['node_name'] == 'gifu151' or \
-                      case['node_name'] == 'aichi521' or \
-                      case['node_name'] in ('gifu210', 'gifu211', 'gifu215', 'gifu216')): # 7/24 Gifu cases not reflected in CTV data
-                    s.attr('node', shape='square', style='', color=color, fontcolor='black')
                 elif case['note'].find('新宿区の劇場利用') >= 0 or \
                      case['note'].find('新宿区内の劇場を利用') >= 0 or \
                      case['note'].find('さいたま市発表の陽性患者の家族') >= 0 or \
@@ -374,8 +350,35 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('神奈川県事例の知人') >= 0 or \
                      case['note'].find('高知県発表86') >= 0 or \
                      case['note'].find('沖縄県発表1557') >= 0 or \
+                     case['note'].find('東京都の陽性患者と接触') >= 0 or \
                      case['node_name'] in ('aichi1220', 'aichi1414'):
                     s.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
+                elif case['node_name'] not in ('aichi1402', 'aichi1435', 'aichi1722', 'aichi3768', 'aichi3775') and \
+                     (case['note'].find('例目') >= 0 or \
+                      case['note'].find('岐阜県で集団感染が発生した合唱団に所属') >= 0 or \
+                      case['note'].find('※集団感染が発生した合唱団に参加') >= 0 or \
+                      case['note'].find('大阪市内のライブハウスの利用者') >= 0 or \
+                      case['note'].find('岐阜市内の肉料理店（潜龍）') >= 0 or \
+                      case['note'].find('スポーツジムの利用者') >= 0 or \
+                      case['note'].find('※高齢者施設の送迎ドライバーとして勤務') >= 0 or \
+                      case['note'].find('※死亡後に感染を確認<br>※名古屋市緑区のデイサービスを利用') >= 0 or \
+                      case['note'].find('※3月5日に感染確認。3月24日に検査で陰性だったため退院。4月2日に陽性と再度確認') >= 0 or \
+                      case['note'].find('※4月2日に愛知県の陽性患者と接触') >= 0 or \
+                      case['note'].find('※愛知県陽性患者の濃厚接触者') >= 0 or \
+                      case['note'].find('※愛知県発表の陽性患者の濃厚接触者') >= 0 or \
+                      case['note'].find('※名古屋市緑区のデイサービスを利用') >= 0 or \
+                      case['note'].find('再度') >= 0 or \
+                      case['note'].find('愛知県陽性患者の接触者') >= 0 or \
+                      case['note'].find('後日感染判明者と接触') >= 0 or \
+                      case['note'].find('名古屋市事例と接触') >= 0 or \
+                      case['note'].find('愛知県内陽性者と接触') >= 0 or \
+                      case['note'].find('名古屋市陽性患者の濃厚接触者') >= 0 or \
+                      case['note'].find('名古屋市陽性患者の接触者') >= 0 or \
+                      case['note'].find('愛知県患者の濃厚接触者') >= 0 or \
+                      case['node_name'] == 'gifu151' or \
+                      case['node_name'] == 'aichi521' or \
+                      case['node_name'] in ('gifu210', 'gifu211', 'gifu215', 'gifu216')): # 7/24 Gifu cases not reflected in CTV data
+                    s.attr('node', shape='square', style='', color=color, fontcolor='black')
                 elif case['node_name'] in ('aichi547') or \
                      case['note'].find('滞在') >= 0 or case['note'].find('東京都から名古屋市へ移動') >= 0 or \
                      (case['note'].find('6月15~16日神奈川県、6月19~21日東京を訪問') >= 0 or 
