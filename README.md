@@ -9,14 +9,14 @@ https://fundexapp.jp/nagoya-u/entry.php?purposeCode=200000&supportCode=200027
 
 ## 愛知県・岐阜県
 
-- 2020-08-18（XX 例目表示）\
-https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-08-18_mode0.pdf
+- 2020-08-19（XX 例目表示）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-08-19_mode0.pdf
 
-- 2020-08-18（年代表示）\
-https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-08-18_mode1.pdf
+- 2020-08-19（年代表示）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-08-19_mode1.pdf
 
-- 2020-08-18（居住地表示）\
-https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-08-18_mode2.pdf
+- 2020-08-19（居住地表示）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-08-19_mode2.pdf
 
 ## 福岡県
 

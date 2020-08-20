@@ -2,6 +2,7 @@ import graphviz
 import datetime
 import json
 from urllib import request
+import re
 
 cases = {}
 
@@ -31,11 +32,14 @@ def readTSV(pref):
                 age, sex = person.split('代')
 
             if note.find('No.') >= 0 and note.find('と接触') >= 0:
-                import re
                 tmp = re.findall('No\.[,\d]*と接触', note)[0]
                 note = note.replace(tmp, tmp.replace('No.', '愛知県内').replace(',', '例目、').replace('と接触', '例目と接触'))
             elif note == '':
                 note = ' '
+
+            if note.find('岐阜県発表') >= 0:
+                tmp = re.findall('岐阜県発表[,\d]*', note)[0]
+                note = note.replace(tmp, tmp.replace('岐阜県発表', '岐阜県内').replace(',', '例目、') + '例目と接触')
 
             if age == '10歳未満':
                 modified_text += '%d例目\t%s\t%s在住の%s（%s）\t%s\n****' % (n, date, city, sex, age, note)
@@ -351,6 +355,7 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('高知県発表86') >= 0 or \
                      case['note'].find('沖縄県発表1557') >= 0 or \
                      case['note'].find('東京都の陽性患者と接触') >= 0 or \
+                     case['note'].find('東京都の陽性患者と接触') >= 0 or \
                      case['node_name'] in ('aichi1220', 'aichi1414'):
                     s.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
                 elif case['node_name'] not in ('aichi1402', 'aichi1435', 'aichi1722', 'aichi3768', 'aichi3775') and \
@@ -381,6 +386,8 @@ def make_date_nodes(date_ranks, label_mode):
                     s.attr('node', shape='square', style='', color=color, fontcolor='black')
                 elif case['node_name'] in ('aichi547') or \
                      case['note'].find('滞在') >= 0 or case['note'].find('東京都から名古屋市へ移動') >= 0 or \
+                     case['note'].find('8月18日まで静岡県に在住') >= 0 or\
+                     case['note'].find('8月18日まで静岡県に在住') >= 0 or\
                      (case['note'].find('6月15~16日神奈川県、6月19~21日東京を訪問') >= 0 or 
                       case['node_name'] in ('aichi918', 'aichi925', 'aichi939') or # 7/24 Nagoya cases not reflected in CTV data
                       case['node_name'] in ('aichi998',)): # 7/25 Nagoya cases not reflected in CTV data '7/9〜7/10に大阪府滞在'
@@ -829,7 +836,7 @@ ROOT.gStyle.SetOptStat(0)
 can = [ROOT.ExactSizeCanvas('can%d' % i, 'can%d' % i, 800, 600) for i in range(4)]
 
 t0 = ROOT.TDatime(2020, 7, 1, 0, 0, 0)
-nday = 49
+nday = 56
 dt = nday * 3600 * 24
 
 h_aichi_wo_nagoya = ROOT.TH1D('h_aichi_wo_nagoya', ';Date;Number of Cases / Day', nday, t0.Convert(), t0.Convert() + dt)
