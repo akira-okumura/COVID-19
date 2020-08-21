@@ -355,7 +355,8 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('高知県発表86') >= 0 or \
                      case['note'].find('沖縄県発表1557') >= 0 or \
                      case['note'].find('東京都の陽性患者と接触') >= 0 or \
-                     case['note'].find('東京都の陽性患者と接触') >= 0 or \
+                     case['note'].find('東京都陽性患者の接触者') >= 0 or \
+                     case['note'].find('大阪府7256') >= 0 or \
                      case['node_name'] in ('aichi1220', 'aichi1414'):
                     s.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
                 elif case['node_name'] not in ('aichi1402', 'aichi1435', 'aichi1722', 'aichi3768', 'aichi3775') and \
@@ -386,7 +387,8 @@ def make_date_nodes(date_ranks, label_mode):
                     s.attr('node', shape='square', style='', color=color, fontcolor='black')
                 elif case['node_name'] in ('aichi547') or \
                      case['note'].find('滞在') >= 0 or case['note'].find('東京都から名古屋市へ移動') >= 0 or \
-                     case['note'].find('8月18日まで静岡県に在住') >= 0 or\
+                     case['note'].find('8月13日～16日に大阪府に滞在') >= 0 or\
+                     case['note'].find('7月30日～8月10日に青森県、岩手県、宮城県、福島県、秋田県に滞在') >= 0 or\
                      case['note'].find('8月18日まで静岡県に在住') >= 0 or\
                      (case['note'].find('6月15~16日神奈川県、6月19~21日東京を訪問') >= 0 or 
                       case['node_name'] in ('aichi918', 'aichi925', 'aichi939') or # 7/24 Nagoya cases not reflected in CTV data
@@ -448,7 +450,10 @@ def link_dummy_nodes():
            case['node_name'] not in ('gifu48', 'gifu52', 'gifu54', 'gifu55', 'gifu56', 'gifu57', 'gifu58'):
             graph.edge(dummy_case['node_name'], case['node_name'], style='invis')
 
-for label_mode in range(3):
+#debug = True
+debug = False
+
+for label_mode in range(1 if debug else 3):
     fname = 'PDF/Tokai_mode%d' % label_mode
     graph = graphviz.Graph(engine='dot', filename=fname)
     graph.attr('node', fontname='Hiragino UD Sans F StdN', fontsize='14')
@@ -474,8 +479,10 @@ for label_mode in range(3):
     link_date_nodes()
     link_dummy_nodes()
 
-    #dummy_edge = lambda a, b : graph.edge(a, b, color='red')#, style='invis') # for debugging
-    dummy_edge = lambda a, b : graph.edge(a, b, style='invis')
+    if debug:
+        dummy_edge = lambda a, b : graph.edge(a, b, color='red')#, style='invis') # for debugging
+    else:
+        dummy_edge = lambda a, b : graph.edge(a, b, style='invis')
     dummy_edges = lambda a : [dummy_edge(a[i], a[i + 1]) for i in range(len(a) - 1)]
 
     dummy_edge('aichi166', 'aichi165')
@@ -760,7 +767,6 @@ for label_mode in range(3):
     dummy_edge('aichi1513', 'aichi2104')
     dummy_edge('aichi2124', 'aichi2468')
     dummy_edge('aichi2179', 'aichi2470')
-    dummy_edge('aichi2192', 'aichi2523')
     dummy_edge('aichi2034', 'aichi2520')
     dummy_edge('aichi2154', 'aichi2519')
     dummy_edge('aichi2191', 'aichi2569')
@@ -808,7 +814,6 @@ for label_mode in range(3):
     dummy_edge('aichi1190', 'aichi1254')
     dummy_edge('aichi2497', 'aichi3141')
     dummy_edge('aichi2206', 'aichi2668')
-    dummy_edge('aichi1458', 'aichi2669')
     dummy_edge('aichi3048', 'aichi3426')
     dummy_edge('aichi3166', 'aichi3391')
     dummy_edge('aichi2718', 'aichi3441')
@@ -818,11 +823,60 @@ for label_mode in range(3):
     dummy_edge('aichi2868', 'aichi3129')
     dummy_edge('aichi2076', 'aichi2770')
     dummy_edge('aichi2770', 'aichi3125')
+
+    dummy_edge('aichi2885', 'aichi3723')
+    dummy_edge('aichi2846', 'aichi3692')
+    dummy_edge('aichi3570', 'aichi3607')
+    dummy_edge('aichi3241', 'aichi3518')
+    dummy_edge('aichi2506', 'aichi2788')
+    dummy_edge('aichi2099', 'aichi2944')
+    dummy_edge('aichi1681', 'aichi2487')
+    dummy_edge('aichi3426', 'aichi3596')
+    dummy_edge('aichi3392', 'aichi3713')
+    dummy_edge('aichi3092', 'aichi3804')
+    dummy_edge('aichi3523', 'aichi3817')
+    dummy_edge('aichi3564', 'aichi3822')
+    dummy_edge('aichi2603', 'aichi3135')
+    dummy_edge('aichi1675', 'aichi1971')
+    dummy_edge('aichi1468', 'aichi1726')
+    dummy_edge('aichi675', 'aichi1526')
+    dummy_edge('aichi984', 'aichi1318')
+    dummy_edge('aichi731', 'aichi1338')
+    dummy_edge('aichi673', 'aichi1135')
+    dummy_edge('aichi1152', 'aichi1285')
+    dummy_edge('aichi1080', 'aichi1307')
+    dummy_edge('aichi1078', 'aichi1354')
+    dummy_edge('aichi1551', 'aichi1938')
+    dummy_edge('aichi1293', 'aichi1936')
+    dummy_edge('aichi2614', 'aichi2913')
+    dummy_edge('aichi2918', 'aichi2934')
+    dummy_edge('aichi2759', 'aichi2922')
+    dummy_edge('aichi2573', 'aichi2910')
+    dummy_edge('aichi2833', 'aichi2891')
+    dummy_edge('aichi2783', 'aichi2759')
+    dummy_edge('aichi1655', 'aichi2558')
+    dummy_edge('aichi2609', 'aichi2558')
+    dummy_edge('aichi1105', 'aichi1227')
+    dummy_edge('aichi1204', 'aichi1402')
+    dummy_edge('aichi873', 'aichi192')
     #dummy_edge('aichi', 'aichi')
     #dummy_edge('aichi', 'aichi')
     #dummy_edge('aichi', 'aichi')
     #dummy_edge('aichi', 'aichi')
     #dummy_edge('aichi', 'aichi')
+    #dummy_edge('aichi', 'aichi')
+    #dummy_edge('aichi', 'aichi')
+    #dummy_edge('aichi', 'aichi')
+    #dummy_edge('aichi', 'aichi')
+    #dummy_edge('aichi', 'aichi')
+
+    dummy_edge('gifu461', 'gifu488')
+    dummy_edge('gifu421', 'gifu475')
+    dummy_edge('gifu421', 'gifu492')
+    dummy_edge('gifu472', 'gifu495')
+    #dummy_edge('gifu', 'gifu')
+    #dummy_edge('gifu', 'gifu')
+    #dummy_edge('gifu', 'gifu')
 
     graph.graph_attr['rankdir'] = 'LR'
     graph.view()
