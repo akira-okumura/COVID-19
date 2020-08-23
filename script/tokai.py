@@ -357,6 +357,7 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('東京都の陽性患者と接触') >= 0 or \
                      case['note'].find('東京都陽性患者の接触者') >= 0 or \
                      case['note'].find('東京都陽性患者の濃厚接触者') >= 0 or \
+                     case['note'].find('大阪府事例の家族') >= 0 or \
                      case['note'].find('大阪府7256') >= 0 or \
                      case['note'].find('兵庫県1927') >= 0 or \
                      case['node_name'] in ('aichi1220', 'aichi1414'):
@@ -383,6 +384,7 @@ def make_date_nodes(date_ranks, label_mode):
                       case['note'].find('名古屋市陽性患者の濃厚接触者') >= 0 or \
                       case['note'].find('名古屋市陽性患者の接触者') >= 0 or \
                       case['note'].find('愛知県患者の濃厚接触者') >= 0 or \
+                      case['note'].find('愛知県陽性患者の濃厚接触者') >= 0 or \
                       case['node_name'] == 'gifu151' or \
                       case['node_name'] == 'aichi521' or \
                       case['node_name'] in ('gifu210', 'gifu211', 'gifu215', 'gifu216')): # 7/24 Gifu cases not reflected in CTV data
@@ -792,7 +794,6 @@ for label_mode in range(1 if debug else 3):
     dummy_edge('aichi1905', 'aichi2008')
     dummy_edge('aichi1176', 'aichi1229')
     dummy_edge('aichi1324', 'aichi1407')
-    dummy_edge('aichi1164', 'aichi1416')
     dummy_edge('aichi1326', 'aichi1670')
     dummy_edge('aichi2310', 'aichi2961')
     dummy_edge('aichi1649', 'aichi2943')
@@ -804,7 +805,6 @@ for label_mode in range(1 if debug else 3):
     dummy_edge('aichi1100', 'aichi1972')
     dummy_edge('aichi1439', 'aichi1791')
     dummy_edge('aichi1391', 'aichi1799')
-    dummy_edge('aichi1163', 'aichi1796')
     dummy_edge('aichi1707', 'aichi1861')
     dummy_edge('aichi1683', 'aichi1898')
     dummy_edge('aichi1520', 'aichi1662')
@@ -861,8 +861,38 @@ for label_mode in range(1 if debug else 3):
     dummy_edge('aichi1105', 'aichi1227')
     dummy_edge('aichi1204', 'aichi1402')
     dummy_edge('aichi873', 'aichi192')
-    #dummy_edge('aichi', 'aichi')
-    #dummy_edge('aichi', 'aichi')
+
+    dummy_edges(('aichi986', 'aichi961', 'aichi936'))
+    dummy_edge('aichi703', 'aichi958')
+    dummy_edge('aichi990', 'aichi953')
+    dummy_edge('aichi672', 'aichi1018')
+    dummy_edge('aichi648', 'aichi1006')
+    dummy_edge('aichi701', 'aichi1043')
+    dummy_edge('aichi745', 'aichi1015')
+    dummy_edge('aichi585', 'aichi2669')
+    dummy_edge('aichi2787', 'aichi3128')
+    dummy_edge('aichi2901', 'aichi3222')
+    dummy_edge('aichi2725', 'aichi3234')
+    dummy_edge('aichi2926', 'aichi3308')
+    dummy_edge('aichi2928', 'aichi3304')
+    dummy_edge('aichi3061', 'aichi3335')
+    dummy_edge('aichi2886', 'aichi3217')
+    dummy_edge('aichi2421', 'aichi3202')
+    dummy_edge('aichi1065', 'aichi3008')
+    dummy_edge('aichi2811', 'aichi3173')
+    dummy_edge('aichi3067', 'aichi3193')
+    dummy_edge('aichi3024', 'aichi3393')
+    dummy_edge('aichi747', 'aichi1192')
+    dummy_edge('aichi717', 'aichi1313')
+    dummy_edge('aichi977', 'aichi1392')
+    dummy_edge('aichi1585', 'aichi1709')
+    dummy_edge('aichi1590', 'aichi1773')
+    dummy_edge('aichi1709', 'aichi1922')
+    dummy_edge('aichi1958', 'aichi2535')
+    dummy_edge('aichi2100', 'aichi2542')
+    dummy_edge('aichi1262', 'aichi1475')
+    dummy_edge('aichi2016', 'aichi2525')
+    dummy_edge('aichi1232', 'aichi1416')
     #dummy_edge('aichi', 'aichi')
     #dummy_edge('aichi', 'aichi')
     #dummy_edge('aichi', 'aichi')
@@ -876,14 +906,13 @@ for label_mode in range(1 if debug else 3):
     dummy_edge('gifu421', 'gifu475')
     dummy_edge('gifu421', 'gifu492')
     dummy_edge('gifu472', 'gifu495')
+    
     #dummy_edge('gifu', 'gifu')
     #dummy_edge('gifu', 'gifu')
     #dummy_edge('gifu', 'gifu')
 
     graph.graph_attr['rankdir'] = 'LR'
     graph.view()
-    import os
-    os.system('open -a Preview %s.pdf' % fname)
 
 import ROOT
 
