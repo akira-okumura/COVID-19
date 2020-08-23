@@ -360,6 +360,8 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('大阪府事例の家族') >= 0 or \
                      case['note'].find('大阪府7256') >= 0 or \
                      case['note'].find('兵庫県1927') >= 0 or \
+                     case['note'].find('神戸市744') >= 0 or \
+                     case['note'].find('大分市発表79例目の濃厚接触') >= 0 or \
                      case['node_name'] in ('aichi1220', 'aichi1414'):
                     s.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
                 elif case['node_name'] not in ('aichi1402', 'aichi1435', 'aichi1722', 'aichi3768', 'aichi3775') and \
