@@ -246,7 +246,7 @@ def make_date_nodes(date_ranks, label_mode):
                 s.node('NB', label='　' * 47 + '※1 陽性確定日の順に並べているため、各クラスターの先頭が感染源であったことを必ずしも意味しません。\n' \
                        + '　' * 42 + '※2 間違いが混入している可能性がありますので、一次情報は自治体の発表をあたってください。\n' \
                        + '　' * 45 + '※3 岐阜県飲食店シャルムと潜龍での集団感染は、作図が困難なため線の繋がりを一部省略しています。\n' \
-                       + '　' * 33 + '※4 愛知県の合計感染者数は延べ人数です。再陽性となった 6 人を含みます。\n' \
+                       + '　' * 33 + '※4 愛知県の合計感染者数は延べ人数です。再陽性となった 7 人を含みます。\n' \
                        + '　' * 16 + '※5 印刷・再配布などご自由にどうぞ。', shape='plaintext', fontsize='48', labeljust='l', height='4')
                 s.node('author', label='　' * 30 + 'データ出典：https://www.ctv.co.jp/covid-19/ および自治体公開データ\n' + '　' * 28 + '作成：@AkiraOkumura（名古屋大学 宇宙地球環境研究所 奥村曉）', shape='plaintext', fontsize='48', height='2.5')
 
@@ -379,6 +379,7 @@ def make_date_nodes(date_ranks, label_mode):
                       case['note'].find('※愛知県陽性患者の濃厚接触者') >= 0 or \
                       case['note'].find('※愛知県発表の陽性患者の濃厚接触者') >= 0 or \
                       case['note'].find('※名古屋市緑区のデイサービスを利用') >= 0 or \
+                      case['note'].find('愛知県内1642例目と同一患者') >= 0 or \
                       case['note'].find('再度') >= 0 or \
                       case['note'].find('愛知県陽性患者の接触者') >= 0 or \
                       case['note'].find('後日感染判明者と接触') >= 0 or \
@@ -964,7 +965,6 @@ for label_mode in range(1 if debug else 3):
     dummy_edge('aichi3284', 'aichi3468')
     dummy_edge('aichi3265', 'aichi3491')
     dummy_edge('aichi2996', 'aichi3500')
-    dummy_edge('aichi1843', 'aichi3588')
     dummy_edge('aichi3410', 'aichi3589')
     dummy_edge('aichi3700', 'aichi3859')
     dummy_edge('aichi3695', 'aichi3806')
