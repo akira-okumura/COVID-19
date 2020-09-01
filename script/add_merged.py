@@ -64,7 +64,7 @@ def main(fin1, fin2):
             import sys
             print('WARNING', line, file=sys.stderr, end='')
             print('*****', note, '*****', file=sys.stderr)
-            note2 = re.sub('(岐阜県内\d*)', '\\1例目', note).replace('例目,岐阜県内', '例目、')
+            note2 = re.sub('(岐阜県内\d*)', '\\1例目と接触', note).replace('例目,岐阜県内', '例目、')
         elif results == ['']:
             note2 = ''
 
