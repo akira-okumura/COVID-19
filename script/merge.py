@@ -47,6 +47,7 @@ def tsv(fname):
 
         text += '\t' # 国籍
         text += city + '\t' # 住居地
+        note = re.sub('愛知県内(\d*)例目と同一患者。', '', note)
         note = re.sub('（.*?）', '', note) # drop e.g. '（20歳代男性・8月4日）'
         note = note.replace('例目及び', '例目、')
         note = note.replace('例目、', ',')
