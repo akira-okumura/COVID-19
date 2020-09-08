@@ -382,6 +382,7 @@ def make_date_nodes(date_ranks, label_mode):
                       case['note'].find('※愛知県発表の陽性患者の濃厚接触者') >= 0 or \
                       case['note'].find('※名古屋市緑区のデイサービスを利用') >= 0 or \
                       case['note'].find('愛知県内1642例目と同一患者') >= 0 or \
+                      case['note'].find('愛知県内1484例目と同一患者') >= 0 or \
                       case['note'].find('再度') >= 0 or \
                       case['note'].find('愛知県陽性患者の接触者') >= 0 or \
                       case['note'].find('後日感染判明者と接触') >= 0 or \
