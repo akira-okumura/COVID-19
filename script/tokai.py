@@ -1007,7 +1007,7 @@ ROOT.gStyle.SetOptStat(0)
 can = [ROOT.ExactSizeCanvas('can%d' % i, 'can%d' % i, 800, 600) for i in range(4)]
 
 t0 = ROOT.TDatime(2020, 7, 1, 0, 0, 0)
-nweeks = 10
+nweeks = 12
 ndays = nweeks * 7
 dt = ndays * 3600 * 24
 
@@ -1021,7 +1021,7 @@ h_untraced = ROOT.TH1D('h_untraced', ';Date;Number of Cases / Day', ndays, t0.Co
 h_age = ROOT.TH2D('h_age', ';Date;Age;Number of Cases / Day / Generation', ndays, t0.Convert(), t0.Convert() + dt, 11, 0, 110)
 h_age.GetXaxis().SetTimeDisplay(1)
 h_age.GetXaxis().SetTimeFormat('%b %d')
-h_age.GetXaxis().SetNdivisions(100 + int(ndays/7), 0)
+h_age.GetXaxis().SetNdivisions(100 + int(ndays/7/2), 0)
 
 for case in cases.values():
     if case['node_name'].find('dummy') == 0:
@@ -1077,7 +1077,7 @@ stack.Draw()
 can[1].Modified()
 stack.GetXaxis().SetTimeDisplay(1)
 stack.GetXaxis().SetTimeFormat('%b %d')
-stack.GetXaxis().SetNdivisions(100 + int(ndays/7), 0)
+stack.GetXaxis().SetNdivisions(100 + int(ndays/7/2), 0)
 stack.GetYaxis().SetNdivisions(110, 1)
 stack.SetTitle(';Date;Number of Cases / Day')
 
@@ -1100,7 +1100,7 @@ stack2.Draw()
 can[2].Modified()
 stack2.GetXaxis().SetTimeDisplay(1)
 stack2.GetXaxis().SetTimeFormat('%b %d')
-stack2.GetXaxis().SetNdivisions(100 + int(ndays/7), 0)
+stack2.GetXaxis().SetNdivisions(100 + int(ndays/7/2), 0)
 stack2.GetYaxis().SetNdivisions(110, 1)
 stack2.SetTitle(';Date;Number of Cases / Day')
 
