@@ -362,6 +362,8 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('大阪府7421') >= 0 or \
                      case['note'].find('兵庫県1927') >= 0 or \
                      case['note'].find('神戸市744') >= 0 or \
+                     case['note'].find('三重県内443例目の知人') >= 0 or \
+                     case['note'].find('神奈川県患者と接触') >= 0 or \
                      case['note'].find('大分市発表79例目の濃厚接触') >= 0 or \
                      case['note'].find('川崎市陽性患者の濃厚接触者（友人）') >= 0 or \
                      case['note'].find('大阪府陽性患者の濃厚接触者（友人）') >= 0 or \
