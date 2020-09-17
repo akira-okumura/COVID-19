@@ -367,6 +367,8 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('大分市発表79例目の濃厚接触') >= 0 or \
                      case['note'].find('川崎市陽性患者の濃厚接触者（友人）') >= 0 or \
                      case['note'].find('大阪府陽性患者の濃厚接触者（友人）') >= 0 or \
+                     case['note'].find('東京都にて埼玉県の陽性患者と接触') >= 0 or \
+                     case['note'].find('滋賀県内468例目') >= 0 or \
                      case['node_name'] in ('aichi1220', 'aichi1414'):
                     s.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
                 elif case['node_name'] not in ('aichi1402', 'aichi1435', 'aichi1722', 'aichi3768', 'aichi3775') and \
@@ -1106,7 +1108,7 @@ stack2.GetXaxis().SetNdivisions(100 + int(ndays/7/2), 0)
 stack2.GetYaxis().SetNdivisions(110, 1)
 stack2.SetTitle(';Date;Number of Cases / Day')
 
-leg2 = ROOT.TLegend(0.45, 0.65, 1.0, 0.85)
+leg2 = ROOT.TLegend(0.5, 0.65, 1.0, 0.85)
 leg2.AddEntry(h_traced, 'Traced Infection Source', 'f')
 leg2.AddEntry(h_untraced, 'Unknown Source', 'f')
 leg2.SetFillStyle(0)
