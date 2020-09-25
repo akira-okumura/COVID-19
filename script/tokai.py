@@ -362,12 +362,14 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('大阪府7421') >= 0 or \
                      case['note'].find('兵庫県1927') >= 0 or \
                      case['note'].find('神戸市744') >= 0 or \
+                     case['note'].find('兵庫県公表2531') >= 0 or \
                      case['note'].find('三重県内443例目の知人') >= 0 or \
                      case['note'].find('神奈川県患者と接触') >= 0 or \
                      case['note'].find('大分市発表79例目の濃厚接触') >= 0 or \
                      case['note'].find('川崎市陽性患者の濃厚接触者（友人）') >= 0 or \
                      case['note'].find('大阪府陽性患者の濃厚接触者（友人）') >= 0 or \
                      case['note'].find('東京都にて埼玉県の陽性患者と接触') >= 0 or \
+                     case['note'].find('東京都にて感染が確認された新型コロナウイルス感染症患者の濃厚接触者') >= 0 or \
                      case['note'].find('滋賀県内468例目') >= 0 or \
                      case['node_name'] in ('aichi1220', 'aichi1414'):
                     s.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
@@ -405,6 +407,7 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('8月13日～16日に大阪府に滞在') >= 0 or\
                      case['note'].find('7月30日～8月10日に青森県、岩手県、宮城県、福島県、秋田県に滞在') >= 0 or\
                      case['note'].find('8月18日まで静岡県に在住') >= 0 or\
+                     case['note'].find('9月12日から名古屋市に滞在') >= 0 or\
                      (case['note'].find('6月15~16日神奈川県、6月19~21日東京を訪問') >= 0 or 
                       case['node_name'] in ('aichi918', 'aichi925', 'aichi939') or # 7/24 Nagoya cases not reflected in CTV data
                       case['node_name'] in ('aichi998',)): # 7/25 Nagoya cases not reflected in CTV data '7/9〜7/10に大阪府滞在'
@@ -1011,7 +1014,7 @@ ROOT.gStyle.SetOptStat(0)
 can = [ROOT.ExactSizeCanvas('can%d' % i, 'can%d' % i, 800, 600) for i in range(4)]
 
 t0 = ROOT.TDatime(2020, 7, 1, 0, 0, 0)
-nweeks = 12
+nweeks = 13
 ndays = nweeks * 7
 dt = ndays * 3600 * 24
 
