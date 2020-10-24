@@ -42,8 +42,11 @@ def tsv(fname):
         if age in ('10未満', '10歳未満'):
             text += '10歳未満%s性\t' % sex # 年代・性別
         else:
-            age = int(age)
-            text += '%d代%s性\t' % (age, sex) # 年代・性別
+            try:
+                age = int(age)
+                text += '%d代%s性\t' % (age, sex) # 年代・性別
+            except:
+                text += '年代不明・%s性\t' % (sex) # 性別
 
         text += '\t' # 国籍
         text += city + '\t' # 住居地
