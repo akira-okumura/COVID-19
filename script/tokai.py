@@ -373,6 +373,10 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('東京都にて感染が確認された新型コロナウイルス感染症患者の濃厚接触者') >= 0 or \
                      case['note'].find('滋賀県内468例目') >= 0 or \
                      case['note'].find('滞在中に大阪府陽性患者と接触') >= 0 or \
+                     case['note'].find('大阪府発表11596') >= 0 or\
+                     case['note'].find('神奈川県7779') >= 0 or\
+                     case['note'].find('京都市公表1323') >= 0 or\
+                     case['note'].find('滋賀県陽性患者の濃厚接触者') >= 0 or\
                      case['node_name'] in ('aichi1220', 'aichi1414'):
                     s.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
                 elif case['node_name'] not in ('aichi1402', 'aichi1435', 'aichi1722', 'aichi3768', 'aichi3775') and \
@@ -1018,7 +1022,7 @@ ROOT.gStyle.SetOptStat(0)
 can = [ROOT.ExactSizeCanvas('can%d' % i, 'can%d' % i, 800, 600) for i in range(4)]
 
 t0 = ROOT.TDatime(2020, 7, 1, 0, 0, 0)
-nweeks = 15
+nweeks = 18
 ndays = nweeks * 7
 dt = ndays * 3600 * 24
 
