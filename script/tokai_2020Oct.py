@@ -22,12 +22,16 @@ def readTSV(pref):
             if n < 1613:
                 continue
 
+            # inpefect. needs to be cleaned up.
             if person.find('10歳未満') >= 0:
                 sex = person.split('10歳未満')[1]
                 age = '10歳未満'
-            elif person.find('調査中') >= 0:
+            elif person.find('調査中') == 0:
+                sex = '調査中'
+                age = person.split('・')[0]
+            elif person.find('調査中') > 0:
+                sex = person.split('・')[1]
                 age = '調査中'
-                sex = person.split('調査中')[1]
             else:
                 age, sex = person.split('代')
 
@@ -88,6 +92,8 @@ def register_cases(pref, label_mode=0):
                 age = 9
             elif age == '1歳未満':
                 age = 0
+            elif age == '調査中':
+                pass
             else:
                 age = int(description.split('（')[-1].split('）')[0].replace('代', ''))
         except:
@@ -268,7 +274,7 @@ def make_date_nodes(date_ranks, label_mode):
                     color = '#0000ff' # blue
                 elif case['description'].find('女性') >= 0:
                     color = '#ff0000' # red
-                elif case['description'].find('名古屋市在住の方（性別・年代非公表）') >= 0 or case['description'] == '':
+                elif case['description'].find('名古屋市在住の方（性別・年代非公表）') >= 0 or case['description'] == '' or case['description'].find('調査中（') >= 0 :
                     color = '#ff00ff' # purple
                 else:
                     color='#000000' # black
@@ -277,6 +283,7 @@ def make_date_nodes(date_ranks, label_mode):
                    case['description'].find('中国籍') >= 0 or \
                    case['description'].find('帰国') >= 0 or \
                    case['description'].find('10月17日にイタリアから入国') >= 0 or \
+                   case['node_name'] == 'aichi6053' or \
                    (case['note'].find('渡航歴') >= 0 and case['note'].find('家族がパキスタン渡航歴あり') < 0):
                     s.attr('node', shape='circle', style='', color=color, fontcolor='black')
                 elif case['note'].find('感染経路不明') >= 0 or case['node_name'] in ('gifu79', 'aichi662', 'aichi661'):
@@ -314,6 +321,7 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('東京都陽性患者の接触者') >= 0 or \
                      case['note'].find('東京都陽性患者の濃厚接触者') >= 0 or \
                      case['note'].find('大阪府事例の家族') >= 0 or \
+                     case['note'].find('大阪府発表11853') >= 0 or \
                      case['note'].find('大阪府7256') >= 0 or \
                      case['note'].find('大阪府7421') >= 0 or \
                      case['note'].find('兵庫県1927') >= 0 or \
@@ -396,6 +404,8 @@ def make_date_nodes(date_ranks, label_mode):
                             label = '0歳'
                         elif case['age'] == 9:
                             label = '<10歳'
+                        elif case['age'] == '調査中':
+                            label = '調査中'
                         else:
                             label = '%d代' % case['age']
 
