@@ -276,6 +276,7 @@ def make_date_nodes(date_ranks, label_mode):
                 if case['note'].find('帰国') >= 0 or \
                    case['description'].find('中国籍') >= 0 or \
                    case['description'].find('帰国') >= 0 or \
+                   case['description'].find('10月17日にイタリアから入国') >= 0 or \
                    (case['note'].find('渡航歴') >= 0 and case['note'].find('家族がパキスタン渡航歴あり') < 0):
                     s.attr('node', shape='circle', style='', color=color, fontcolor='black')
                 elif case['note'].find('感染経路不明') >= 0 or case['node_name'] in ('gifu79', 'aichi662', 'aichi661'):
@@ -470,6 +471,47 @@ for label_mode in range(1 if debug else 2):
         dummy_edge = lambda a, b : graph.edge(a, b, style='invis')
     dummy_edges = lambda a : [dummy_edge(a[i], a[i + 1]) for i in range(len(a) - 1)]
 
+    dummy_edges(('aichi5376', 'aichi5384', 'aichi5385'))
+    dummy_edge('aichi5398', 'aichi5427')
+    dummy_edge('aichi5397', 'aichi5415')
+    dummy_edge('aichi5433', 'aichi5450')
+    dummy_edge('aichi5397', 'aichi5453')
+    dummy_edge('aichi5432', 'aichi5455')
+    dummy_edge('aichi5440', 'aichi5463')
+    dummy_edge('aichi5417', 'aichi5527')
+    dummy_edge('aichi5464', 'aichi5533')
+    dummy_edge('aichi5522', 'aichi5548')
+    dummy_edge('aichi5549', 'aichi5552')
+    dummy_edge('aichi5554', 'aichi5595')
+    dummy_edge('aichi5603', 'aichi5643')
+    dummy_edge('aichi5619', 'aichi5638')
+    dummy_edge('aichi5618', 'aichi5670')
+    dummy_edge('aichi5635', 'aichi5687')
+    dummy_edge('aichi5620', 'aichi5695')
+    dummy_edge('aichi5653', 'aichi5706')
+    dummy_edge('aichi5657', 'aichi5709')
+    dummy_edge('aichi5570', 'aichi5667')
+    dummy_edge('aichi5655', 'aichi5743')
+    dummy_edge('aichi5684', 'aichi5730')
+    dummy_edge('aichi5700', 'aichi5754')
+    dummy_edge('aichi5718', 'aichi5758')
+    dummy_edge('aichi5626', 'aichi5757')
+    dummy_edge('aichi5574', 'aichi5750')
+    dummy_edge('aichi5631', 'aichi5735')
+    dummy_edge('aichi5816', 'aichi5825')
+    dummy_edge('aichi5796', 'aichi5858')
+    dummy_edge('aichi5795', 'aichi5859')
+    dummy_edge('aichi5848', 'aichi5874')
+    dummy_edge('aichi5870', 'aichi5922')
+    dummy_edge('aichi5422', 'aichi5490')
+    dummy_edge('aichi5770', 'aichi5803')
+    dummy_edge('aichi5728', 'aichi5806')
+    dummy_edge('aichi5739', 'aichi5810')
+    dummy_edge('aichi5765', 'aichi5915')
+    dummy_edge('aichi5736', 'aichi5880')
+
+    dummy_edge('gifu655', 'gifu662')
+    dummy_edge('gifu658', 'gifu664')
 
     graph.graph_attr['rankdir'] = 'LR'
     graph.view()
