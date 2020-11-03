@@ -339,6 +339,7 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('大阪府発表11596') >= 0 or\
                      case['note'].find('神奈川県7779') >= 0 or\
                      case['note'].find('京都市公表1323') >= 0 or\
+                     case['note'].find('福岡県5230') >= 0 or\
                      case['note'].find('滋賀県陽性患者の濃厚接触者') >= 0 or\
                      case['node_name'] in ('aichi1220', 'aichi1414'):
                     s.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
@@ -363,6 +364,7 @@ def make_date_nodes(date_ranks, label_mode):
                       case['note'].find('後日感染判明者と接触') >= 0 or \
                       case['note'].find('名古屋市事例と接触') >= 0 or \
                       case['note'].find('愛知県内陽性者と接触') >= 0 or \
+                      case['note'].find('愛知県患者の濃厚接触') >= 0 or \
                       case['note'].find('名古屋市陽性患者の濃厚接触者') >= 0 or \
                       case['note'].find('名古屋市陽性患者の接触者') >= 0 or \
                       case['note'].find('愛知県患者の濃厚接触者') >= 0 or \

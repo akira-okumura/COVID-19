@@ -7,17 +7,17 @@
 名古屋大学では、コロナ禍での経済困窮学生を支援するため「新型コロナウイルス感染症対策緊急学生支援基金」を開設しています。
 https://fundexapp.jp/nagoya-u/entry.php?purposeCode=200000&supportCode=200027
 
-## 愛知県・岐阜県
+## 愛知県・岐阜県の経路図
 
-### 2020-10-01 以降のみ表示したもの
+### 2020-10-01 以降のみ表示した PDF
 
-- 2020-10-31（XX 例目表示）\
-https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-10-31_mode0.pdf
+- 2020-11-03（XX 例目表示）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-11-03_mode0.pdf
 
-- 2020-10-31（年代・居住地表示）\
-https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-10-31_mode1.pdf
+- 2020-11-03（年代・居住地表示）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-11-03_mode1.pdf
 
-### 2020-09-29 までのもの
+### 2020-09-29 までを表示した PDF
 
 - 2020-09-29（XX 例目表示）\
 https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-09-29_mode0.pdf
@@ -28,7 +28,7 @@ https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-09-29_mode1.p
 - 2020-09-29（居住地表示）\
 https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-09-29_mode2.pdf
 
-## 福岡県
+## 福岡県の経路図
 
 - 2020-07-25（XX 例目表示）\
 https://github.com/akira-okumura/COVID-19/raw/master/PDF/Fukuoka2020-07-25_mode0.pdf
