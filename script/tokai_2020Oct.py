@@ -534,7 +534,7 @@ ROOT.gStyle.SetOptStat(0)
 can = [ROOT.ExactSizeCanvas('can%d' % i, 'can%d' % i, 800, 600) for i in range(4)]
 
 t0 = ROOT.TDatime(2020, 7, 1, 0, 0, 0)
-nweeks = 18
+nweeks = 20
 ndays = nweeks * 7
 dt = ndays * 3600 * 24
 
