@@ -335,8 +335,12 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('東京都にて埼玉県の陽性患者と接触') >= 0 or \
                      case['note'].find('東京都にて感染が確認された新型コロナウイルス感染症患者の濃厚接触者') >= 0 or \
                      case['note'].find('滋賀県内468例目') >= 0 or \
+                     case['note'].find('東京都陽性患者と接触') >= 0 or \
                      case['note'].find('滞在中に大阪府陽性患者と接触') >= 0 or \
                      case['note'].find('大阪府発表11596') >= 0 or\
+                     case['note'].find('北海道3424') >= 0 or\
+                     case['note'].find('大阪府13123') >= 0 or\
+                     case['note'].find('鹿児島県480') >= 0 or\
                      case['note'].find('神奈川県7779') >= 0 or\
                      case['note'].find('京都市公表1323') >= 0 or\
                      case['note'].find('福岡県5230') >= 0 or\
@@ -521,8 +525,28 @@ for label_mode in range(1 if debug else 2):
     dummy_edge('aichi5765', 'aichi5915')
     dummy_edge('aichi5736', 'aichi5880')
 
-    dummy_edge('gifu655', 'gifu662')
-    dummy_edge('gifu658', 'gifu664')
+    #dummy_edge('gifu652', 'gifu662')
+    #dummy_edge('gifu652', 'gifu658')
+    #dummy_edge('gifu658', 'gifu665')
+    #dummy_edge('gifu657', 'gifu666')
+
+    #dummy_edge('gifu677', 'gifu674')
+
+    dummy_edge('gifu658', 'gifu693')
+    dummy_edge('gifu657', 'gifu700')
+    dummy_edge('gifu657', 'gifu710')
+    #dummy_edges(('gifu707', 'gifu710', 'gifu708'))
+
+    #dummy_edge('gifu658', 'gifu674')
+
+    #dummy_edges(('gifu645', 'gifu646', 'gifu647'))
+    #dummy_edge('gifu658', 'date2020-10-22')
+
+    #dummy_edges(('gifu648', 'gifu651', 'gifu650'))
+    #
+    #dummy_edges(('gifu', 'aichi5384', 'aichi5385'))
+    #dummy_edge('gifu658', 'gifu664')
+    #dummy_edge('gifu646', 'gifu648')
 
     graph.graph_attr['rankdir'] = 'LR'
     graph.view()
