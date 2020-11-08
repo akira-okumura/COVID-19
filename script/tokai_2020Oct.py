@@ -211,7 +211,6 @@ def make_date_nodes(date_ranks, label_mode):
                        + '　' * 32 + '※3 愛知県の合計感染者数は延べ人数です。再陽性となった人を含みます。\n' \
                        + '　' * 16 + '※4 印刷・再配布などご自由にどうぞ。', shape='plaintext', fontsize='24', labeljust='l', height='1.4')
                 s.node('author', label='　' * 30 + 'データ出典：https://www.ctv.co.jp/covid-19/ および自治体公開データ\n' + '　' * 28 + '作成：@AkiraOkumura（名古屋大学 宇宙地球環境研究所 奥村曉）', shape='plaintext', fontsize='24', height='1.2')
-
                 #response = request.urlopen('https://www.ctv.co.jp/covid-19/person.txt')
                 response = request.urlopen('https://www.ctv.co.jp/covid-19/person2.txt') # new file since Apr 21
                 json_data = json.loads(response.read())[0]
@@ -447,8 +446,8 @@ def link_dummy_nodes():
            case['node_name'] not in ('gifu48', 'gifu52', 'gifu54', 'gifu55', 'gifu56', 'gifu57', 'gifu58'):
             graph.edge(dummy_case['node_name'], case['node_name'], style='invis')
 
-debug = True
-#debug = False
+#debug = True
+debug = False
 
 for label_mode in range(1 if debug else 2):
     fname = 'PDF/Tokai_mode%d' % label_mode
@@ -493,12 +492,10 @@ for label_mode in range(1 if debug else 2):
     dummy_edge('aichi5397', 'aichi5453')
     dummy_edge('aichi5432', 'aichi5455')
     dummy_edge('aichi5440', 'aichi5463')
-    dummy_edge('aichi5417', 'aichi5527')
     dummy_edge('aichi5464', 'aichi5533')
     dummy_edge('aichi5522', 'aichi5548')
     dummy_edge('aichi5549', 'aichi5552')
     dummy_edge('aichi5554', 'aichi5595')
-    dummy_edge('aichi5603', 'aichi5643')
     dummy_edge('aichi5619', 'aichi5638')
     dummy_edge('aichi5618', 'aichi5670')
     dummy_edge('aichi5635', 'aichi5687')
@@ -507,9 +504,8 @@ for label_mode in range(1 if debug else 2):
     dummy_edge('aichi5657', 'aichi5709')
     dummy_edge('aichi5570', 'aichi5667')
     dummy_edge('aichi5655', 'aichi5743')
-    dummy_edge('aichi5684', 'aichi5730')
     dummy_edge('aichi5700', 'aichi5754')
-    dummy_edge('aichi5718', 'aichi5758')
+    dummy_edge('aichi5703', 'aichi5758')
     dummy_edge('aichi5574', 'aichi5750')
     dummy_edge('aichi5631', 'aichi5735')
     dummy_edge('aichi5816', 'aichi5825')
@@ -517,39 +513,65 @@ for label_mode in range(1 if debug else 2):
     dummy_edge('aichi5795', 'aichi5859')
     dummy_edge('aichi5848', 'aichi5874')
     dummy_edge('aichi5870', 'aichi5922')
-    dummy_edge('aichi5422', 'aichi5490')
     dummy_edge('aichi5770', 'aichi5803')
     dummy_edge('aichi5728', 'aichi5806')
     dummy_edge('aichi5739', 'aichi5810')
     dummy_edge('aichi5765', 'aichi5915')
     dummy_edge('aichi5736', 'aichi5880')
+    dummy_edge('aichi5609', 'aichi5669')
+    dummy_edge('aichi5578', 'aichi5621')
+    dummy_edge('aichi5617', 'aichi5642')
+    dummy_edge('aichi5590', 'aichi5643')
+    dummy_edge('aichi5705', 'aichi5723')
+    dummy_edge('aichi5710', 'aichi5717')
+    dummy_edge('aichi5565', 'aichi5594')
+    dummy_edge('aichi5482', 'aichi5530')
+    dummy_edge('aichi5538', 'aichi5582')
+    dummy_edge('aichi5542', 'aichi5582')
+    dummy_edge('aichi5535', 'aichi5565')
+        
     dummy_edges(('aichi6107', 'aichi6136', 'dummy2020-10-30'))
-    dummy_edge('aichi6172', 'dummy2020-10-31')
+    dummy_edges(('aichi6629', 'aichi6627', 'aichi6591', 'aichi6626'))
+
+    dummy_edge('aichi5439', 'aichi5503')
+    dummy_edge('aichi5457', 'aichi5490')
+    dummy_edge('aichi6626', 'dummy2020-11-06')
+
+    dummy_edge('dummy2020-11-03', 'gifu698')
+
+    dummy_edges(('gifu646', 'gifu645', 'gifu647'))
+    dummy_edges(('gifu646', 'gifu645', 'gifu647'))
+    dummy_edge('gifu651', 'gifu648')
+    dummy_edge('gifu647', 'gifu648')
+    dummy_edge('gifu644', 'gifu645')
+    dummy_edge('gifu658', 'gifu657')
+    dummy_edge('gifu645', 'gifu657')
+    dummy_edge('gifu648', 'gifu650')
+
+    dummy_edges(('gifu656', 'gifu654', 'gifu653', 'gifu655'))
+    dummy_edge('gifu656', 'gifu665')
+    dummy_edge('gifu654', 'gifu662')
+    dummy_edge('gifu653', 'gifu666')
+
+    dummy_edge('gifu665', 'gifu674')
+    dummy_edge('gifu666', 'gifu677')
+    dummy_edge('gifu663', 'aichi5847')
+    dummy_edge('gifu680', 'gifu681')
+
+    dummy_edge('gifu680', 'gifu685')
+    dummy_edge('gifu681', 'gifu685')
+
+    dummy_edges(('gifu689', 'gifu688', 'gifu691', 'gifu690', 'gifu693'))
+
+    dummy_edges(('gifu685', 'gifu682', 'gifu686'))
+    dummy_edge('gifu686', 'gifu700')
+
+    dummy_edge('gifu689', 'gifu698')
+
+    dummy_edges(('gifu708', 'gifu704', 'gifu702', 'gifu701', 'gifu707', 'gifu703'))
+    dummy_edge('gifu700', 'gifu709')
+
     dummy_edge('gifu729', 'dummy2020-11-07')
-    dummy_edges(('gifu683', 'gifu684', 'gifu685'))
-
-    #dummy_edge('gifu652', 'gifu662')
-    #dummy_edge('gifu652', 'gifu658')
-    #dummy_edge('gifu658', 'gifu665')
-    #dummy_edge('gifu657', 'gifu666')
-
-    #dummy_edge('gifu677', 'gifu674')
-
-    dummy_edge('gifu658', 'gifu693')
-    dummy_edge('gifu657', 'gifu700')
-    dummy_edge('gifu657', 'gifu710')
-    #dummy_edges(('gifu707', 'gifu710', 'gifu708'))
-
-    #dummy_edge('gifu658', 'gifu674')
-
-    #dummy_edges(('gifu645', 'gifu646', 'gifu647'))
-    #dummy_edge('gifu658', 'date2020-10-22')
-
-    #dummy_edges(('gifu648', 'gifu651', 'gifu650'))
-    #
-    #dummy_edges(('gifu', 'aichi5384', 'aichi5385'))
-    #dummy_edge('gifu658', 'gifu664')
-    #dummy_edge('gifu646', 'gifu648')
 
     graph.graph_attr['rankdir'] = 'LR'
     graph.view()
