@@ -447,8 +447,8 @@ def link_dummy_nodes():
            case['node_name'] not in ('gifu48', 'gifu52', 'gifu54', 'gifu55', 'gifu56', 'gifu57', 'gifu58'):
             graph.edge(dummy_case['node_name'], case['node_name'], style='invis')
 
-#debug = True
-debug = False
+debug = True
+#debug = False
 
 for label_mode in range(1 if debug else 2):
     fname = 'PDF/Tokai_mode%d' % label_mode
@@ -510,7 +510,6 @@ for label_mode in range(1 if debug else 2):
     dummy_edge('aichi5684', 'aichi5730')
     dummy_edge('aichi5700', 'aichi5754')
     dummy_edge('aichi5718', 'aichi5758')
-    dummy_edge('aichi5626', 'aichi5757')
     dummy_edge('aichi5574', 'aichi5750')
     dummy_edge('aichi5631', 'aichi5735')
     dummy_edge('aichi5816', 'aichi5825')
@@ -524,6 +523,10 @@ for label_mode in range(1 if debug else 2):
     dummy_edge('aichi5739', 'aichi5810')
     dummy_edge('aichi5765', 'aichi5915')
     dummy_edge('aichi5736', 'aichi5880')
+    dummy_edges(('aichi6107', 'aichi6136', 'dummy2020-10-30'))
+    dummy_edge('aichi6172', 'dummy2020-10-31')
+    dummy_edge('gifu729', 'dummy2020-11-07')
+    dummy_edges(('gifu683', 'gifu684', 'gifu685'))
 
     #dummy_edge('gifu652', 'gifu662')
     #dummy_edge('gifu652', 'gifu658')
