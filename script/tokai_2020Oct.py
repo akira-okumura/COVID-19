@@ -305,6 +305,7 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('東京都事例の家族') >= 0 or \
                      case['note'].find('大阪府事例と接触') >= 0 or \
                      case['note'].find('三重県公表231') >= 0 or \
+                     case['note'].find('神奈川県9100') >= 0 or \
                      case['note'].find('静岡県熱海市のクラスターが発生したカラオケを伴う飲食店を利用') >= 0 or \
                      case['note'].find('四日市市陽性患者の接触者') >= 0 or \
                      case['note'].find('三重県陽性患者の接触者') >= 0 or \
