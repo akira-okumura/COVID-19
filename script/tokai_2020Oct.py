@@ -129,41 +129,12 @@ def register_cases(pref, label_mode=0):
                 else:
                     source_idx.append('gifu%d' % n)
 
-        if note == '※岐阜県内31例目女性と同じ職場':
-            charme = True
-        elif note == '※岐阜大学医学部付属病院の精神科医':
-            # see https://www.hosp.gifu-u.ac.jp/oshirase/2020/04/04/post_176.html
-            # 「当該医師は、30代2名、20代1名であり、接触があった人については、概ね特定されております。」
-            charme = True
-            source_idx.append('gifu44') 
-        elif note in ('※岐阜市内の飲食店（シャルム）の従業員​', '※岐阜市内の飲食店（シャルム）の従業員 ', '※岐阜市内の飲食店（シャルム）の従業員'):
-            charme = True
-            #source_idx.append('gifu31')
-            #source_idx.append('gifu35')
-            #source_idx.append('gifu36')
-        elif note in ('※岐阜市内の飲食店（シャルム）を利用', '※岐阜市内の飲食店（シャルム）を利用​', '※岐阜市内の飲食店（シャルム）の従業員 ',
-                      '※岐阜市内の飲食店（シャルム）の従業員 の濃厚接触者 ', '※岐阜市内の飲食店（シャルム）の従業員​の濃厚接触者​',
-                      '※岐阜市内の飲食店（シャルム）の従業員 の濃厚接触者', '※岐阜市内の飲食店（シャルム）利用者の濃厚接触者',
-                      '※岐阜市内の飲食店（シャルム）利用者の濃厚接触者'):
-            charme = True
-            #for i in range(51, 59):
-            #    source_idx.append('gifu%d' % i)
-        elif node_name in ('gifu113', 'gifu29', 'gifu25', 'gifu31'):
-            charme = True
-        elif note in ('※集団感染が発生した合唱団に参加', '※岐阜県で集団感染が発生した合唱団に所属'):
-            charme = False
-            source_idx.append('gifu5')
-        elif note in ('※岐阜市内の肉料理店（潜龍）の従業員',):
-            source_idx.append('gifu79')
-        elif note in ('※岐阜市内の肉料理店（潜龍）の従業員の家族（濃厚接触者）',
-                      '※岐阜市内の肉料理店（潜龍）の利用者'):
-            source_idx.append('gifu81')
-        else:
-            charme = False
+        if note == '11月6日岐阜県公表のクラスターの関連から検査':
+            source_idx.append('gifu708') 
 
         cases['%s%d' % (pref, idx)] = {'node_name':node_name, 'date':date, 'note':note,
                                        'source_idx':source_idx, 'age':age, 'city':city,
-                                       'description':description, 'linked':False, 'charme':charme}
+                                       'description':description, 'linked':False}
 
 def register_sources():
     for case in cases.values():
@@ -195,7 +166,7 @@ def register_dummy_cases():
         node_name = 'dummy%s' % str(date)
         cases[node_name] = {'node_name':node_name, 'date':date, 'note':'',
                             'source_idx':[],
-                            'description':'', 'linked':False, 'charme':False}
+                            'description':'', 'linked':False}
 
 def make_date_nodes(date_ranks, label_mode):
     date_nodes = []
@@ -286,8 +257,6 @@ def make_date_nodes(date_ranks, label_mode):
                     s.attr('node', shape='circle', style='', color=color, fontcolor='black')
                 elif case['note'].find('感染経路不明') >= 0 or case['node_name'] in ('gifu79', 'aichi662', 'aichi661'):
                     s.attr('node', shape='circle', style='filled', color=color+'AA', fontcolor='white')
-                elif case['charme']:
-                    s.attr('node', shape='doublecircle', style='', color=color, fontcolor='black')
                 elif case['note'].find('新宿区の劇場利用') >= 0 or \
                      case['note'].find('新宿区内の劇場を利用') >= 0 or \
                      case['note'].find('さいたま市発表の陽性患者の家族') >= 0 or \
@@ -349,6 +318,7 @@ def make_date_nodes(date_ranks, label_mode):
                     s.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
                 elif case['node_name'] not in ('aichi1402', 'aichi1435', 'aichi1722', 'aichi3768', 'aichi3775') and \
                      (case['note'].find('例目') >= 0 or \
+                      case['note'].find('11月6日岐阜県公表のクラスターの関連から検査') >= 0 or \
                       case['note'].find('岐阜県で集団感染が発生した合唱団に所属') >= 0 or \
                       case['note'].find('※集団感染が発生した合唱団に参加') >= 0 or \
                       case['note'].find('大阪市内のライブハウスの利用者') >= 0 or \
@@ -365,6 +335,7 @@ def make_date_nodes(date_ranks, label_mode):
                       case['note'].find('愛知県内1484例目と同一患者') >= 0 or \
                       case['note'].find('再度') >= 0 or \
                       case['note'].find('愛知県陽性患者の接触者') >= 0 or \
+                      case['note'].find('愛知県陽性者の濃厚接触者') >= 0 or \
                       case['note'].find('後日感染判明者と接触') >= 0 or \
                       case['note'].find('名古屋市事例と接触') >= 0 or \
                       case['note'].find('愛知県内陽性者と接触') >= 0 or \
@@ -538,7 +509,7 @@ for label_mode in range(1 if debug else 2):
     dummy_edge('aichi5457', 'aichi5490')
     dummy_edge('aichi6626', 'dummy2020-11-06')
 
-    dummy_edge('dummy2020-11-03', 'gifu698')
+    dummy_edges(('dummy2020-11-03', 'gifu694', 'gifu698', 'gifu696', 'gifu697'))
 
     dummy_edges(('gifu646', 'gifu645', 'gifu647'))
     dummy_edges(('gifu646', 'gifu645', 'gifu647'))
@@ -567,11 +538,18 @@ for label_mode in range(1 if debug else 2):
     dummy_edges(('gifu685', 'gifu682', 'gifu686'))
     dummy_edge('gifu686', 'gifu700')
 
-    dummy_edge('gifu689', 'gifu698')
+    dummy_edge('gifu689', 'gifu694')
+    dummy_edge('gifu688', 'gifu698')
+    dummy_edge('gifu691', 'gifu696')
+    dummy_edge('gifu690', 'gifu697')
 
-    dummy_edges(('gifu708', 'gifu704', 'gifu702', 'gifu701', 'gifu707', 'gifu703'))
+
+    dummy_edges(('gifu708', 'gifu704', 'gifu702', 'gifu701', 'gifu706', 'gifu707', 'gifu703'))
     dummy_edge('gifu700', 'gifu709')
+    dummy_edges(('gifu717', 'gifu715', 'gifu726', 'gifu725', 'gifu724', 'gifu722', 'gifu721'))
 
+    dummy_edge('gifu729', 'dummy2020-11-07')
+    
     dummy_edge('gifu729', 'dummy2020-11-07')
 
     graph.graph_attr['rankdir'] = 'LR'
@@ -581,7 +559,7 @@ import ROOT
 
 ROOT.gStyle.SetOptStat(0)
 
-can = [ROOT.ExactSizeCanvas('can%d' % i, 'can%d' % i, 800, 600) for i in range(4)]
+can = [ROOT.ExactSizeCanvas('can%d' % i, 'can%d' % i, 800, 600) for i in range(3)]
 
 t0 = ROOT.TDatime(2020, 7, 1, 0, 0, 0)
 nweeks = 20
