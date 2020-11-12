@@ -131,6 +131,10 @@ def register_cases(pref, label_mode=0):
 
         if note == '11月6日岐阜県公表のクラスターの関連から検査':
             source_idx.append('gifu708') 
+        elif note.find('11月6日の集団感染が発生した市内事業所の') >= 0:
+            source_idx.append('aichi6365') 
+        elif note.find('PUB「EDEN」関係の患者の濃厚接触者') >= 0:
+            source_idx.append('aichi6111') 
 
         cases['%s%d' % (pref, idx)] = {'node_name':node_name, 'date':date, 'note':note,
                                        'source_idx':source_idx, 'age':age, 'city':city,
@@ -309,6 +313,8 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('大阪府発表11596') >= 0 or\
                      case['note'].find('北海道3424') >= 0 or\
                      case['note'].find('大阪府13123') >= 0 or\
+                     case['note'].find('宮城県861') >= 0 or\
+                     case['note'].find('鹿児島県533') >= 0 or\
                      case['note'].find('鹿児島県480') >= 0 or\
                      case['note'].find('神奈川県7779') >= 0 or\
                      case['note'].find('京都市公表1323') >= 0 or\
@@ -318,7 +324,10 @@ def make_date_nodes(date_ranks, label_mode):
                     s.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
                 elif case['node_name'] not in ('aichi1402', 'aichi1435', 'aichi1722', 'aichi3768', 'aichi3775') and \
                      (case['note'].find('例目') >= 0 or \
+                      case['note'].find('名古屋市陽性者の濃厚接触者（同じ職場）') >= 0 or \
                       case['note'].find('11月6日岐阜県公表のクラスターの関連から検査') >= 0 or \
+                      case['note'].find('PUB「EDEN」関係の患者の濃厚接触者') >= 0 or \
+                      case['note'].find('11月6日の集団感染が発生した市内事業所の') >= 0 or \
                       case['note'].find('岐阜県で集団感染が発生した合唱団に所属') >= 0 or \
                       case['note'].find('※集団感染が発生した合唱団に参加') >= 0 or \
                       case['note'].find('大阪市内のライブハウスの利用者') >= 0 or \
@@ -446,7 +455,11 @@ for label_mode in range(1 if debug else 2):
                 source_name = cases[source]['node_name']
                 if before_2020Oct(cases[source]['date']):
                     continue
-                graph.edge(source_name, node_name)
+                if source_name in ('gifu708', 'gifu711') :
+                    color='deeppink'
+                else:
+                    color='black'
+                graph.edge(source_name, node_name, color=color)
 
     link_date_nodes()
     link_dummy_nodes()
@@ -542,6 +555,13 @@ for label_mode in range(1 if debug else 2):
     dummy_edge('gifu688', 'gifu698')
     dummy_edge('gifu691', 'gifu696')
     dummy_edge('gifu690', 'gifu697')
+
+    dummy_edges(('gifu751', 'gifu749', 'gifu748', 'gifu747', 'gifu746', 'gifu743', 'gifu752', 'gifu745'))
+    dummy_edge('gifu752', 'gifu778')
+
+    dummy_edge('gifu720', 'gifu741')
+    dummy_edge('gifu719', 'gifu755')
+    dummy_edge('gifu718', 'gifu750')
 
 
     dummy_edges(('gifu708', 'gifu704', 'gifu702', 'gifu701', 'gifu706', 'gifu707', 'gifu703'))
