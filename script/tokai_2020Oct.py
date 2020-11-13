@@ -556,13 +556,12 @@ for label_mode in range(1 if debug else 2):
     dummy_edge('gifu691', 'gifu696')
     dummy_edge('gifu690', 'gifu697')
 
-    dummy_edges(('gifu751', 'gifu749', 'gifu748', 'gifu747', 'gifu746', 'gifu743', 'gifu752', 'gifu745'))
+    dummy_edges(('gifu751', 'gifu748', 'gifu747', 'gifu746', 'gifu749', 'gifu743', 'gifu752', 'gifu745'))
     dummy_edge('gifu752', 'gifu778')
 
     dummy_edge('gifu720', 'gifu741')
     dummy_edge('gifu719', 'gifu755')
     dummy_edge('gifu718', 'gifu750')
-
 
     dummy_edges(('gifu708', 'gifu704', 'gifu702', 'gifu701', 'gifu706', 'gifu707', 'gifu703'))
     dummy_edge('gifu700', 'gifu709')
@@ -571,6 +570,8 @@ for label_mode in range(1 if debug else 2):
     dummy_edge('gifu729', 'dummy2020-11-07')
     
     dummy_edge('gifu729', 'dummy2020-11-07')
+
+    dummy_edge('gifu726', 'gifu754')
 
     graph.graph_attr['rankdir'] = 'LR'
     graph.view()
