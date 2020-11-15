@@ -320,12 +320,14 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('京都市公表1323') >= 0 or\
                      case['note'].find('福岡県5230') >= 0 or\
                      case['note'].find('滋賀県陽性患者の濃厚接触者') >= 0 or\
+                     case['note'].find('北海道公表3964') >= 0 or\
                      case['node_name'] in ('aichi1220', 'aichi1414'):
                     s.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
                 elif case['node_name'] not in ('aichi1402', 'aichi1435', 'aichi1722', 'aichi3768', 'aichi3775') and \
                      (case['note'].find('例目') >= 0 or \
                       case['note'].find('名古屋市陽性者の濃厚接触者（同じ職場）') >= 0 or \
                       case['note'].find('11月6日岐阜県公表のクラスターの関連から検査') >= 0 or \
+                      case['note'].find('11月6日岐阜県内のクラスターの関連から検査') >= 0 or \
                       case['note'].find('PUB「EDEN」関係の患者の濃厚接触者') >= 0 or \
                       case['note'].find('11月6日の集団感染が発生した市内事業所の') >= 0 or \
                       case['note'].find('岐阜県で集団感染が発生した合唱団に所属') >= 0 or \
