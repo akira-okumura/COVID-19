@@ -129,9 +129,9 @@ def register_cases(pref, label_mode=0):
                 else:
                     source_idx.append('gifu%d' % n)
 
-        if note == '11月6日岐阜県公表のクラスターの関連から検査':
+        if note in ('11月6日岐阜県公表のクラスターの関連から検査', '11月6日岐阜県内のクラスターの関連から検', '岐阜のクラスターの関連から検査', '11月6日の岐阜県クラスターの関連から検査'):
             source_idx.append('gifu708') 
-        elif note.find('11月6日の集団感染が発生した市内事業所の') >= 0:
+        elif note.find('11月6日の集団感染が発生した市内事業所の') >= 0 or note.find('11月6日岡崎市発表の集団感染が発生した市内事業所の') >= 0:
             source_idx.append('aichi6365') 
         elif note.find('PUB「EDEN」関係の患者の濃厚接触者') >= 0:
             source_idx.append('aichi6111') 
@@ -325,6 +325,8 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('滋賀県陽性患者の濃厚接触者') >= 0 or\
                      case['note'].find('北海道公表3964') >= 0 or\
                      case['note'].find('三重県611') >= 0 or\
+                     case['note'].find('静岡市公表の陽性患者と接触') >= 0 or \
+                     case['note'].find('東京都陽性者の濃厚接触者') >= 0 or \
                      case['node_name'] in ('aichi1220', 'aichi1414'):
                     s.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
                 elif case['node_name'] not in ('aichi1402', 'aichi1435', 'aichi1722', 'aichi3768', 'aichi3775') and \
@@ -333,8 +335,11 @@ def make_date_nodes(date_ranks, label_mode):
                       case['note'].find('名古屋市陽性者の濃厚接触者（同じ職場）') >= 0 or \
                       case['note'].find('11月6日岐阜県公表のクラスターの関連から検査') >= 0 or \
                       case['note'].find('11月6日岐阜県内のクラスターの関連から検査') >= 0 or \
+                      case['note'].find('11月6日の岐阜県クラスターの関連から検査') >= 0 or \
+                      case['note'].find('岐阜のクラスターの関連から検査') >= 0 or \
                       case['note'].find('PUB「EDEN」関係の患者の濃厚接触者') >= 0 or \
                       case['note'].find('11月6日の集団感染が発生した市内事業所の') >= 0 or \
+                      case['note'].find('11月6日岡崎市発表の集団感染が発生した市内事業所の') >= 0 or \
                       case['note'].find('岐阜県で集団感染が発生した合唱団に所属') >= 0 or \
                       case['note'].find('※集団感染が発生した合唱団に参加') >= 0 or \
                       case['note'].find('大阪市内のライブハウスの利用者') >= 0 or \
@@ -361,6 +366,8 @@ def make_date_nodes(date_ranks, label_mode):
                       case['note'].find('愛知県患者の濃厚接触者') >= 0 or \
                       case['note'].find('愛知県陽性患者の濃厚接触者') >= 0 or \
                       case['note'].find('愛知県陽性者の接触者') >= 0 or \
+                      case['note'].find('名古屋市陽性者の濃厚接触者') >= 0 or \
+                      case['note'].find('名古屋市陽性者の接触者') >= 0 or \
                       case['node_name'] == 'gifu151' or \
                       case['node_name'] == 'aichi521' or \
                       case['node_name'] in ('gifu210', 'gifu211', 'gifu215', 'gifu216')): # 7/24 Gifu cases not reflected in CTV data
@@ -590,7 +597,7 @@ ROOT.gStyle.SetOptStat(0)
 can = [ROOT.ExactSizeCanvas('can%d' % i, 'can%d' % i, 800, 600) for i in range(3)]
 
 t0 = ROOT.TDatime(2020, 7, 1, 0, 0, 0)
-nweeks = 20
+nweeks = 24
 ndays = nweeks * 7
 dt = ndays * 3600 * 24
 
@@ -604,7 +611,7 @@ h_untraced = ROOT.TH1D('h_untraced', ';Date;Number of Cases / Day', ndays, t0.Co
 h_age = ROOT.TH2D('h_age', ';Date;Age;Number of Cases / Day / Generation', ndays, t0.Convert(), t0.Convert() + dt, 11, 0, 110)
 h_age.GetXaxis().SetTimeDisplay(1)
 h_age.GetXaxis().SetTimeFormat('%b %d')
-h_age.GetXaxis().SetNdivisions(100 + int(ndays/7/2), 0)
+h_age.GetXaxis().SetNdivisions(300 + int(ndays/7/3), 0)
 
 for case in cases.values():
     if case['node_name'].find('dummy') == 0:
@@ -660,11 +667,11 @@ stack.Draw()
 can[1].Modified()
 stack.GetXaxis().SetTimeDisplay(1)
 stack.GetXaxis().SetTimeFormat('%b %d')
-stack.GetXaxis().SetNdivisions(100 + int(ndays/7/2), 0)
+stack.GetXaxis().SetNdivisions(300 + int(ndays/7/3), 0)
 stack.GetYaxis().SetNdivisions(110, 1)
 stack.SetTitle(';Date;Number of Cases / Day')
 
-leg = ROOT.TLegend(0.6, 0.7, 0.95, 0.85)
+leg = ROOT.TLegend(0.4, 0.7, 0.75, 0.85)
 leg.AddEntry(h_gifu, 'Gifu', 'f')
 leg.AddEntry(h_nagoya, 'Aichi (Nagoya)', 'f')
 leg.AddEntry(h_aichi_wo_nagoya, 'Aichi (Other)', 'f')
@@ -683,11 +690,11 @@ stack2.Draw()
 can[2].Modified()
 stack2.GetXaxis().SetTimeDisplay(1)
 stack2.GetXaxis().SetTimeFormat('%b %d')
-stack2.GetXaxis().SetNdivisions(100 + int(ndays/7/2), 0)
+stack2.GetXaxis().SetNdivisions(300 + int(ndays/7/3), 0)
 stack2.GetYaxis().SetNdivisions(110, 1)
 stack2.SetTitle(';Date;Number of Cases / Day')
 
-leg2 = ROOT.TLegend(0.5, 0.65, 1.0, 0.85)
+leg2 = ROOT.TLegend(0.3, 0.65, 0.8, 0.85)
 leg2.AddEntry(h_traced, 'Traced Infection Source', 'f')
 leg2.AddEntry(h_untraced, 'Unknown Source', 'f')
 leg2.SetFillStyle(0)
