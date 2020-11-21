@@ -259,6 +259,7 @@ def make_date_nodes(date_ranks, label_mode):
                    case['description'].find('中国籍') >= 0 or \
                    case['description'].find('帰国') >= 0 or \
                    case['description'].find('10月17日にイタリアから入国') >= 0 or \
+                   case['note'].find('11月10日に南アフリカ共和国から入国') >= 0 or \
                    (case['note'].find('渡航歴') >= 0 and case['note'].find('家族がパキスタン渡航歴あり') < 0):
                     s.attr('node', shape='circle', style='', color=color, fontcolor='black')
                 elif case['note'].find('感染経路不明') >= 0 or case['node_name'] in ('gifu79', 'aichi662', 'aichi661'):
@@ -327,6 +328,13 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('三重県611') >= 0 or\
                      case['note'].find('静岡市公表の陽性患者と接触') >= 0 or \
                      case['note'].find('東京都陽性者の濃厚接触者') >= 0 or \
+                     case['note'].find('東京都の陽性者と接触') >= 0 or \
+                     case['note'].find('静岡県発表988') >= 0 or \
+                     case['note'].find('さいたま市発表1125') >= 0 or \
+                     case['note'].find('広島県の陽性者と接触') >= 0 or \
+                     case['note'].find('県外⑫の濃厚接触者（家族）') >= 0 or \
+                     case['note'].find('三重県発表643,666') >= 0 or \
+                     case['note'].find('静岡県1105') >= 0 or \
                      case['node_name'] in ('aichi1220', 'aichi1414'):
                     s.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
                 elif case['node_name'] not in ('aichi1402', 'aichi1435', 'aichi1722', 'aichi3768', 'aichi3775') and \
@@ -368,6 +376,8 @@ def make_date_nodes(date_ranks, label_mode):
                       case['note'].find('愛知県陽性者の接触者') >= 0 or \
                       case['note'].find('名古屋市陽性者の濃厚接触者') >= 0 or \
                       case['note'].find('名古屋市陽性者の接触者') >= 0 or \
+                      case['note'].find('豊田市陽性者の接触者') >= 0 or \
+                      case['note'].find('知人が陽性者') >= 0 or \
                       case['node_name'] == 'gifu151' or \
                       case['node_name'] == 'aichi521' or \
                       case['node_name'] in ('gifu210', 'gifu211', 'gifu215', 'gifu216')): # 7/24 Gifu cases not reflected in CTV data
