@@ -7,7 +7,7 @@ import re
 
 print('本市公表\t年代\t性別\t居住地\t海外渡航歴\t発症日\t陽性確定日\t重症度\t特記事項')
 
-lines = sys.stdin.readlines()
+lines = sys.stdin.readlines()[0].split('\r')
 
 for line in lines:
     line = line.replace('\r', '').replace('\n', '')
@@ -26,6 +26,7 @@ for line in lines:
     line = re.sub('岐阜県公表(\d*)例目', '岐阜県内\\1例目', line)
     line = re.sub('本市公表(\d*)例目', '名古屋市発表\\1例目', line)
     line = re.sub('豊橋市公表(\d*)例目', '豊橋市発表\\1例目', line)
+    line = re.sub('豊田市公表(\d*)例目', '豊田市発表\\1例目', line)
     line = re.sub('日(\d*)月', '日\t\\1月', line)
 
     print(line)

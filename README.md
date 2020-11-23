@@ -11,11 +11,11 @@ https://fundexapp.jp/nagoya-u/entry.php?purposeCode=200000&supportCode=200027
 
 ### 2020-10-01 以降のみ表示した PDF
 
-- 2020-11-21（XX 例目表示）\
-https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-11-21_mode0.pdf
+- 2020-11-22（XX 例目表示）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-11-22_mode0.pdf
 
-- 2020-11-21（年代・居住地表示）\
-https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-11-21_mode1.pdf
+- 2020-11-22（年代・居住地表示）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Tokai2020-11-22_mode1.pdf
 
 ### 2020-09-29 までを表示した PDF
 
