@@ -25,6 +25,7 @@ for line in lines:
     line = re.sub('愛知県公表(\d*)例目', '愛知県内\\1例目', line)
     line = re.sub('岐阜県公表(\d*)例目', '岐阜県内\\1例目', line)
     line = re.sub('本市公表(\d*)例目', '名古屋市発表\\1例目', line)
+    line = re.sub('岡崎市公表(\d*)例目', '岡崎市発表\\1例目', line)
     line = re.sub('豊橋市公表(\d*)例目', '豊橋市発表\\1例目', line)
     line = re.sub('豊田市公表(\d*)例目', '豊田市発表\\1例目', line)
     line = re.sub('日(\d*)月', '日\t\\1月', line)
