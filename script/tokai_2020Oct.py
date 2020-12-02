@@ -260,6 +260,7 @@ def make_date_nodes(date_ranks, label_mode):
                    case['description'].find('帰国') >= 0 or \
                    case['description'].find('10月17日にイタリアから入国') >= 0 or \
                    case['note'].find('11月10日に南アフリカ共和国から入国') >= 0 or \
+                   case['note'].find('11月21日にパキスタンから帰国') >= 0 or \
                    (case['note'].find('渡航歴') >= 0 and case['note'].find('家族がパキスタン渡航歴あり') < 0):
                     s.attr('node', shape='circle', style='', color=color, fontcolor='black')
                 elif case['note'].find('感染経路不明') >= 0 or case['node_name'] in ('gifu79', 'aichi662', 'aichi661'):
@@ -345,6 +346,7 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('神奈川県陽性者の濃厚接触者') >= 0 or \
                      case['note'].find('県外⑰の接触者') >= 0 or \
                      case['note'].find('大阪府陽性患者と接触') >= 0 or \
+                     case['note'].find('静岡県の陽性患者と接触') >= 0 or \
                      case['node_name'] in ('aichi10002', 'aichi10003') or \
                      case['node_name'] in ('aichi1220', 'aichi1414'):
                     s.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
@@ -578,6 +580,11 @@ for label_mode in range(1 if debug else 2):
     dummy_edges(('dummy2020-11-10', 'gifu749'))
     dummy_edges(('aichi7915', 'aichi7867', 'dummy2020-11-17'))
     dummy_edges(('gifu858', 'gifu857', 'dummy2020-11-19'))
+
+    dummy_edges(('gifu850', 'gifu849', 'gifu842', 'gifu843', 'gifu846'))
+    dummy_edges(('gifu1074', 'gifu1075', 'gifu1088', 'gifu1087', 'gifu1086'))
+    dummy_edges(('gifu1048', 'gifu1047', 'gifu1044', 'gifu1043', 'gifu1041', 'gifu1042'))
+    dummy_edges(('gifu983', 'gifu981', 'gifu976', 'gifu975', 'gifu974', 'gifu973', 'gifu972'))
 
     graph.graph_attr['rankdir'] = 'LR'
     graph.view()
