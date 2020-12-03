@@ -347,6 +347,8 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('県外⑰の接触者') >= 0 or \
                      case['note'].find('大阪府陽性患者と接触') >= 0 or \
                      case['note'].find('静岡県の陽性患者と接触') >= 0 or \
+                     case['note'].find('東京都事例の同僚') >= 0 or \
+                     case['note'].find('沖縄県事例の同僚') >= 0 or \
                      case['node_name'] in ('aichi10002', 'aichi10003') or \
                      case['node_name'] in ('aichi1220', 'aichi1414'):
                     s.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
