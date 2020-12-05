@@ -28,5 +28,7 @@ for line in lines:
     line = re.sub(' *性別：(.*)', '\\1\t岡崎市\t\t', line)
     line = re.sub(' *現在の主な症状：(.*)', '\\1\t', line)
     line = re.sub('本市発表の新型コロナウイルス感染症患者（(\d*)例目≪市内在住\d*例目≫）', '岡崎市発表\\1例目', line)
+    line = re.sub('本市発表の新型コロナウイルス感染症患者(\d*)例目≪市内在住\d*例目≫', '岡崎市発表\\1例目', line)
+    line = re.sub('愛知県発表（(\d*)例目）', '愛知県内\\1例目', line)
 
     print(line, end='')

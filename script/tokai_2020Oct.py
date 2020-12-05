@@ -349,6 +349,8 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('静岡県の陽性患者と接触') >= 0 or \
                      case['note'].find('東京都事例の同僚') >= 0 or \
                      case['note'].find('沖縄県事例の同僚') >= 0 or \
+                     case['note'].find('長野県陽性者の接触者') >= 0 or \
+                     case['note'].find('大阪府陽性者の濃厚接触者') >= 0 or \
                      case['node_name'] in ('aichi10002', 'aichi10003') or \
                      case['node_name'] in ('aichi1220', 'aichi1414'):
                     s.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
@@ -394,6 +396,7 @@ def make_date_nodes(date_ranks, label_mode):
                       case['note'].find('豊田市陽性者の接触者') >= 0 or \
                       case['note'].find('知人が陽性者') >= 0 or \
                       case['note'].find('新型コロナウイルス接触確認アプリの通知により検査') >= 0 or \
+                      case['note'].find('四日市市公表160') >= 0 or \
                       case['node_name'] == 'gifu151' or \
                       case['node_name'] == 'aichi521' or \
                       case['node_name'] in ('gifu210', 'gifu211', 'gifu215', 'gifu216')): # 7/24 Gifu cases not reflected in CTV data
