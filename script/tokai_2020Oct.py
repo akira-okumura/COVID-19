@@ -261,6 +261,7 @@ def make_date_nodes(date_ranks, label_mode):
                    case['description'].find('10月17日にイタリアから入国') >= 0 or \
                    case['note'].find('11月10日に南アフリカ共和国から入国') >= 0 or \
                    case['note'].find('11月21日にパキスタンから帰国') >= 0 or \
+                   case['note'].find('11月27日アメリカから帰国') >= 0 or \
                    (case['note'].find('渡航歴') >= 0 and case['note'].find('家族がパキスタン渡航歴あり') < 0):
                     s.attr('node', shape='circle', style='', color=color, fontcolor='black')
                 elif case['note'].find('感染経路不明') >= 0 or case['node_name'] in ('gifu79', 'aichi662', 'aichi661'):
