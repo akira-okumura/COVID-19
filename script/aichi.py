@@ -18,5 +18,6 @@ for line in lines:
     line = re.sub('県内(\d*)例目', '愛知県内\\1例目', line)
     line = re.sub('岐阜県(\d*)例目', '岐阜県内\\1例目', line)
     line = re.sub('日(\d*)月', '日\t\\1月', line)
+    line = re.sub('10未満(男|女)', '10未満\t\\1\t', line)
 
     print(line)

@@ -29,5 +29,6 @@ for line in lines:
     line = re.sub('豊橋市公表(\d*)例目', '豊橋市発表\\1例目', line)
     line = re.sub('豊田市公表(\d*)例目', '豊田市発表\\1例目', line)
     line = re.sub('日(\d*)月', '日\t\\1月', line)
+    line = re.sub('10歳未満\t(男|女)', '10歳未満\t\\1\t', line)
 
     print(line)
