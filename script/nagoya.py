@@ -30,7 +30,7 @@ for line in lines:
     line = re.sub('豊田市公表(\d*)例目', '豊田市発表\\1例目', line)
     line = re.sub('日(\d*)月', '日\t\\1月', line)
     line = re.sub('10歳未満\t(男|女)', '10歳未満\t\\1\t', line)
-    line = re.sub('(男|女)名古屋市', '\t\\1\t名古屋市', line)
+    line = re.sub('(男|女)名古屋市', '\\1\t名古屋市', line)
 
     if line in ('10歳未', '満'):
         print(line, end = '')
