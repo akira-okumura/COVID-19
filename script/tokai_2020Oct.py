@@ -264,6 +264,7 @@ def make_date_nodes(date_ranks, label_mode):
                    case['note'].find('11月27日アメリカから帰国') >= 0 or \
                    case['note'].find('12月3日ポルトガルから帰国') >= 0 or \
                    case['note'].find('12月6日にロシアより入国') >= 0 or \
+                   case['note'].find('12月1日海外から入国') >= 0 or \
                    (case['note'].find('渡航歴') >= 0 and case['note'].find('家族がパキスタン渡航歴あり') < 0):
                     s.attr('node', shape='circle', style='', color=color, fontcolor='black')
                 elif case['note'].find('感染経路不明') >= 0 or case['node_name'] in ('gifu79', 'aichi662', 'aichi661'):
@@ -358,6 +359,16 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('滋賀県陽性者の接触者') >= 0 or \
                      case['note'].find('四日市市公表160') >= 0 or \
                      case['note'].find('三重県921') >= 0 or \
+                     case['note'].find('静岡県陽性者の濃厚接触者') >= 0 or \
+                     case['note'].find('石川県916') >= 0 or \
+                     case['note'].find('浜松市発表569') >= 0 or \
+                     case['note'].find('山形県公表226') >= 0 or \
+                     case['note'].find('沖縄県陽性患者の濃厚接触者') >= 0 or \
+                     case['note'].find('京都府陽性患者と接触') >= 0 or \
+                     case['note'].find('福岡県6692') >= 0 or \
+                     case['note'].find('浜松市発表569') >= 0 or \
+                     case['note'].find('浜松市発表582') >= 0 or \
+                     case['note'].find('東京都事例の濃厚接触者') >= 0 or \
                      case['node_name'] in ('aichi10002', 'aichi10003') or \
                      case['node_name'] in ('aichi1220', 'aichi1414'):
                     s.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
@@ -608,7 +619,7 @@ ROOT.gStyle.SetOptStat(0)
 can = [ROOT.ExactSizeCanvas('can%d' % i, 'can%d' % i, 800, 600) for i in range(3)]
 
 t0 = ROOT.TDatime(2020, 7, 1, 0, 0, 0)
-nweeks = 24
+nweeks = 28
 ndays = nweeks * 7
 dt = ndays * 3600 * 24
 
