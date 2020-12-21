@@ -137,6 +137,8 @@ def register_cases(pref, label_mode=0):
             source_idx.append('aichi6111') 
         elif note.find('外国人学校クラスター関連') >= 0:
             source_idx.append('gifu753') 
+        elif note.find('陽性者が発生した市内医療機関の関係者') >= 0:
+            source_idx.append('aichi13174') 
 
         cases['%s%d' % (pref, idx)] = {'node_name':node_name, 'date':date, 'note':note,
                                        'source_idx':source_idx, 'age':age, 'city':city,
@@ -374,6 +376,7 @@ def make_date_nodes(date_ranks, label_mode):
                      case['note'].find('長野県公表1011') >= 0 or \
                      case['note'].find('静岡県事例の濃厚接触者') >= 0 or \
                      case['note'].find('福岡県6736') >= 0 or \
+                     case['note'].find('滋賀県公表883') >= 0 or \
                      case['node_name'] in ('aichi10002', 'aichi10003') or \
                      case['node_name'] in ('aichi1220', 'aichi1414'):
                     s.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
@@ -421,6 +424,7 @@ def make_date_nodes(date_ranks, label_mode):
                       case['note'].find('新型コロナウイルス接触確認アプリの通知により検査') >= 0 or \
                       case['note'].find('岐阜県事例の別居親族') >= 0 or \
                       case['note'].find('市外の陽性者の濃厚接触者') >= 0 or \
+                      case['note'].find('陽性者が発生した市内医療機関の関係者') >= 0 or \
                       case['node_name'] == 'gifu151' or \
                       case['node_name'] == 'aichi521' or \
                       case['node_name'] in ('gifu210', 'gifu211', 'gifu215', 'gifu216')): # 7/24 Gifu cases not reflected in CTV data
