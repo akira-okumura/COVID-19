@@ -60,7 +60,9 @@ def main(fin1, fin2):
 
         note.replace(' ', '')
         note2 = ''
-        if note != '':
+        if note == 'あり':
+            note2 = 'あり'
+        elif note != '':
             import sys
             print('WARNING', line, file=sys.stderr, end='')
             print('*****', note, '*****', file=sys.stderr)
@@ -70,7 +72,6 @@ def main(fin1, fin2):
             note2 = note4
         elif results == ['']:
             note2 = ''
-
 
         if indices != '':
             if note2 == '':

@@ -429,6 +429,7 @@ def make_date_nodes(date_ranks, label_mode):
                       case['note'].find('岐阜県事例の別居親族') >= 0 or \
                       case['note'].find('市外の陽性者の濃厚接触者') >= 0 or \
                       case['note'].find('陽性者が発生した市内医療機関の関係者') >= 0 or \
+                      case['note'] == 'あり' or \
                       case['node_name'] == 'gifu151' or \
                       case['node_name'] == 'aichi521' or \
                       case['node_name'] in ('gifu210', 'gifu211', 'gifu215', 'gifu216')): # 7/24 Gifu cases not reflected in CTV data
@@ -665,7 +666,7 @@ for case in cases.values():
     elif case['node_name'].find('gifu') == 0:
         h_gifu.Fill(t.Convert())
 
-    if len(case['source_idx']) > 0:
+    if len(case['source_idx']) > 0 or case['note'] == 'あり':
         h_traced.Fill(t.Convert())
     else:
         h_untraced.Fill(t.Convert())
