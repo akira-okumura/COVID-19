@@ -23,6 +23,7 @@ for line in lines:
 
     line = re.sub('患者（岡崎市(\d*)例目≪市内在住\d*例目≫）について', '\n\\1\t', line)
     line = re.sub('患者\((\d*)例目≪市内在住\d*例目≫）について', '\n\\1\t', line)
+    line = re.sub('患者（(\d*)例目≪市内在住\d*例目≫）について', '\n\\1\t', line)
     line = re.sub(' *年代：(\d*)歳代', '\\1\t', line)
     line = re.sub(' *年代：10歳未満', '10歳未満\t', line)
     line = re.sub(' *性別：(.*)', '\\1\t岡崎市\t\t', line)

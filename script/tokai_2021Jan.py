@@ -33,7 +33,7 @@ aichi_gifu_contact_tuple = (
     '新型コロナウイルス接触確認アプリの通知により検査', '岐阜県事例の別居親族',
     '市外の陽性者の濃厚接触者', '陽性者が発生した市内医療機関の関係者', '愛知県患者の接触者',
     '岐阜市事例の濃厚接触者', '陽性者が発生した市内高齢者施設の関係者', '岐阜県事例の濃厚接触者',
-    '岐阜県事例と接触')
+    '岐阜県事例と接触', '豊田市事例と接触', '名古屋市事例の濃厚接触者')
 
 non_aichi_gifu_contact_tuple = (
     '新宿区の劇場利用', '新宿区内の劇場を利用', 'さいたま市発表の陽性患者の家族',
@@ -71,7 +71,10 @@ non_aichi_gifu_contact_tuple = (
     '長野県陽性者の濃厚接触者（親族）', '三重県公表1161', '静岡県2276',
     '埼玉県陽性者の接触者', '大阪府陽性者の接触者', '県外43の濃厚接触者（家族）',
     '岩手県事例の濃厚接触者', '三重県発表1210', '横浜市発表8621',
-    '長崎県事例と接触', '長野県事例と接触', '岡山県事例と接触')
+    '長崎県事例と接触', '長野県事例と接触', '岡山県事例と接触', '北海道事例と接触',
+    '静岡県発表2613', '京都府事例と接触', '神奈川県事例と接触', '埼玉県事例と接触',
+    '千葉県事例と接触', '三重県陽性者の濃厚接触者（友人）', '神奈川県の患者の濃厚接触者',
+    '和歌山県事例と接触', '群馬県事例と接触', '福岡県事例と接触', '静岡県発表2900', '和歌山県事例と接触')
 
 class Case:
     def __init__(self, age, city, node_name, note, date, description, connected_nodes):
@@ -134,16 +137,11 @@ class Case:
            self.note.find('12月1日海外から入国') >= 0 or \
            self.note.find('航空機近席に感染者あり') >= 0 or \
            self.note.find('フィリピン') >= 0 or \
+           self.note.find('インドネシア') >= 0 or \
            (self.note.find('渡航歴') >= 0 and self.note.find('家族がパキスタン渡航歴あり') < 0):
             return True
         else:
             return False
-
-    def has_non_aichi_gifu_route(self):
-        return False
-
-    def has_aichi_gifu_route(self):
-        return False
 
 class CaseGraph:
     def __init__(self, fname):
@@ -155,14 +153,14 @@ class CaseGraph:
 
         self.nx_graph = nx.path_graph(0)
 
-    def add_cases(self, cases, pref=None):
+    def add_cases(self, cases, pref=None, cluster_thd=1):
         for case in cases.values():
             for node in case.connected_nodes:
                 cases[node].is_connected = True
 
         self.make_nx_nodes(cases)
 
-        self.make_pref_selection(cases, pref)
+        self.make_pref_selection(cases, pref, cluster_thd)
 
         self.make_gv_date_rank_ditc(cases, pref)
         self.make_gv_caption()
@@ -170,11 +168,67 @@ class CaseGraph:
         self.make_gv_edges(cases)
         self.make_gv_notes()
 
-    def add_only_aichi_cases(self, cases):
-        self.add_cases(cases, 'aichi')
+    def add_only_aichi_returning_cases(self, cases):
+        for case in cases.values():
+            for node in case.connected_nodes:
+                cases[node].is_connected = True
 
-    def add_only_gifu_cases(self, cases):
-        self.add_cases(cases, 'gifu')
+        self.make_nx_nodes(cases)
+
+        # make clusters from the NetworkX graph
+        for comp in nx.connected_components(self.nx_graph):
+            subgraph = self.nx_graph.subgraph(comp).copy()
+            node_names = subgraph.nodes
+            
+            # check if the cluster has any non Aichi, Gifu, Mie cases
+            if len([x for x in node_names if (cases[x].city not in ('愛知県', '岐阜県', '三重県') and cases[x].city[-1] in ('都', '道', '府', '県'))]) == 0:
+                for node_name in node_names:
+                    cases.pop(node_name)
+
+            # Remove remaining large clusters
+            if len([x for x in node_names if x in ('gifu1603', 'aichi13326', 'aichi13504', 'aichi12324')]) > 0:
+                for node_name in node_names:
+                    cases.pop(node_name)
+
+        self.make_gv_date_rank_ditc(cases, 'aichi')
+        self.make_gv_caption()
+        self.make_gv_date_nodes()
+        self.make_gv_edges(cases)
+        self.make_gv_notes()
+
+    def add_only_aichi_kids_cases(self, cases):
+        for case in cases.values():
+            for node in case.connected_nodes:
+                cases[node].is_connected = True
+
+        self.make_nx_nodes(cases)
+
+        # make clusters from the NetworkX graph
+        for comp in nx.connected_components(self.nx_graph):
+            subgraph = self.nx_graph.subgraph(comp).copy()
+            node_names = subgraph.nodes
+            
+            # Remove clusters not containing < 10 year cases
+            if len([x for x in node_names if cases[x].age != None and cases[x].age < 10]) == 0:
+                for node_name in node_names:
+                    cases.pop(node_name)
+
+            # Remove remaining large clusters
+            #if len([x for x in node_names if x in ('gifu1603', 'aichi13326', 'aichi13504', 'aichi12324')]) > 0:
+            #    for node_name in node_names:
+            #        cases.pop(node_name)
+
+        self.make_gv_date_rank_ditc(cases, 'aichi')
+        self.make_gv_caption()
+        self.make_gv_date_nodes()
+        self.make_gv_edges(cases)
+        self.make_gv_notes()
+
+    def add_only_aichi_cases(self, cases, cluster_thd=1):
+        self.add_cases(cases, 'aichi', cluster_thd)
+
+    def add_only_gifu_cases(self, cases, cluster_thd=1):
+        self.add_cases(cases, 'gifu', cluster_thd)
 
     def make_nx_nodes(self, cases):
         for case in sorted(cases.values(), key=lambda x:x.date):
@@ -182,7 +236,7 @@ class CaseGraph:
             for node in case.connected_nodes:
                 self.nx_graph.add_edge(case.node_name, node)
 
-    def make_pref_selection(self, cases, pref=None):
+    def make_pref_selection(self, cases, pref=None, cluster_thd=1):
         if pref == None:
             return
 
@@ -190,6 +244,12 @@ class CaseGraph:
         for comp in nx.connected_components(self.nx_graph):
             subgraph = self.nx_graph.subgraph(comp).copy()
             node_names = subgraph.nodes
+
+            # remove small clusters or single cases
+            if len(subgraph) < cluster_thd:
+                for node_name in node_names:
+                    cases.pop(node_name)
+                continue
 
             # calculate the claster duration for later sort
             first_day = datetime.date.fromisoformat('3000-01-01')
@@ -218,14 +278,61 @@ class CaseGraph:
                  ('gifu1041', '岐阜市\n河村病院'), ('gifu1270', '大垣日大高校'), ('gifu1378', '多治見市\nケアハウスビアンカ\n（老人ホーム）'),
                  ('gifu1491', '中京学院大学\n硬式野球部'), ('gifu1603', '中津川市\nサンシャインプレミアム中津川\nグループホーム'), ('gifu1463', '複数大学の会食'),
                  ('gifu1086', '岐阜協立大学\n男子バレーボール部'), ('gifu1559', '岐南町\n障害者福祉施設'), ('gifu1673', '本巣市\n職場'),
-                 ('gifu2106', '本巣郡北方町\nGAS PANIC（接待）'), ('gifu1924', '岐阜市折立\nオイコットクラブ（接待）'), ('gifu1950', '朝日大\n運動部'),
+                 ('gifu2106', '本巣郡北方町\nGAS PANIC（接待）'), ('gifu1924', '岐阜市折立\nオイコットクラブ（接待）'), ('gifu1950', '朝日大学\n運動部'),
                  ('gifu1783', '可児市\nスターダストフィリピンクラブ'), ('gifu1930', '羽島市\n入所型高齢者福祉施設'), ('gifu2193', '複数大学の飲食'),
                  ('gifu1377', '羽島市\n職場関連'), ('gifu2250', '岐阜市\n高齢者福祉施設'), ('gifu2079', '会食'),
                  ('gifu2108', '親族の会食'), ('gifu1857', '可児郵便局'), ('gifu1254', '帝京大可児高校'),
                  ('gifu1134', 'さわやかナーシング\n可児デイサービスセンター'), ('gifu1206', '複数の飲食店'), ('gifu1887', '各務原市\n職場'),
                  ('gifu1256', '岐阜協立大\nサッカー部（飲食）'), ('gifu1243', '不破郡垂井町\n不破高校'), ('gifu1257', '飲食店会食\nから親族へ'),
                  ('gifu956', '揖斐郡池田町\nイビデン樹脂'), ('gifu1662', '海津市\n学童保育'), ('gifu1253', '高山市\n久美愛厚生病院'),
-                 ('gifu1152', '親族'), ('gifuX', ''), ('gifuX', ''))
+                 ('gifu1152', '親族'), ('gifu2440', '居酒屋・カラオケ'),
+                 ('gifu2491', '各務原市\n高齢者福祉施設'), ('gifu2447', '会食'),
+                 ('gifu2250', '岐阜市\n高齢者福祉施設'), ('gifu2593', '関市\n事業所'),
+                 ('gifu2356', '会食'), ('gifu2604', '会食'), ('gifuX', ''), ('gifuX', ''))
+        notes += (('aichi6365', '岡崎市\n高齢者施設'),
+                  ('aichi7301', '名古屋市\n高齢者施設'),
+                  ('aichi8406', '名古屋市\n地域活動グループなど'),
+                  ('aichi9161', '医療・高齢者施設\n（3A）'), # confirmed
+                  ('aichi10826', '幸田町\n京ヶ峰岡田病院\n（3B）'), # confirmed
+                  ('aichi11540', '豊川市民病院\n（3C）'), # confirmed
+                  ('aichi10681', '名古屋市\n繁華街の飲食店\n（3D）'), # confirmed
+                  ('aichi11028', '名古屋市\n保育施設\n（3E）'), # confirmed
+                  ('aichi11043', '豊川市\n病院\n（3F）'), # confirmed
+                  ('aichi12093', '保育施設・学校\n（3G）'), # confirmed
+                  ('aichi11818', '医療・高齢者施設\n（3H）'), # confirmed
+                  ('aichi12583', '職場（3I）'), # confirmed (30 = 32 - 2 Gifu)
+                  ('aichi12324', '医療・高齢者施設\n（3J）'), # confirmed (1 common case in 3R?)
+                  ('aichi11946', '医療・高齢者施設\n（3K）'), # confirmed (all 12 cases as of Jan 5)
+                  ('aichi12868', '藤田医科大学\n学生\n（3L）'), # confirmed
+                  ('aichi13326', '春日井市民病院\n（3M）'), # confirmed
+                  ('aichi13541', 'クラブチーム\n（3N）'), # confirmed
+                  ('aichi12495', '医療・高齢者施設\n（3O?）'), # ? 44 cases as of Jan 5, but official says 33 (Jan 5 and 8)
+                  ('aichiX', '医療・高齢者施設\n（3P?）'),  # 23 as of Jan 5 and 8
+                  ('aichi12615', '医療・高齢者施設\n（3Q）'), # 23 as of Jan 5 (碧南?)
+                  ('aichi13504', '医療・高齢者施設\n（3R）'), # confirmed
+                  ('aichi13623', '碧南市\n看護ステーション（3Q?）'), # 17 cases as of Jan 5
+                  ('aichi12834', '船舶\n（3S）'),  # confirmed
+                  ('aichi14892', '高齢者施設\n（3T）'), # confirmed
+                  ('aichi13191', '医療・高齢者施設\n（3U）'), # confirmed
+                  ('aichi14725', '弥富市\n海南病院\n（3V）'), # confirmed
+                  ('aichi14370', '職場（3W）'), # confirmed (count 18 direct cases only as of Jan 5)
+                  ('aichi13174', '豊橋市\n医療施設'), # 23 as of Jan 5
+                  ('aichiX', '医療・高齢者施設\n（3X）'), # 20 as of Jan 5
+                  ('aichi14408', '名古屋市\n名古屋記念病院\n（3Y）'), # confirmed
+                  ('aichi14683', '瀬戸市\nあさい病院\n（3Z）'), # confirmed
+                  ('aichi13890', '豊橋市\n高齢者施設\n（4A）'), # confirmed
+                  ('aichi14219', '医療・高齢者施設\n（4B）'), # confirmed
+                  ('aichi15147', '医療・高齢者施設\n（4C）'), # confirmed
+                  ('aichi16036', '職場（4D）'), ('aichi16039', '職場（4D）'),
+                  ('aichi15111', '福祉施設\n（4E）'), # confirmed
+                  ('aichi16822', '名古屋市\n東部医療センター\n（4F）'), # confirmed
+                  ('aichi14284', '医療・高齢者施設\n（4G）'), # confirmed
+                  ('aichi14219', '高齢者施設\n（4H）'), # confirmed
+                  ('aichiX', '医療・高齢者施設\n（4I）'), # 15955? 25 as of Jan 8
+                  #('aichi17399', '会食?\n（4J?）'), # 11 as of Jan 8 西尾
+                  #('aichi18323', '会食?\n（4J?）'), # 11 as of Jan 8 名古屋
+                  ('aichiX', ''), ('aichiX', ''), ('aichiX', ''),
+                  ('aichiX', ''), ('aichiX', ''), ('aichiX', ''))
         for note in notes:
             if source.find(note[0]) >= 0:
                 self.gv_graph.node('%s_caption' % note[0], label=note[1], shape='plaintext', fixedsize='1', width='0.5', height='0.5', fontsize='12')
@@ -541,49 +648,91 @@ class ROOTPlotter:
 
         self.can = [ROOT.ExactSizeCanvas('can%d' % i, 'can%d' % i, 800, 600) for i in range(3)]
 
-        t0 = ROOT.TDatime(2020, 7, 1, 0, 0, 0)
+        t0 = ROOT.TDatime(2020, 7, 1, 0, 0, 0).Convert()
         nweeks = 28
         ndays = nweeks * 7
         dt = ndays * 3600 * 24
+        t1 = t0 + dt
 
-        self.h_aichi_wo_nagoya = ROOT.TH1D('h_aichi_wo_nagoya', ';Date;Number of Cases / Day', ndays, t0.Convert(), t0.Convert() + dt)
-        self.h_nagoya = ROOT.TH1D('h_nagoya', ';Date;Number of Cases / Day', ndays, t0.Convert(), t0.Convert() + dt)
-        self.h_gifu = ROOT.TH1D('h_gifu', ';Date;Number of Cases / Day', ndays, t0.Convert(), t0.Convert() + dt)
+        self.h_aichi_wo_nagoya = ROOT.TH1D('h_aichi_wo_nagoya', ';Date;Number of Cases / Day', ndays, t0, t1)
+        self.h_nagoya = ROOT.TH1D('h_nagoya', ';Date;Number of Cases / Day', ndays, t0, t1)
+        self.h_gifu = ROOT.TH1D('h_gifu', ';Date;Number of Cases / Day', ndays, t0, t1)
 
-        self.h_traced = ROOT.TH1D('h_traced', ';Date;Number of Cases / Day', ndays, t0.Convert(), t0.Convert() + dt)
-        self.h_untraced = ROOT.TH1D('h_untraced', ';Date;Number of Cases / Day', ndays, t0.Convert(), t0.Convert() + dt)
+        self.h_traced = ROOT.TH1D('h_traced', ';Date;Number of Cases / Day', ndays, t0, t1)
+        self.h_untraced = ROOT.TH1D('h_untraced', ';Date;Number of Cases / Day', ndays, t0, t1)
 
-        self.h_age = ROOT.TH2D('h_age', ';Date;Age;Number of Cases / Day / Generation', ndays, t0.Convert(), t0.Convert() + dt, 11, 0, 110)
+        self.h_age = ROOT.TH2D('h_age', ';Date;Age;Number of Cases / Day / Generation', ndays, t0, t1, 11, 0, 110)
         self.h_age.GetXaxis().SetTimeDisplay(1)
         self.h_age.GetXaxis().SetTimeFormat('%b %d')
         self.h_age.GetXaxis().SetNdivisions(300 + int(ndays/7/3), 0)
 
+        max_bin = 0
         for case in cases.values():
             if case.node_name.find('dummy') == 0:
                 continue
 
             date = case.date
             y, m, d = date.year, date.month, date.day
-            t = ROOT.TDatime(y, m, d, 0, 0, 0)
+            t = ROOT.TDatime(y, m, d, 0, 0, 0).Convert()
+
+            b = self.h_nagoya.FindBin(t)
+            if b > max_bin:
+                max_bin = b
 
             if case.node_name.find('aichi') == 0:
                 if case.city == '名古屋市':
-                    self.h_nagoya.Fill(t.Convert())
+                    self.h_nagoya.Fill(t)
                 else:
-                    self.h_aichi_wo_nagoya.Fill(t.Convert())
+                    self.h_aichi_wo_nagoya.Fill(t)
             elif case.node_name.find('gifu') == 0:
-                self.h_gifu.Fill(t.Convert())
+                self.h_gifu.Fill(t)
 
             if len(case.connected_nodes) > 0 or case.note == 'あり':
-                self.h_traced.Fill(t.Convert())
+                self.h_traced.Fill(t)
             else:
-                self.h_untraced.Fill(t.Convert())
+                self.h_untraced.Fill(t)
 
             age = case.age
             try:
-                self.h_age.Fill(t.Convert(), age + 5 if age >= 10 else 5)
+                self.h_age.Fill(t, age + 5 if age >= 10 else 5)
             except:
                 print('Ignoring age ', age, ' of ', case.node_name)
+
+        # make 7-day average
+        self.stack_ave7 = ROOT.THStack('stack_ave7', '')
+        self.h_ave7 = []
+        self.g_ave7 = []
+        for hi, h in enumerate((self.h_aichi_wo_nagoya, self.h_nagoya, self.h_gifu)):
+            self.h_ave7.append(h.Clone('%s_ave7' % h.GetName()))
+            self.h_ave7[-1].Reset()
+            self.h_ave7[-1].SetFillStyle(0)
+            self.h_ave7[-1].SetFillColor(0)
+            self.h_ave7[-1].SetLineColor(h.GetFillColor())
+            for i in range(1, max_bin + 1):
+                for j in range(7):
+                    b = i + j
+                    if b <= max_bin:
+                        t = h.GetBinCenter(b)
+                        self.h_ave7[-1].Fill(t, h.GetBinContent(i))
+
+            self.h_ave7[-1].Scale(1/7.)
+            self.stack_ave7.Add(self.h_ave7[-1])
+
+            self.g_ave7.append(ROOT.TGraph())
+            for i in range(1, max_bin + 1):
+                counts = 0
+                for h in self.h_ave7:
+                    counts += h.GetBinContent(i)
+
+                self.g_ave7[-1].SetPoint(i - 1, self.h_nagoya.GetBinCenter(i), counts)
+
+            self.g_ave7[-1].SetLineColor((2, 5, 4)[hi])
+            self.g_ave7[-1].SetLineWidth(2)
+
+        n1 = int(ROOT.h_aichi_wo_nagoya.GetBinContent(max_bin) + ROOT.h_nagoya.GetBinContent(max_bin))
+        n2 = int(ROOT.h_nagoya.GetBinContent(max_bin))
+        n3 = int(ROOT.h_gifu.GetBinContent(max_bin))
+        print(f'愛知県 {n1} 名（うち名古屋市 {n2}）、岐阜県 {n3} 名')
 
         self.can[0].cd()
         self.h_age.Draw('colz')
@@ -605,10 +754,13 @@ class ROOTPlotter:
         self.h_nagoya.SetFillColorAlpha(5, 0.5)
         self.h_gifu.SetFillColorAlpha(4, 0.5)
         self.stack = ROOT.THStack('stack', '')
-        self.stack.Add(self.h_aichi_wo_nagoya)
-        self.stack.Add(self.h_nagoya)
-        self.stack.Add(self.h_gifu)
+        for h in (self.h_aichi_wo_nagoya, self.h_nagoya, self.h_gifu):
+            self.stack.Add(h)
         self.stack.Draw()
+
+        #self.stack_ave7.Draw('hist c same')
+        for g in self.g_ave7:
+            g.Draw('c same')
         self.can[1].Modified()
         self.stack.GetXaxis().SetTimeDisplay(1)
         self.stack.GetXaxis().SetTimeFormat('%b %d')
@@ -616,10 +768,14 @@ class ROOTPlotter:
         self.stack.GetYaxis().SetNdivisions(110, 1)
         self.stack.SetTitle(';Date;Number of Cases / Day')
 
-        self.leg = ROOT.TLegend(0.4, 0.7, 0.75, 0.85)
+        self.leg = ROOT.TLegend(0.25, 0.7, 0.75, 0.85)
         self.leg.AddEntry(self.h_gifu, 'Gifu', 'f')
+        self.leg.AddEntry(self.g_ave7[2], 'Seven-day Average', 'l')
         self.leg.AddEntry(self.h_nagoya, 'Aichi (Nagoya)', 'f')
+        self.leg.AddEntry(self.g_ave7[1], '', 'l')
         self.leg.AddEntry(self.h_aichi_wo_nagoya, 'Aichi (Other)', 'f')
+        self.leg.AddEntry(self.g_ave7[0], '', 'l')
+        self.leg.SetNColumns(2)
         self.leg.SetFillStyle(0)
         self.leg.Draw()
 
@@ -645,24 +801,43 @@ class ROOTPlotter:
         self.leg2.SetFillStyle(0)
         self.leg2.Draw()
 
+def link_nodes(case_graph):
+    link_cases = lambda a, b : case_graph.gv_graph.edge(a, b, style='invis')
+    link_cases('aichi13623', 'aichi12615') # cluster 3Q?
+    for i in range(16036, 16039):
+        link_cases(f'aichi{i}', f'aichi{i + 1}') # cluster 4D?
+
 def main():
     global plotter
-    '''
+
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     plotter = ROOTPlotter(cases)
+ 
+    reader = TSVReader()
+    cases = reader.make_aichi_gifu_cases()
+    case_graph_aichi = CaseGraph('Aichi_kids')
+    case_graph_aichi.add_only_aichi_kids_cases(cases)
+    case_graph_aichi.gv_graph.view()
+    return
+    reader = TSVReader()
+    cases = reader.make_aichi_gifu_cases()
+    case_graph_aichi = CaseGraph('Aichi_returning')
+    case_graph_aichi.add_only_aichi_returning_cases(cases)
+    case_graph_aichi.gv_graph.view()
 
     reader = TSVReader()
     cases = reader.make_aichi_cases()
     cases.update(reader.make_gifu_cases())
     case_graph_aichi = CaseGraph('Aichi')
-    case_graph_aichi.add_only_aichi_cases(cases)
+    case_graph_aichi.add_only_aichi_cases(cases, 1)
+    link_nodes(case_graph_aichi)
     case_graph_aichi.gv_graph.view()
-    '''
+    return
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     case_graph_gifu = CaseGraph('Gifu')
-    case_graph_gifu.add_only_gifu_cases(cases)
+    case_graph_gifu.add_only_gifu_cases(cases, 1)
     case_graph_gifu.gv_graph.view()
 
 
