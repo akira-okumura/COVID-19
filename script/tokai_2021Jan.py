@@ -74,7 +74,9 @@ non_aichi_gifu_contact_tuple = (
     '長崎県事例と接触', '長野県事例と接触', '岡山県事例と接触', '北海道事例と接触',
     '静岡県発表2613', '京都府事例と接触', '神奈川県事例と接触', '埼玉県事例と接触',
     '千葉県事例と接触', '三重県陽性者の濃厚接触者（友人）', '神奈川県の患者の濃厚接触者',
-    '和歌山県事例と接触', '群馬県事例と接触', '福岡県事例と接触', '静岡県発表2900', '和歌山県事例と接触')
+    '和歌山県事例と接触', '群馬県事例と接触', '福岡県事例と接触', '静岡県発表2900', '和歌山県事例と接触',
+    '静岡県発表2979', '横浜市陽性者の接触者', '福岡県陽性者の接触者（親族）', '兵庫県陽性者の濃厚接触者',
+    '静岡県事例と接触', '兵庫県事例と接触')
 
 class Case:
     def __init__(self, age, city, node_name, note, date, description, connected_nodes):
@@ -138,6 +140,7 @@ class Case:
            self.note.find('航空機近席に感染者あり') >= 0 or \
            self.note.find('フィリピン') >= 0 or \
            self.note.find('インドネシア') >= 0 or \
+           self.note.find('バーレーン') >= 0 or \
            (self.note.find('渡航歴') >= 0 and self.note.find('家族がパキスタン渡航歴あり') < 0):
             return True
         else:
@@ -288,7 +291,8 @@ class CaseGraph:
                  ('gifu1152', '親族'), ('gifu2440', '居酒屋・カラオケ'),
                  ('gifu2491', '各務原市\n高齢者福祉施設'), ('gifu2447', '会食'),
                  ('gifu2250', '岐阜市\n高齢者福祉施設'), ('gifu2593', '関市\n事業所'),
-                 ('gifu2356', '会食'), ('gifu2604', '会食'), ('gifuX', ''), ('gifuX', ''))
+                 ('gifu2356', '会食'), ('gifu2604', '会食'), ('gifu2595', '親族会食'), ('gifu2655', '海津市\n事業所'),
+                 ('gifuX', ''), ('gifuX', ''), ('gifuX', ''))
         notes += (('aichi6365', '岡崎市\n高齢者施設'),
                   ('aichi7301', '名古屋市\n高齢者施設'),
                   ('aichi8406', '名古屋市\n地域活動グループなど'),
@@ -329,8 +333,7 @@ class CaseGraph:
                   ('aichi14284', '医療・高齢者施設\n（4G）'), # confirmed
                   ('aichi14219', '高齢者施設\n（4H）'), # confirmed
                   ('aichiX', '医療・高齢者施設\n（4I）'), # 15955? 25 as of Jan 8
-                  #('aichi17399', '会食?\n（4J?）'), # 11 as of Jan 8 西尾
-                  #('aichi18323', '会食?\n（4J?）'), # 11 as of Jan 8 名古屋
+                  ('aichi18323', '会食\n（4J）'), # confirmed
                   ('aichiX', ''), ('aichiX', ''), ('aichiX', ''),
                   ('aichiX', ''), ('aichiX', ''), ('aichiX', ''))
         for note in notes:
@@ -813,13 +816,13 @@ def main():
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     plotter = ROOTPlotter(cases)
- 
+
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     case_graph_aichi = CaseGraph('Aichi_kids')
     case_graph_aichi.add_only_aichi_kids_cases(cases)
     case_graph_aichi.gv_graph.view()
-    return
+
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     case_graph_aichi = CaseGraph('Aichi_returning')
@@ -829,11 +832,19 @@ def main():
     reader = TSVReader()
     cases = reader.make_aichi_cases()
     cases.update(reader.make_gifu_cases())
+    case_graph_aichi = CaseGraph('Aichi_cluster')
+    case_graph_aichi.add_only_aichi_cases(cases, 5)
+    link_nodes(case_graph_aichi)
+    case_graph_aichi.gv_graph.view()
+    return
+    reader = TSVReader()
+    cases = reader.make_aichi_cases()
+    cases.update(reader.make_gifu_cases())
     case_graph_aichi = CaseGraph('Aichi')
     case_graph_aichi.add_only_aichi_cases(cases, 1)
     link_nodes(case_graph_aichi)
     case_graph_aichi.gv_graph.view()
-    return
+
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     case_graph_gifu = CaseGraph('Gifu')
