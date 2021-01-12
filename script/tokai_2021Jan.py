@@ -76,7 +76,7 @@ non_aichi_gifu_contact_tuple = (
     '千葉県事例と接触', '三重県陽性者の濃厚接触者（友人）', '神奈川県の患者の濃厚接触者',
     '和歌山県事例と接触', '群馬県事例と接触', '福岡県事例と接触', '静岡県発表2900', '和歌山県事例と接触',
     '静岡県発表2979', '横浜市陽性者の接触者', '福岡県陽性者の接触者（親族）', '兵庫県陽性者の濃厚接触者',
-    '静岡県事例と接触', '兵庫県事例と接触')
+    '静岡県事例と接触', '兵庫県事例と接触', '栃木県事例と接触', '静岡県事例の濃厚接触者')
 
 class Case:
     def __init__(self, age, city, node_name, note, date, description, connected_nodes):
@@ -127,20 +127,16 @@ class Case:
             return False
 
     def has_foreign_route(self):
+        foreign_tuple = ('11月10日に南アフリカ共和国から入国', '11月21日にパキスタンから帰国',
+                         '11月27日アメリカから帰国', '12月3日ポルトガルから帰国',
+                         '12月6日にロシアより入国', '12月1日海外から入国',
+                         '航空機近席に感染者あり', 'フィリピン', 'インドネシア', 'バーレーン', 'メキシコ')
+
         if self.note.find('帰国') >= 0 or \
            self.description.find('中国籍') >= 0 or \
            self.description.find('帰国') >= 0 or \
            self.description.find('10月17日にイタリアから入国') >= 0 or \
-           self.note.find('11月10日に南アフリカ共和国から入国') >= 0 or \
-           self.note.find('11月21日にパキスタンから帰国') >= 0 or \
-           self.note.find('11月27日アメリカから帰国') >= 0 or \
-           self.note.find('12月3日ポルトガルから帰国') >= 0 or \
-           self.note.find('12月6日にロシアより入国') >= 0 or \
-           self.note.find('12月1日海外から入国') >= 0 or \
-           self.note.find('航空機近席に感染者あり') >= 0 or \
-           self.note.find('フィリピン') >= 0 or \
-           self.note.find('インドネシア') >= 0 or \
-           self.note.find('バーレーン') >= 0 or \
+           len([x for x in foreign_tuple if self.note.find(x) >= 0]) > 0 or \
            (self.note.find('渡航歴') >= 0 and self.note.find('家族がパキスタン渡航歴あり') < 0):
             return True
         else:
@@ -289,10 +285,10 @@ class CaseGraph:
                  ('gifu1256', '岐阜協立大\nサッカー部（飲食）'), ('gifu1243', '不破郡垂井町\n不破高校'), ('gifu1257', '飲食店会食\nから親族へ'),
                  ('gifu956', '揖斐郡池田町\nイビデン樹脂'), ('gifu1662', '海津市\n学童保育'), ('gifu1253', '高山市\n久美愛厚生病院'),
                  ('gifu1152', '親族'), ('gifu2440', '居酒屋・カラオケ'),
-                 ('gifu2491', '各務原市\n高齢者福祉施設'), ('gifu2447', '会食'),
+                 ('gifu2491', '各務原市\nデイサービスセンター\n岐阜市\n県総合医療センター'), ('gifu2447', '会食'),
                  ('gifu2250', '岐阜市\n高齢者福祉施設'), ('gifu2593', '関市\n事業所'),
                  ('gifu2356', '会食'), ('gifu2604', '会食'), ('gifu2595', '親族会食'), ('gifu2655', '海津市\n事業所'),
-                 ('gifuX', ''), ('gifuX', ''), ('gifuX', ''))
+                 ('gifu2739', '家族'), ('gifu2740', '職場'), ('gifuX', ''))
         notes += (('aichi6365', '岡崎市\n高齢者施設'),
                   ('aichi7301', '名古屋市\n高齢者施設'),
                   ('aichi8406', '名古屋市\n地域活動グループなど'),
@@ -313,7 +309,7 @@ class CaseGraph:
                   ('aichi12495', '医療・高齢者施設\n（3O?）'), # ? 44 cases as of Jan 5, but official says 33 (Jan 5 and 8)
                   ('aichiX', '医療・高齢者施設\n（3P?）'),  # 23 as of Jan 5 and 8
                   ('aichi12615', '医療・高齢者施設\n（3Q）'), # 23 as of Jan 5 (碧南?)
-                  ('aichi13504', '医療・高齢者施設\n（3R）'), # confirmed
+                  ('aichi13504', '名古屋市\n障害者施設\n（3R）'), # confirmed
                   ('aichi13623', '碧南市\n看護ステーション（3Q?）'), # 17 cases as of Jan 5
                   ('aichi12834', '船舶\n（3S）'),  # confirmed
                   ('aichi14892', '高齢者施設\n（3T）'), # confirmed
@@ -321,20 +317,22 @@ class CaseGraph:
                   ('aichi14725', '弥富市\n海南病院\n（3V）'), # confirmed
                   ('aichi14370', '職場（3W）'), # confirmed (count 18 direct cases only as of Jan 5)
                   ('aichi13174', '豊橋市\n医療施設'), # 23 as of Jan 5
-                  ('aichiX', '医療・高齢者施設\n（3X）'), # 20 as of Jan 5
+                  ('aichiX', '医療・高齢者施設等\n（3X）'), # 20 as of Jan 5
                   ('aichi14408', '名古屋市\n名古屋記念病院\n（3Y）'), # confirmed
                   ('aichi14683', '瀬戸市\nあさい病院\n（3Z）'), # confirmed
                   ('aichi13890', '豊橋市\n高齢者施設\n（4A）'), # confirmed
-                  ('aichi14219', '医療・高齢者施設\n（4B）'), # confirmed
-                  ('aichi15147', '医療・高齢者施設\n（4C）'), # confirmed
+                  ('aichi14219', '医療・高齢者施設等\n（4B）'), # confirmed
+                  ('aichi15147', '医療・高齢者施設等\n（4C）'), # confirmed
                   ('aichi16036', '職場（4D）'), ('aichi16039', '職場（4D）'),
                   ('aichi15111', '福祉施設\n（4E）'), # confirmed
                   ('aichi16822', '名古屋市\n東部医療センター\n（4F）'), # confirmed
-                  ('aichi14284', '医療・高齢者施設\n（4G）'), # confirmed
+                  ('aichi14284', '医療・高齢者施設等\n（4G）'), # confirmed
                   ('aichi14219', '高齢者施設\n（4H）'), # confirmed
                   ('aichiX', '医療・高齢者施設\n（4I）'), # 15955? 25 as of Jan 8
                   ('aichi18323', '会食\n（4J）'), # confirmed
-                  ('aichiX', ''), ('aichiX', ''), ('aichiX', ''),
+                  ('aichi18776', 'クラブチーム（4K?）'), # 13 as of Jan 11
+                  ('aichi19047', '医療・高齢者施設等（4L?）'), # 10 as of Jan 11
+                  ('aichi18942', '年末年始親族'),
                   ('aichiX', ''), ('aichiX', ''), ('aichiX', ''))
         for note in notes:
             if source.find(note[0]) >= 0:
@@ -812,7 +810,7 @@ def link_nodes(case_graph):
 
 def main():
     global plotter
-
+    '''
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     plotter = ROOTPlotter(cases)
@@ -828,12 +826,12 @@ def main():
     case_graph_aichi = CaseGraph('Aichi_returning')
     case_graph_aichi.add_only_aichi_returning_cases(cases)
     case_graph_aichi.gv_graph.view()
-
+    '''
     reader = TSVReader()
     cases = reader.make_aichi_cases()
     cases.update(reader.make_gifu_cases())
     case_graph_aichi = CaseGraph('Aichi_cluster')
-    case_graph_aichi.add_only_aichi_cases(cases, 5)
+    case_graph_aichi.add_only_aichi_cases(cases, 10)
     link_nodes(case_graph_aichi)
     case_graph_aichi.gv_graph.view()
     return
@@ -850,7 +848,6 @@ def main():
     case_graph_gifu = CaseGraph('Gifu')
     case_graph_gifu.add_only_gifu_cases(cases, 1)
     case_graph_gifu.gv_graph.view()
-
 
 def before_2020Nov(date):
     return str(date)[:-3] in ('2020-01', '2020-02', '2020-03', '2020-04', '2020-05', '2020-06', '2020-07', '2020-08', '2020-09', '2020-10')
