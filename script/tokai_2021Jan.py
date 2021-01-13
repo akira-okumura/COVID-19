@@ -76,7 +76,8 @@ non_aichi_gifu_contact_tuple = (
     '千葉県事例と接触', '三重県陽性者の濃厚接触者（友人）', '神奈川県の患者の濃厚接触者',
     '和歌山県事例と接触', '群馬県事例と接触', '福岡県事例と接触', '静岡県発表2900', '和歌山県事例と接触',
     '静岡県発表2979', '横浜市陽性者の接触者', '福岡県陽性者の接触者（親族）', '兵庫県陽性者の濃厚接触者',
-    '静岡県事例と接触', '兵庫県事例と接触', '栃木県事例と接触', '静岡県事例の濃厚接触者')
+    '静岡県事例と接触', '兵庫県事例と接触', '栃木県事例と接触', '静岡県事例の濃厚接触者',
+    '福岡市発表6116', '佐世保市157,158')
 
 class Case:
     def __init__(self, age, city, node_name, note, date, description, connected_nodes):
@@ -181,6 +182,34 @@ class CaseGraph:
             
             # check if the cluster has any non Aichi, Gifu, Mie cases
             if len([x for x in node_names if (cases[x].city not in ('愛知県', '岐阜県', '三重県') and cases[x].city[-1] in ('都', '道', '府', '県'))]) == 0:
+                for node_name in node_names:
+                    cases.pop(node_name)
+
+            # Remove remaining large clusters
+            if len([x for x in node_names if x in ('gifu1603', 'aichi13326', 'aichi13504', 'aichi12324')]) > 0:
+                for node_name in node_names:
+                    cases.pop(node_name)
+
+        self.make_gv_date_rank_ditc(cases, 'aichi')
+        self.make_gv_caption()
+        self.make_gv_date_nodes()
+        self.make_gv_edges(cases)
+        self.make_gv_notes()
+
+    def add_only_aichi_20s_cases(self, cases):
+        for case in cases.values():
+            for node in case.connected_nodes:
+                cases[node].is_connected = True
+
+        self.make_nx_nodes(cases)
+
+        # make clusters from the NetworkX graph
+        for comp in nx.connected_components(self.nx_graph):
+            subgraph = self.nx_graph.subgraph(comp).copy()
+            node_names = subgraph.nodes
+            
+            # check if the cluster has any non Aichi, Gifu, Mie cases
+            if len([x for x in node_names if cases[x].age == 20]) == 0:
                 for node_name in node_names:
                     cases.pop(node_name)
 
@@ -330,7 +359,7 @@ class CaseGraph:
                   ('aichi14219', '高齢者施設\n（4H）'), # confirmed
                   ('aichiX', '医療・高齢者施設\n（4I）'), # 15955? 25 as of Jan 8
                   ('aichi18323', '会食\n（4J）'), # confirmed
-                  ('aichi18776', 'クラブチーム（4K?）'), # 13 as of Jan 11
+                  ('aichi18776', 'トヨタ自動車ヴェルブリッツ\nラグビーチーム\n（4K）'), # 13 as of Jan 11
                   ('aichi19047', '医療・高齢者施設等（4L?）'), # 10 as of Jan 11
                   ('aichi18942', '年末年始親族'),
                   ('aichiX', ''), ('aichiX', ''), ('aichiX', ''))
@@ -810,23 +839,32 @@ def link_nodes(case_graph):
 
 def main():
     global plotter
-    '''
+
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     plotter = ROOTPlotter(cases)
 
+    '''
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     case_graph_aichi = CaseGraph('Aichi_kids')
     case_graph_aichi.add_only_aichi_kids_cases(cases)
     case_graph_aichi.gv_graph.view()
-
+    '''
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     case_graph_aichi = CaseGraph('Aichi_returning')
     case_graph_aichi.add_only_aichi_returning_cases(cases)
     case_graph_aichi.gv_graph.view()
+
     '''
+    reader = TSVReader()
+    cases = reader.make_aichi_gifu_cases()
+    case_graph_aichi = CaseGraph('Aichi_20s')
+    case_graph_aichi.add_only_aichi_20s_cases(cases)
+    case_graph_aichi.gv_graph.view()
+    '''
+
     reader = TSVReader()
     cases = reader.make_aichi_cases()
     cases.update(reader.make_gifu_cases())
@@ -834,7 +872,7 @@ def main():
     case_graph_aichi.add_only_aichi_cases(cases, 10)
     link_nodes(case_graph_aichi)
     case_graph_aichi.gv_graph.view()
-    return
+
     reader = TSVReader()
     cases = reader.make_aichi_cases()
     cases.update(reader.make_gifu_cases())

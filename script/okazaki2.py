@@ -13,7 +13,7 @@ f_all = sys.stdin.read().replace('\r', '\n')
 for word in ('患者例', '(市内在住例)', '年代性別職業症状等発症日判明日備考'):
     f_all = f_all.replace(word + '\n', '')
 
-f_all = re.sub('(\d+?)\n（\d+?）\n', '\\1\t', f_all)
+f_all = re.sub('(\d+)\n（\d+）\n', '\\1\t', f_all)
 f_all = re.sub('\n歳代\n([男女])', '\t\\1\t岡崎市\t\t', f_all)
 f_all = re.sub('(軽症|中等症|重症)', '\t\\1\t', f_all)
 f_all = re.sub('無症状', '\tなし\t', f_all)
@@ -21,7 +21,7 @@ f_all = re.sub('無症状', '\tなし\t', f_all)
 lines = f_all.split('\n')
 
 for line in lines:
-    line = re.sub('(なし|軽症|中等症|重症)\t(\d+?/\d+?) (\d+?/\d+?)', '\\2\t\\3\t\\1\t', line)
-    line = re.sub('なし\t－ (\d+?/\d+?)', '－\t\\1\tなし\t', line)
+    line = re.sub('(なし|軽症|中等症|重症)\t(\d+/\d+) (\d+/\d+)', '\\2\t\\3\t\\1\t', line)
+    line = re.sub('なし\t－ (\d+/\d+)', '－\t\\1\tなし\t', line)
     print(line)
 
