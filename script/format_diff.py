@@ -9,6 +9,7 @@ lines = sys.stdin.readlines()
 
 for line in lines:
     line = line.replace('名古屋市\t[-あり-]\t\t名古屋市発表', '名古屋市\t\t名古屋市発表')
+    line = line.replace('[-知人が陽性者-]\t{+陽性者と接触+}', '知人が陽性者')
     line = re.sub('名古屋市\t\[-あり-\]\t\{\+No.(\d+?)と接触\+\}\t名古屋市発表', '名古屋市\tNo.\\1と接触\t名古屋市発表', line)
     line = re.sub('\t\[-あり\t本県発表(\d+?)-\]\t\{\+No.(\d+?)と接触\t本県発表(\d+?)\+\}', '\tNo.\\2と接触\t本県発表\\1', line)
     line = re.sub('\t\t\[-本県発表(\d+?)-\]\t\t\{\+本県発表(\d+?)\+\}', '\t\t本県発表\\1', line)

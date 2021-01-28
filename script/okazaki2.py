@@ -14,6 +14,7 @@ for word in ('患者例', '(市内在住例)', '年代性別職業症状等発�
     f_all = f_all.replace(word + '\n', '')
 
 f_all = re.sub('(\d+)\n（\d+）\n', '\\1\t', f_all)
+f_all = re.sub('(\d+)\n\(\d+\)\n', '\\1\t', f_all)
 f_all = re.sub('\n歳代\n([男女])', '\t\\1\t岡崎市\t\t', f_all)
 f_all = re.sub('(軽症|中等症|重症)', '\t\\1\t', f_all)
 f_all = re.sub('無症状', '\tなし\t', f_all)

@@ -36,7 +36,8 @@ aichi_gifu_contact_tuple = (
     '岐阜県事例と接触', '豊田市事例と接触', '名古屋市事例の濃厚接触者', '岡崎市事例と接触',
     '陽性者が発生した市内事業所の関係者',
     '陽性者が発生した市内寮の関係者',
-    '本日発表のクラスター発生施設の職員', '本日発表のクラスター発生施設の利用者')
+    '1/22発表のクラスター発生施設の職員', '1/22発表のクラスター発生施設の利用者',
+    '陽性者が発生した市内飲食店Aの関係者', '陽性者が発生した市内飲食店Bの関係者')
 
 non_aichi_gifu_contact_tuple = (
     '新宿区の劇場利用', '新宿区内の劇場を利用', 'さいたま市発表の陽性患者の家族',
@@ -86,7 +87,8 @@ non_aichi_gifu_contact_tuple = (
     '沖縄県陽性者の接触者（友人）', '和歌山県陽性者の濃厚接触者（友人）', '静岡県陽性者の接触者',
     '三重県陽性者の濃厚接触者（親族）', '沖縄県陽性者の濃厚接触者（友人）', '県外77の濃厚接触者（家族）',
     '県外78の濃厚接触者（家族）', '県外73の濃厚接触者（家族）', '県外74の濃厚接触者（友人）',
-    '県外69の濃厚接触者（家族）', '東京都陽性者の接触者')
+    '県外69の濃厚接触者（家族）', '東京都陽性者の接触者',
+    '県外91の接触者', '茨城県陽性者の接触者')
 
 # 再感染
 repos_dict = {'aichi19770': 'aichi15172',
@@ -389,6 +391,9 @@ class CaseGraph:
                  ('gifu3305', '岐阜市\n清流病院'),
                  ('gifu3297', '美濃市\nデイサービス'),
                  ('gifu3502', '家族'),
+                 ('gifu3763', '可児市\nデイサービス'),
+                 ('gifu3828', '可児市\nルグラン（キャバクラ）'),
+                 ('gifu3805', '岐阜市\n老人ホーム'),
                  ('gifuX', ''))
         notes += (('aichi6365', '岡崎市\n高齢者施設'),
                   ('aichi7301', '名古屋市\n高齢者施設'),
@@ -408,7 +413,7 @@ class CaseGraph:
                   ('aichi13326', '春日井市民病院\n（3M）'), # confirmed
                   ('aichi13541', 'クラブチーム\n（3N）'), # confirmed
                   ('aichi12495', '医療・高齢者施設\n（3O?）'), # ? 44 cases as of Jan 5, but official says 33 (Jan 5 and 8)
-                  ('aichiX', '医療・高齢者施設\n（3P?）'),  # 23 as of Jan 5 and 8
+                  ('aichi13174', '豊橋市\n医療施設（3P）'), # confirmed
                   ('aichi12615', '医療・高齢者施設\n（3Q）'), # 23 as of Jan 5 (碧南?)
                   ('aichi13504', '名古屋市\n障碍者施設\n（3R）'), # confirmed
                   ('aichi13623', '碧南市\n看護ステーション（3Q?）'), # 17 cases as of Jan 5
@@ -417,42 +422,50 @@ class CaseGraph:
                   ('aichi13191', '医療・高齢者施設\n（3U）'), # confirmed
                   ('aichi14725', '弥富市\n海南病院\n（3V）'), # confirmed
                   ('aichi14370', '職場（3W）'), # confirmed (count 18 direct cases only as of Jan 5)
-                  ('aichi13174', '豊橋市\n医療施設'), # 23 as of Jan 5
                   ('aichiX', '医療・高齢者施設等\n（3X）'), # 20 as of Jan 5
                   ('aichi14408', '名古屋市\n名古屋記念病院\n（3Y）'), # confirmed
                   ('aichi14683', '瀬戸市\nあさい病院\n（3Z）'), # confirmed
                   ('aichi13890', '豊橋市\n高齢者施設\n（4A）'), # confirmed
-                  ('aichi14219', '医療・高齢者施設等\n（4B）'), # confirmed
-                  ('aichi15147', '医療・高齢者施設等\n（4C）'), # confirmed
-                  ('aichi16036', '職場（4D）'), ('aichi16039', '職場（4D）'),
-                  ('aichi15111', '福祉施設\n（4E）'), # confirmed
-                  ('aichi16822', '名古屋市\n東部医療センター\n（4F）'), # confirmed
-                  ('aichi14284', '医療・高齢者施設等\n（4G）'), # confirmed
-                  ('aichi14219', '高齢者施設\n（4H）'), # confirmed
+                  ('aichi14219', '名古屋市\n高齢者施設\n（4B）'), # confirmed (asahi.com Jan 3)
+                  ('aichi15147', '名古屋市\n高齢者施設\n（4C）'), # confirmed (asahi.com Jan 3)
+                  ('aichi16036', '名古屋市\n職場（4D）'), ('aichi16039', '名古屋市\n職場（4D）'), #  (asahi.com Jan 3)
+                  ('aichi15111', '名古屋市\n福祉施設\n（4E）'), # confirmed (asahi.com Jan 3)
+                  ('aichi16822', '名古屋市\n東部医療センター\n（4F）'), # confirmed (asahi.com Jan 3)
+                  ('aichi14284', '名古屋市\n高齢者施設\n（4G）'), # confirmed (asahi.com Jan 3)
+                  ('aichi15662', '高齢者施設\n（4H）'), # confirmed
                   ('aichi15955', '医療・高齢者施設\n（4I）'), # 25 as of Jan 8, 26 as of Jan 12
                   ('aichi18323', '会食\n（4J）'), # confirmed
                   ('aichi18776', 'トヨタ自動車ヴェルブリッツ\nラグビーチーム\n（4K）'), # 13 as of Jan 11
                   ('aichi19047', '医療・高齢者施設等（4L）'), # confirmed
                   ('aichi18942', '年末年始親族'),
                   ('aichi19003', '愛知県警警察学校（4M）'),
-                  ('aichiX', '医療・高齢者施設\n（4N）'), # 12 as of Jan 17
-                  ('aichiX', 'クラブチーム（4O）'), # 10 as of Jan 17
+                  ('aichiX', '名古屋市\n高齢者施設\n（4N）'), # 12 as of Jan 17
+                  ('aichi18855', '刈谷市クラブチーム?\n（4O?）'), # 10 as of Jan 17
                   ('aichi18959', '豊橋市\n東部環境センター\n（4P）'), # confirmed
                   ('aichi20230', '豊田市\n医療機関（4Q）'), # confirmed
-                  ('aichiX', '飲食店（4R）'), # 9 as of Jan 23
+                  ('aichi19271', '飲食店?（4R?）'), # 9 as of Jan 23
                   ('aichi21152', '大府市\n保育施設'),
                   ('aichi21557', '医療・高齢者施設等（4S）'), # confirmed
                   ('aichi21342', '大府市\n成人式二次会（4T）'), # confirmed
                   ('aichi21601', '名古屋市\n職場（4U）'), # confirmed
                   ('aichi21837', '岡崎市\n高齢者施設（4V）'), # confirmed
-                  ('aichiX', '医療・高齢者施設等（4W）'), # 11 as of Jan 23
-                  ('aichi22861', '医療・高齢者施設等（4X）'), # confirmed
+                  ('aichi21065', '名古屋市\n医療・高齢者施設等（4W）'), # confirmed
+                  ('aichi22861', '名古屋市\n医療・高齢者施設等（4X）'), # confirmed 12
                   ('aichi21591', '豊橋市\n寮（4Y）'), # confirmed
                   ('aichi21617', '名古屋市\n保育園（4Z）'), # confirmed
-                  ('aichi18725', '医療・高齢者施設等（5A?）'), # 18 as of Jan 23, 0 Jan 22
-                  ('aichi21620', '医療・高齢者施設等（5B?）'), # 11 as of Jan 23, 0 Jan 22
+                  ('aichi18725', '医療・高齢者施設等（5A）'), # confirmed
+                  ('aichi21620', '医療・高齢者施設等（5B）'), # confirmed
+                  ('aichi21869', '医療・高齢者施設等（5C）'), # confirmed
+                  ('aichi20961', '豊橋市\n接待を伴う飲食店（5D）'), # confirmed
+                  ('aichi22085', '豊橋市\n接待を伴う飲食店'),
+                  ('aichi22680', '名古屋市\n医療機関（5E）'), # confirmed but 2 persons are missing
+                  ('aichiX', ''),
+                  ('aichiX', ''),
+                  ('aichiX', ''),
+                  ('aichiX', ''),
                   ('aichiX', ''),
                   ('aichiX', ''))
+
         for note in notes:
             if source.find(note[0]) >= 0:
                 self.gv_graph.node('%s_caption' % note[0], label=note[1], shape='plaintext', fixedsize='1', width='0.5', height='0.5', fontsize='12')
@@ -666,9 +679,19 @@ class TSVReader():
                 connected_nodes.append('aichi18959')
             elif note.find('陽性者が発生した市内寮の関係者') >= 0:
                 connected_nodes.append('aichi21591') # Toyohashi 705
-            elif note.find('本日発表のクラスター発生施設の') >= 0:
+            elif note.find('1/22発表のクラスター発生施設の') >= 0:
                 connected_nodes.append('aichi21837') # Okazaki
                 # where is Okazaki 1/20 cluster
+            elif note.find('陽性者が発生した市内飲食店Aの関係者') >= 0:
+                connected_nodes.append('aichi20961') # Toyohashi
+                connected_nodes.append('aichi21842')
+                connected_nodes.append('aichi22097')
+                connected_nodes.append('aichi22600')
+            elif note.find('陽性者が発生した市内飲食店Bの関係者') >= 0:
+                connected_nodes.append('aichi22085') # Toyohashi
+                connected_nodes.append('aichi22580')
+                connected_nodes.append('aichi22584')
+                connected_nodes.append('aichi22595')
             elif node_name in repos_dict.keys():
                 # 再感染
                 connected_nodes.append(repos_dict[node_name])
@@ -816,13 +839,11 @@ class ROOTPlotter:
         # make 7-day average
         self.stack_ave7 = ROOT.THStack('stack_ave7', '')
         self.h_ave7 = []
-        self.g_ave7 = []
         for hi, h in enumerate((self.h_aichi_wo_nagoya, self.h_nagoya, self.h_gifu)):
             self.h_ave7.append(h.Clone('%s_ave7' % h.GetName()))
             self.h_ave7[-1].Reset()
-            self.h_ave7[-1].SetFillStyle(0)
-            self.h_ave7[-1].SetFillColor(0)
-            self.h_ave7[-1].SetLineColor(h.GetFillColor())
+            self.h_ave7[-1].SetLineColor((2, 5, 4)[hi])
+            self.h_ave7[-1].SetLineWidth(2)
             for i in range(1, max_bin + 1):
                 for j in range(7):
                     b = i + j
@@ -832,17 +853,6 @@ class ROOTPlotter:
 
             self.h_ave7[-1].Scale(1/7.)
             self.stack_ave7.Add(self.h_ave7[-1])
-
-            self.g_ave7.append(ROOT.TGraph())
-            for i in range(1, max_bin + 1):
-                counts = 0
-                for h in self.h_ave7:
-                    counts += h.GetBinContent(i)
-
-                self.g_ave7[-1].SetPoint(i - 1, self.h_nagoya.GetBinCenter(i), counts)
-
-            self.g_ave7[-1].SetLineColor((2, 5, 4)[hi])
-            self.g_ave7[-1].SetLineWidth(2)
 
         n1 = int(ROOT.h_aichi_wo_nagoya.GetBinContent(max_bin) + ROOT.h_nagoya.GetBinContent(max_bin))
         n2 = int(ROOT.h_nagoya.GetBinContent(max_bin))
@@ -873,9 +883,7 @@ class ROOTPlotter:
             self.stack.Add(h)
         self.stack.Draw()
 
-        #self.stack_ave7.Draw('hist c same')
-        for g in self.g_ave7:
-            g.Draw('c same')
+        self.stack_ave7.Draw('hist c same noclear')
         self.can[1].Modified()
         self.stack.GetXaxis().SetTimeDisplay(1)
         self.stack.GetXaxis().SetTimeFormat('%b %d')
@@ -885,11 +893,11 @@ class ROOTPlotter:
 
         self.leg = ROOT.TLegend(0.25, 0.7, 0.75, 0.85)
         self.leg.AddEntry(self.h_gifu, 'Gifu', 'f')
-        self.leg.AddEntry(self.g_ave7[2], 'Seven-day Average', 'l')
+        self.leg.AddEntry(self.h_ave7[2], 'Seven-day Average', 'l')
         self.leg.AddEntry(self.h_nagoya, 'Aichi (Nagoya)', 'f')
-        self.leg.AddEntry(self.g_ave7[1], '', 'l')
+        self.leg.AddEntry(self.h_ave7[1], '', 'l')
         self.leg.AddEntry(self.h_aichi_wo_nagoya, 'Aichi (Other)', 'f')
-        self.leg.AddEntry(self.g_ave7[0], '', 'l')
+        self.leg.AddEntry(self.h_ave7[0], '', 'l')
         self.leg.SetNColumns(2)
         self.leg.SetFillStyle(0)
         self.leg.Draw()
@@ -928,6 +936,7 @@ def main():
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     plotter = ROOTPlotter(cases)
+
     '''
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
@@ -946,7 +955,7 @@ def main():
     case_graph_aichi = CaseGraph('Aichi_20s')
     case_graph_aichi.add_only_aichi_20s_cases(cases)
     case_graph_aichi.gv_graph.view()
-
+    '''
     reader = TSVReader()
     cases = reader.make_aichi_cases()
     cases.update(reader.make_gifu_cases())
@@ -968,7 +977,7 @@ def main():
     case_graph_gifu = CaseGraph('Gifu')
     case_graph_gifu.add_only_gifu_cases(cases, 1)
     case_graph_gifu.gv_graph.view()
-    '''
+
 def before_2020Nov(date):
     return str(date)[:-3] in ('2020-01', '2020-02', '2020-03', '2020-04', '2020-05', '2020-06', '2020-07', '2020-08', '2020-09', '2020-10')
 

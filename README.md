@@ -20,8 +20,8 @@ https://github.com/akira-okumura/COVID-19/raw/master/PDF/Aichi2021-01-24_cluster
 - 2021-01-08（愛知、10 歳未満の子供を含むクラスターのみを表示）\
 https://github.com/akira-okumura/COVID-19/raw/master/PDF/Aichi2021-01-08_kids.pdf
 
-- 2021-01-24（岐阜）\
-https://github.com/akira-okumura/COVID-19/raw/master/PDF/Gifu2021-01-24.pdf
+- 2021-01-28（岐阜）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Gifu2021-01-28.pdf
 
 
 ### 2020-10-01 以降（第 3 波）のみ表示した PDF

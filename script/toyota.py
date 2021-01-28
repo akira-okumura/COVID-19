@@ -23,5 +23,6 @@ for line in lines:
     line = re.sub('現在の症状：(.*)', '\\1\t', line)
     line = re.sub('本市(\d*)例目患者', '豊田市発表\\1例目', line)
     line = re.sub('愛知県発表(\d*)例目患者', '愛知県内\\1例目', line)
+    line = re.sub('\t(軽症|中等症|重症)（.*）\t', '\t\\1\t', line)
 
     print(line, end='')
