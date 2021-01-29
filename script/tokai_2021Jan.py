@@ -37,7 +37,8 @@ aichi_gifu_contact_tuple = (
     '陽性者が発生した市内事業所の関係者',
     '陽性者が発生した市内寮の関係者',
     '1/22発表のクラスター発生施設の職員', '1/22発表のクラスター発生施設の利用者',
-    '陽性者が発生した市内飲食店Aの関係者', '陽性者が発生した市内飲食店Bの関係者')
+    '陽性者が発生した市内飲食店Aの関係者', '陽性者が発生した市内飲食店Bの関係者',
+    '1/28発表の集団感染発生施設の関係者')
 
 non_aichi_gifu_contact_tuple = (
     '新宿区の劇場利用', '新宿区内の劇場を利用', 'さいたま市発表の陽性患者の家族',
@@ -394,6 +395,10 @@ class CaseGraph:
                  ('gifu3763', '可児市\nデイサービス'),
                  ('gifu3828', '可児市\nルグラン（キャバクラ）'),
                  ('gifu3805', '岐阜市\n老人ホーム'),
+                 ('gifu3895', '会食・職場'),
+                 ('gifuX', ''),
+                 ('gifuX', ''),
+                 ('gifuX', ''),
                  ('gifuX', ''))
         notes += (('aichi6365', '岡崎市\n高齢者施設'),
                   ('aichi7301', '名古屋市\n高齢者施設'),
@@ -445,7 +450,7 @@ class CaseGraph:
                   ('aichi20230', '豊田市\n医療機関（4Q）'), # confirmed
                   ('aichi19271', '飲食店?（4R?）'), # 9 as of Jan 23
                   ('aichi21152', '大府市\n保育施設'),
-                  ('aichi21557', '医療・高齢者施設等（4S）'), # confirmed
+                  ('aichi21557', '蒲郡市\n高齢者施設（4S）'), # confirmed
                   ('aichi21342', '大府市\n成人式二次会（4T）'), # confirmed
                   ('aichi21601', '名古屋市\n職場（4U）'), # confirmed
                   ('aichi21837', '岡崎市\n高齢者施設（4V）'), # confirmed
@@ -459,9 +464,9 @@ class CaseGraph:
                   ('aichi20961', '豊橋市\n接待を伴う飲食店（5D）'), # confirmed
                   ('aichi22085', '豊橋市\n接待を伴う飲食店'),
                   ('aichi22680', '名古屋市\n医療機関（5E）'), # confirmed but 2 persons are missing
-                  ('aichiX', ''),
-                  ('aichiX', ''),
-                  ('aichiX', ''),
+                  ('aichiX', '（5F）'), # 16 as of Jan 28
+                  ('aichi20933', '豊田市\n介護施設（5G?）'), # 10 as of Jan 28, 11 on Tokai News, 7 in TSV
+                  ('aichi22072', '豊橋市\n高齢者施設（5H）'), # confirmed
                   ('aichiX', ''),
                   ('aichiX', ''),
                   ('aichiX', ''))
@@ -671,6 +676,11 @@ class TSVReader():
             elif note.find('陽性者が発生した市内医療機関の関係者') >= 0:
                 # Toyohashi
                 connected_nodes.append('aichi13174')
+            elif (note.find('陽性者が発生した市内高齢者施設の関係者') >= 0 and pref == 'aichi' and \
+                 (idx in range(23519, 23522) or idx in range(23546, 23555))) or \
+                 idx in (22922, 23060, 23061, 23274, 23275, 23295, 23296):
+                # Toyohashi
+                connected_nodes.append('aichi22072')
             elif note.find('陽性者が発生した市内高齢者施設の関係者') >= 0:
                 # Toyohashi
                 connected_nodes.append('aichi13890')
@@ -682,6 +692,8 @@ class TSVReader():
             elif note.find('1/22発表のクラスター発生施設の') >= 0:
                 connected_nodes.append('aichi21837') # Okazaki
                 # where is Okazaki 1/20 cluster
+            elif note.find('1/28発表の集団感染発生施設の関係者') >= 0:
+                connected_nodes.append('aichi20933') # Toyota
             elif note.find('陽性者が発生した市内飲食店Aの関係者') >= 0:
                 connected_nodes.append('aichi20961') # Toyohashi
                 connected_nodes.append('aichi21842')
@@ -937,13 +949,13 @@ def main():
     cases = reader.make_aichi_gifu_cases()
     plotter = ROOTPlotter(cases)
 
-    '''
+
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     case_graph_aichi = CaseGraph('Aichi_kids')
     case_graph_aichi.add_only_aichi_kids_cases(cases)
     case_graph_aichi.gv_graph.view()
-
+    '''
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     case_graph_aichi = CaseGraph('Aichi_returning')
