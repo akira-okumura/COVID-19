@@ -38,7 +38,7 @@ aichi_gifu_contact_tuple = (
     '陽性者が発生した市内寮の関係者',
     '1/22発表のクラスター発生施設の職員', '1/22発表のクラスター発生施設の利用者',
     '陽性者が発生した市内飲食店Aの関係者', '陽性者が発生した市内飲食店Bの関係者',
-    '1/28発表の集団感染発生施設の関係者')
+    '1/28発表の集団感染発生施設の関係者', '1月19日発表の集団感染発生施設の関係者')
 
 non_aichi_gifu_contact_tuple = (
     '新宿区の劇場利用', '新宿区内の劇場を利用', 'さいたま市発表の陽性患者の家族',
@@ -463,9 +463,9 @@ class CaseGraph:
                   ('aichi21869', '医療・高齢者施設等（5C）'), # confirmed
                   ('aichi20961', '豊橋市\n接待を伴う飲食店（5D）'), # confirmed
                   ('aichi22085', '豊橋市\n接待を伴う飲食店'),
-                  ('aichi22680', '名古屋市\n医療機関（5E）'), # confirmed but 2 persons are missing
-                  ('aichiX', '（5F）'), # 16 as of Jan 28
-                  ('aichi20933', '豊田市\n介護施設（5G?）'), # 10 as of Jan 28, 11 on Tokai News, 7 in TSV
+                  ('aichi22680', '名古屋市\n医療機関（5E）'), # confirmed
+                  ('aichi22401', '名古屋市\n医療機関（5F）'), # confirmed
+                  ('aichi20933', '豊田市\n介護施設（5G）'), # confirmed
                   ('aichi22072', '豊橋市\n高齢者施設（5H）'), # confirmed
                   ('aichiX', ''),
                   ('aichiX', ''),
@@ -677,7 +677,7 @@ class TSVReader():
                 # Toyohashi
                 connected_nodes.append('aichi13174')
             elif (note.find('陽性者が発生した市内高齢者施設の関係者') >= 0 and pref == 'aichi' and \
-                 (idx in range(23519, 23522) or idx in range(23546, 23555))) or \
+                 (idx in range(23519, 23522) or idx in range(23546, 23555) or idx in range(23734, 23738) or idx == 23741)) or \
                  idx in (22922, 23060, 23061, 23274, 23275, 23295, 23296):
                 # Toyohashi
                 connected_nodes.append('aichi22072')
@@ -704,6 +704,8 @@ class TSVReader():
                 connected_nodes.append('aichi22580')
                 connected_nodes.append('aichi22584')
                 connected_nodes.append('aichi22595')
+            elif note.find('1月19日発表の集団感染発生施設の関係者') >= 0:
+                connected_nodes.append('aichi20230') # Toyota 867
             elif node_name in repos_dict.keys():
                 # 再感染
                 connected_nodes.append(repos_dict[node_name])
@@ -955,13 +957,13 @@ def main():
     case_graph_aichi = CaseGraph('Aichi_kids')
     case_graph_aichi.add_only_aichi_kids_cases(cases)
     case_graph_aichi.gv_graph.view()
-    '''
+
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     case_graph_aichi = CaseGraph('Aichi_returning')
     case_graph_aichi.add_only_aichi_returning_cases(cases)
     case_graph_aichi.gv_graph.view()
-
+    '''
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     case_graph_aichi = CaseGraph('Aichi_20s')
@@ -975,7 +977,7 @@ def main():
     case_graph_aichi.add_only_aichi_cases(cases, 10)
     link_nodes(case_graph_aichi)
     case_graph_aichi.gv_graph.view()
-    '''
+
     reader = TSVReader()
     cases = reader.make_aichi_cases()
     cases.update(reader.make_gifu_cases())
@@ -983,7 +985,7 @@ def main():
     case_graph_aichi.add_only_aichi_cases(cases, 1)
     link_nodes(case_graph_aichi)
     case_graph_aichi.gv_graph.view()
-    '''
+
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     case_graph_gifu = CaseGraph('Gifu')
