@@ -18,6 +18,9 @@ f_all = re.sub('(\d+)\n\(\d+\)\n', '\\1\t', f_all)
 f_all = re.sub('\n歳代\n([男女])', '\t\\1\t岡崎市\t\t', f_all)
 f_all = re.sub('(軽症|中等症|重症)', '\t\\1\t', f_all)
 f_all = re.sub('無症状', '\tなし\t', f_all)
+f_all = re.sub('\n(\d+)例目の', '岡崎市発表\\1例目の', f_all)
+f_all = re.sub('接触（', '接触者（', f_all)
+f_all = re.sub('愛知県(\d+)例目', '愛知県内\\1例目', f_all)
 
 lines = f_all.split('\n')
 

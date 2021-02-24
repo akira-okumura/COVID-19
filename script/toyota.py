@@ -12,12 +12,14 @@ lines = sys.stdin.readlines()
 
 for line in lines:
     line = line.replace('\n', '')
-    if line.find('職業：') == 0 or line == '':
+    if line.find('職業：') == 0 or line.find('職業 ：') == 0 or line == '':
         continue
 
     line = re.sub('患者（(\d*)例目）概要', '\n\\1\t', line)
     line = re.sub('年齢、性別：(\d*)歳代　(.*)', '\\1\t\\2\t豊田市\t\t\t\t', line)
     line = re.sub('年齢、性別：(\d*)歳代 (.*)', '\\1\t\\2\t豊田市\t\t\t\t', line)
+    line = re.sub('年代、性別：(\d*)歳代 (.*)', '\\1\t\\2\t豊田市\t\t\t\t', line)
+    line = re.sub('年代、性別：(\d*)歳代　(.*)', '\\1\t\\2\t豊田市\t\t\t\t', line)
     line = re.sub('年齢、性別：10歳未満　(.*)', '10歳未満\t\\1\t豊田市\t\t\t\t', line)
     line = re.sub('年齢、性別：10歳未満 (.*)', '10歳未満\t\\1\t豊田市\t\t\t\t', line)
     line = re.sub('現在の症状：(.*)', '\\1\t', line)

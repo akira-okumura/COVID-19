@@ -41,7 +41,7 @@ aichi_gifu_contact_tuple = (
     '1/28発表の集団感染発生施設の関係者', '1月19日発表の集団感染発生施設の関係者',
     '1月28日発表の集団感染発生施設の関係者', 
     '陽性者と同じ施設職員', '陽性者の家族', '陽性者の同僚',
-    '陽性者と同じ施設利用者')
+    '陽性者と同じ施設利用者', '陽性者の友人')
 
 non_aichi_gifu_contact_tuple = (
     '新宿区の劇場利用', '新宿区内の劇場を利用', 'さいたま市発表の陽性患者の家族',
@@ -93,14 +93,17 @@ non_aichi_gifu_contact_tuple = (
     '県外78の濃厚接触者（家族）', '県外73の濃厚接触者（家族）', '県外74の濃厚接触者（友人）',
     '県外69の濃厚接触者（家族）', '東京都陽性者の接触者',
     '県外91の接触者', '茨城県陽性者の接触者', '島根事例の濃厚接触者', '高知県事例と接触',
-    '県外86の濃厚接触者（家族）')
+    '県外86の濃厚接触者（家族）', '県外97の濃厚接触者（友人）', '県外97の濃厚接触者（家族）',
+    '横浜市事例と接触')
 
 # 再感染
 repos_dict = {'aichi19770': 'aichi15172',
               'aichi20403': 'aichi15384',
               'aichi21078': 'aichi13970',
               'aichi21939': 'aichi18198',
-              'aichi24064': 'aichi5599'}
+              'aichi24064': 'aichi5599',
+              'aichi25477': 'aichi22968',
+              'aichi25582': 'aichi21139'}
 
 from enum import Enum
 
@@ -193,7 +196,7 @@ class Case:
                          '11月27日アメリカから帰国', '12月3日ポルトガルから帰国',
                          '12月6日にロシアより入国', '12月1日海外から入国',
                          '航空機近席に感染者あり', 'フィリピン', 'インドネシア', 'バーレーン',
-                         'メキシコ', 'タイ', 'ハンガリー')
+                         'メキシコ', 'タイ', 'ハンガリー', 'アメリカ')
 
         if self.note.find('帰国') >= 0 or \
            self.description.find('中国籍') >= 0 or \
@@ -281,6 +284,29 @@ class CaseGraph:
 
             # Remove remaining large clusters
             if len([x for x in node_names if x in ('gifu1603', 'aichi13326', 'aichi13504', 'aichi12324')]) > 0:
+                for node_name in node_names:
+                    cases.pop(node_name)
+
+        self.make_gv_date_rank_ditc(cases, 'aichi')
+        self.make_gv_caption()
+        self.make_gv_date_nodes()
+        self.make_gv_edges(cases)
+        self.make_gv_notes()
+
+    def add_selected_city_cases(self, cases, city):
+        for case in cases.values():
+            for node in case.connected_nodes:
+                cases[node].is_connected = True
+
+        self.make_nx_nodes(cases)
+
+        # make clusters from the NetworkX graph
+        for comp in nx.connected_components(self.nx_graph):
+            subgraph = self.nx_graph.subgraph(comp).copy()
+            node_names = subgraph.nodes
+            
+            # Remove clusters not containing < 10 year cases
+            if len([x for x in node_names if cases[x].city == city]) == 0:
                 for node_name in node_names:
                     cases.pop(node_name)
 
@@ -405,9 +431,14 @@ class CaseGraph:
                  ('gifu3878', '親族会食'),
                  ('gifu4017', '可児市\nクラブプレミアム（接待）'),
                  ('gifu4130', '大垣市\n職場'),
-                 ('gifuX', ''),
-                 ('gifuX', ''),
-                 ('gifuX', ''),
+                 ('gifu4175', '美濃加茂市\n木沢記念病院'),
+                 ('gifu4158', '親族・職場'),
+                 ('gifu4102', '大垣市\n学習塾'),
+                 ('gifu4227', '海津市\n家族・知人'),
+                 ('gifu4376', '瑞浪市\n市立みどり幼児園'),
+                 ('gifu4413', '各務原市\n語学学校'),
+                 ('gifu4440', '岐阜市\n県立岐南工業高校'),
+                 ('gifu4587', '瑞浪市\n東濃厚生病院'),
                  ('gifuX', ''))
         notes += (('aichi6365', '岡崎市\n高齢者施設'),
                   ('aichi7301', '名古屋市\n高齢者施設'),
@@ -465,14 +496,13 @@ class CaseGraph:
                   ('aichi21837', '岡崎市\n高齢者施設（4V）'), # confirmed
                   ('aichi21065', '名古屋市\n医療・高齢者施設等（4W）'), # confirmed
                   # 4X 1/26 13, 1/27 14, 1/28-29 ?, 1/30 15, 1/31 15
-                  #('aichi20326', '名古屋市\n医療・高齢者施設等（4X）'), # confirmed 12, 22943, 20326, 23389, 17875
                   ('aichi17875', '名古屋市\n医療・高齢者施設等（4X）'), # confirmed by hibcbc data
                   # 4X official(hicbc), 1/28 23559(23533), 1/27 23389(23363), 1/25 22944(22914), 1/24 22860(22834)
                   ('aichi22944', '名古屋市\n医療・高齢者施設等（4X）'), # hicbc says it belongs to 4X
                   ('aichi21591', '豊橋市\n寮（4Y）'), # confirmed
                   ('aichi21617', '名古屋市\n保育園（4Z）'), # confirmed
                   ('aichi18725', '医療・高齢者施設等（5A）'), # confirmed
-                  ('aichi21620', '医療・高齢者施設等（5B）'), # confirmed
+                  ('aichi21620', '名古屋市\n高齢者施設（5B）'), # confirmed
                   ('aichi21869', '医療・高齢者施設等（5C）'), # confirmed
                   ('aichi20961', '豊橋市\n接待を伴う飲食店（5D）'), # confirmed
                   ('aichi22085', '豊橋市\n接待を伴う飲食店'),
@@ -484,6 +514,11 @@ class CaseGraph:
                   ('aichi22861', '名古屋市\n高齢者施設（5J）'), # confirmed
                   ('aichi23759', '名古屋市\n高齢者施設（5K）'), # confirmed
                   ('aichi23356', '名古屋市\n高齢者施設（5L）'), # confirmed
+                  ('aichi23222', '安城市\n高齢者施設（5M）'),
+                  ('aichi24449', '一宮市\n医療機関（5N）'), # confirmed
+                  ('aichi24390', '豊田市\n介護事業所（5O?）'),
+                  ('aichi23181', '春日井市\n高齢者施設（5P）'), # confirmed
+                  ('aichi24902', '刈谷市\n医療機関（5Q）'), # confirmed
                   ('aichiX', ''),
                   ('aichiX', ''))
 
@@ -494,13 +529,13 @@ class CaseGraph:
 
     def make_gv_edges(self, cases):
         for case in cases.values():
-            if before_2020Nov(case.date):
+            if before_2021(case.date):
                 continue
             if len(case.connected_nodes) > 0:
                 node_name = case.node_name
                 for node in case.connected_nodes:
                     source_node_name = cases[node].node_name
-                    if before_2020Nov(cases[node].date):
+                    if before_2021(cases[node].date):
                         continue
                     self.gv_graph.edge(source_node_name, node_name)
 
@@ -553,7 +588,7 @@ class CaseGraph:
         self.date_ranks = {} # stores all cases date by date
         for case in sorted(cases.values(), key=lambda x:x.date):
             date = case.date
-            if before_2020Nov(case.date):
+            if before_2021(case.date):
                 continue
             if date not in self.date_ranks.keys():
                 self.date_ranks[date] = [case,]
@@ -691,8 +726,8 @@ class TSVReader():
                 # Toyohashi
                 connected_nodes.append('aichi13174')
             elif (note.find('陽性者が発生した市内高齢者施設の関係者') >= 0 and pref == 'aichi' and \
-                 (idx in range(23519, 23522) or idx in range(23546, 23555) or idx in range(23734, 23738) or idx == 23741)) or \
-                 idx in (22922, 23060, 23061, 23274, 23275, 23295, 23296):
+                  (idx in range(23519, 23522) or idx in range(23546, 23555) or idx in range(23734, 23738))) or \
+                  idx in (22922, 23060, 23061, 23274, 23275, 23295, 23296, 23741, 24409):
                 # Toyohashi
                 connected_nodes.append('aichi22072')
             elif note.find('陽性者が発生した市内高齢者施設の関係者') >= 0:
@@ -721,10 +756,16 @@ class TSVReader():
                 connected_nodes.append('aichi22595')
             elif note.find('1月19日発表の集団感染発生施設の関係者') >= 0:
                 connected_nodes.append('aichi20230') # Toyota 867
-            elif node_name in ('gifu4147', 'gifu4160', 'gifu4166'):
+            elif node_name in ('gifu4147', 'gifu4160', 'gifu4166', 'gifu4243', 'gifu4528'):
                 connected_nodes.append('gifu3305') # 清流病院
             elif node_name in ('gifu4131', 'gifu4132', 'gifu4166'):
                 connected_nodes.append('gifu4130') # 職場
+            elif node_name in ('gifu4317'):
+                connected_nodes.append('gifu3805') # 岐阜市老人ホーム
+            elif node_name in ('gifu4459', 'gifu4479', 'gifu4480'):
+                connected_nodes.append('gifu4440') # 県立岐南工業高校
+            elif node_name in ('gifu4434', 'gifu4433'):
+                connected_nodes.append('gifu4413') # 語学学校
             elif node_name in repos_dict.keys():
                 # 再感染
                 connected_nodes.append(repos_dict[node_name])
@@ -758,6 +799,9 @@ class TSVReader():
             n = int(n)
             if n < 1613:
                 continue
+
+            if n == 25188:
+                continue # 患者発生届取り下げのため削除
 
             # inpefect. needs to be cleaned up.
             if person.find('10歳未満') >= 0:
@@ -820,7 +864,7 @@ class ROOTPlotter:
         self.can = [ROOT.ExactSizeCanvas('can%d' % i, 'can%d' % i, 800, 600) for i in range(3)]
 
         t0 = ROOT.TDatime(2020, 7, 1, 0, 0, 0).Convert()
-        nweeks = 32
+        nweeks = 40
         ndays = nweeks * 7
         dt = ndays * 3600 * 24
         t1 = t0 + dt
@@ -835,7 +879,7 @@ class ROOTPlotter:
         self.h_age = ROOT.TH2D('h_age', ';Date;Age;Number of Cases / Day / Generation', ndays, t0, t1, 11, 0, 110)
         self.h_age.GetXaxis().SetTimeDisplay(1)
         self.h_age.GetXaxis().SetTimeFormat('%b %d')
-        self.h_age.GetXaxis().SetNdivisions(300 + int(ndays/7/4), 0)
+        self.h_age.GetXaxis().SetNdivisions(200 + int(ndays/7/4), 0)
 
         max_bin = 0
         for case in cases.values():
@@ -924,7 +968,7 @@ class ROOTPlotter:
         self.stack.GetYaxis().SetNdivisions(110, 1)
         self.stack.SetTitle(';Date;Number of Cases / Day')
 
-        self.leg = ROOT.TLegend(0.25, 0.7, 0.75, 0.85)
+        self.leg = ROOT.TLegend(0.15, 0.7, 0.65, 0.85)
         self.leg.AddEntry(self.h_gifu, 'Gifu', 'f')
         self.leg.AddEntry(self.h_ave7[2], 'Seven-day Average', 'l')
         self.leg.AddEntry(self.h_nagoya, 'Aichi (Nagoya)', 'f')
@@ -951,17 +995,22 @@ class ROOTPlotter:
         self.stack2.GetYaxis().SetNdivisions(110, 1)
         self.stack2.SetTitle(';Date;Number of Cases / Day')
 
-        self.leg2 = ROOT.TLegend(0.3, 0.65, 0.8, 0.85)
+        self.leg2 = ROOT.TLegend(0.15, 0.65, 0.65, 0.85)
         self.leg2.AddEntry(self.h_traced, 'Traced Infection Source', 'f')
         self.leg2.AddEntry(self.h_untraced, 'Unknown Source', 'f')
         self.leg2.SetFillStyle(0)
         self.leg2.Draw()
 
-def link_nodes(case_graph):
-    link_cases = lambda a, b : case_graph.gv_graph.edge(a, b, style='invis')
+def link_nodes(case_graph, cases):
+    link_cases = lambda a, b : case_graph.gv_graph.edge(a, b, style='invis') if a in cases and b in cases else 1
     link_cases('aichi13623', 'aichi12615') # cluster 3Q?
     for i in range(16036, 16039):
         link_cases(f'aichi{i}', f'aichi{i + 1}') # cluster 4D?
+
+    # 木沢病院
+    kizawa = (4176, 4213, 4215)
+    for i in range(len(kizawa) - 1):
+        link_cases(f'gifu{kizawa[i]}', f'gifu{kizawa[i + 1]}')
 
 def main():
     global plotter
@@ -969,20 +1018,34 @@ def main():
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     plotter = ROOTPlotter(cases)
+    reader = TSVReader()
 
-    '''
+    '''    
+    cases = reader.make_aichi_cases()
+    cases.update(reader.make_gifu_cases())
+    case_graph_anjo = CaseGraph('Anjo')
+    #case_graph_anjo.add_selected_city_cases(cases, '安城市')
+    case_graph_anjo.add_selected_city_cases(cases, '尾張旭市')
+    #case_graph_anjo.add_selected_city_cases(cases, '高浜市')
+    #case_graph_anjo.add_selected_city_cases(cases, '知多市')
+    #case_graph_anjo.add_selected_city_cases(cases, '蒲郡市')
+    #case_graph_anjo.add_selected_city_cases(cases, '豊山町')
+    #case_graph_anjo.add_selected_city_cases(cases, '名古屋市')
+    case_graph_anjo.gv_graph.view()
+
+
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     case_graph_aichi = CaseGraph('Aichi_kids')
     case_graph_aichi.add_only_aichi_kids_cases(cases)
     case_graph_aichi.gv_graph.view()
-    '''
+
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     case_graph_aichi = CaseGraph('Aichi_returning')
     case_graph_aichi.add_only_aichi_returning_cases(cases)
     case_graph_aichi.gv_graph.view()
-    '''
+
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     case_graph_aichi = CaseGraph('Aichi_20s')
@@ -994,25 +1057,29 @@ def main():
     cases.update(reader.make_gifu_cases())
     case_graph_aichi = CaseGraph('Aichi_cluster')
     case_graph_aichi.add_only_aichi_cases(cases, 10)
-    link_nodes(case_graph_aichi)
+    link_nodes(case_graph_aichi, cases)
     case_graph_aichi.gv_graph.view()
-    '''
+
     reader = TSVReader()
     cases = reader.make_aichi_cases()
     cases.update(reader.make_gifu_cases())
     case_graph_aichi = CaseGraph('Aichi')
     case_graph_aichi.add_only_aichi_cases(cases, 1)
-    link_nodes(case_graph_aichi)
+    link_nodes(case_graph_aichi, cases)
     case_graph_aichi.gv_graph.view()
-    '''
+
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     case_graph_gifu = CaseGraph('Gifu')
     case_graph_gifu.add_only_gifu_cases(cases, 1)
+    link_nodes(case_graph_gifu, cases)
     case_graph_gifu.gv_graph.view()
 
 def before_2020Nov(date):
     return str(date)[:-3] in ('2020-01', '2020-02', '2020-03', '2020-04', '2020-05', '2020-06', '2020-07', '2020-08', '2020-09', '2020-10')
+
+def before_2021(date):
+    return str(date)[:-5] in ('2020-',)
 
 if __name__ == '__main__':
     main()
