@@ -1032,14 +1032,14 @@ def main():
     #case_graph_anjo.add_selected_city_cases(cases, '豊山町')
     #case_graph_anjo.add_selected_city_cases(cases, '名古屋市')
     case_graph_anjo.gv_graph.view()
-
+    '''    
 
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     case_graph_aichi = CaseGraph('Aichi_kids')
     case_graph_aichi.add_only_aichi_kids_cases(cases)
     case_graph_aichi.gv_graph.view()
-
+    '''    
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     case_graph_aichi = CaseGraph('Aichi_returning')
