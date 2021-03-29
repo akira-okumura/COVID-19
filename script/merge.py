@@ -43,6 +43,8 @@ def tsv(fname):
 
         if age in ('10未満', '10歳未満'):
             text += '10歳未満%s\t' % sex # 年代・性別
+        elif age in ('90歳以上', '90以上'):
+            text += '90歳以上%s\t' % sex # 年代・性別
         else:
             try:
                 age = int(age)

@@ -41,7 +41,9 @@ aichi_gifu_contact_tuple = (
     '1/28発表の集団感染発生施設の関係者', '1月19日発表の集団感染発生施設の関係者',
     '1月28日発表の集団感染発生施設の関係者', 
     '陽性者と同じ施設職員', '陽性者の家族', '陽性者の同僚',
-    '陽性者と同じ施設利用者', '陽性者の友人')
+    '陽性者と同じ施設利用者', '陽性者の友人',
+    '愛知県陽性者等の接触者（職場）', '3月19日発表の集団感染発生施設の関係者',
+    '感染者が発生した市内医療機関の関係者')
 
 non_aichi_gifu_contact_tuple = (
     '新宿区の劇場利用', '新宿区内の劇場を利用', 'さいたま市発表の陽性患者の家族',
@@ -94,16 +96,21 @@ non_aichi_gifu_contact_tuple = (
     '県外69の濃厚接触者（家族）', '東京都陽性者の接触者',
     '県外91の接触者', '茨城県陽性者の接触者', '島根事例の濃厚接触者', '高知県事例と接触',
     '県外86の濃厚接触者（家族）', '県外97の濃厚接触者（友人）', '県外97の濃厚接触者（家族）',
-    '横浜市事例と接触')
+    '横浜市事例と接触', '県外102の濃厚接触者（家族）', '沖縄県8333',
+    '静岡県発表5199')
 
-# 再感染
+# 再感染 or 再陽性
 repos_dict = {'aichi19770': 'aichi15172',
               'aichi20403': 'aichi15384',
               'aichi21078': 'aichi13970',
               'aichi21939': 'aichi18198',
               'aichi24064': 'aichi5599',
               'aichi25477': 'aichi22968',
-              'aichi25582': 'aichi21139'}
+              'aichi25582': 'aichi21139',
+              'aichi25740': 'aichi9255',
+              'aichi25929': 'aichi24213',
+              'aichi25935': 'aichi22967',
+              'aichi27000': 'aichi25557'}
 
 from enum import Enum
 
@@ -165,6 +172,8 @@ class Case:
             self.gv_label = '<10歳'
         elif self.age == '調査中':
             self.gv_label = '調査中'
+        elif self.age == 99:
+            self.gv_label = '≧90歳'
         else:
             self.gv_label = '%d代' % self.age
 
@@ -196,7 +205,8 @@ class Case:
                          '11月27日アメリカから帰国', '12月3日ポルトガルから帰国',
                          '12月6日にロシアより入国', '12月1日海外から入国',
                          '航空機近席に感染者あり', 'フィリピン', 'インドネシア', 'バーレーン',
-                         'メキシコ', 'タイ', 'ハンガリー', 'アメリカ')
+                         'メキシコ', 'タイ', 'ハンガリー', 'アメリカ', 'アラブ首長国連邦',
+                         'パキスタン')
 
         if self.note.find('帰国') >= 0 or \
            self.description.find('中国籍') >= 0 or \
@@ -439,6 +449,18 @@ class CaseGraph:
                  ('gifu4413', '各務原市\n語学学校'),
                  ('gifu4440', '岐阜市\n県立岐南工業高校'),
                  ('gifu4587', '瑞浪市\n東濃厚生病院'),
+                 ('gifu4604', '土岐市\n高井病院'),
+                 ('gifu4551', '可児市\n人材派遣会社'),
+                 ('gifu4692', '各務原市\n消防本部'),
+                 ('gifu4635', '羽島郡岐南町\n事業所'),
+                 ('gifu4741', '岐阜市弥生町\nフィリピンパブ'), # 156
+                 ('gifu4747', '各務原市\n老人保健施設「サンバレーかかみ野」'), # 157
+                 ('gifu4751', '宿泊・会食（親族）'), # 158
+                 ('gifu4774', '大垣市\n接待を伴う飲食店'), # 159
+                 ('gifu4763', '同居（職場）'), # 160
+                 ('gifuX', ''),
+                 ('gifuX', ''),
+                 ('gifuX', ''),
                  ('gifuX', ''))
         notes += (('aichi6365', '岡崎市\n高齢者施設'),
                   ('aichi7301', '名古屋市\n高齢者施設'),
@@ -519,7 +541,18 @@ class CaseGraph:
                   ('aichi24390', '豊田市\n介護事業所（5O?）'),
                   ('aichi23181', '春日井市\n高齢者施設（5P）'), # confirmed
                   ('aichi24902', '刈谷市\n医療機関（5Q）'), # confirmed
-                  ('aichiX', ''),
+                  ('aichi25565', '名古屋市\nカラオケ喫茶（5R）'), # confirmed
+                  ('aichi25650', '半田市\n半田市立半田病院（5S）'), # confirmed
+                  ('aichi26197', '名古屋市\n高齢者施設（5T）'), # confirmed
+                  ('aichi26143', '名古屋市内\n会食（5U）'), # confirmed
+                  ('aichiX', '飲食店（5V）'),
+                  ('aichi26280', '名古屋市\n職場（5W）'), # confirmed
+                  ('aichi26379', '豊田市\n医療機関（5X）'), # confirmed
+                  ('aichi26504', '名古屋市\n保育施設（5Y）'), # confirmed
+                  ('aichi26625', '愛知学院大学\n硬式野球部寮（5Z）'), # confirmed
+                  ('aichi26638', '愛西市\n保育施設（6A）'), # confirmed
+                  ('aichi26509', '春日井市\n高齢者施設（6B）'), # confirmed
+                  ('aichi26779', '豊橋市\n積善病院（6C）'), # confirmed
                   ('aichiX', ''))
 
         for note in notes:
@@ -566,7 +599,7 @@ class CaseGraph:
             #response = request.urlopen('https://www.ctv.co.jp/covid-19/person.txt')
             response = request.urlopen('https://www.ctv.co.jp/covid-19/person2.txt') # new file since Apr 21
             json_data = json.loads(response.read())[0]
-            update = json_data['update']
+            update = json_data['update'].replace('更新 ※中京テレビ調べ', '')
             json_data = json_data['pref3']
             for i in range(len(json_data) - 1, -1, -1):
                 deaths = int(json_data[i]['content2'])
@@ -667,7 +700,7 @@ class TSVReader():
             idx = int(idx.replace('例目', '')) # drop '例目’
 
             m, d = map(int, date.replace('月', '-').replace('日', '').split('-'))
-            if (pref == 'gifu' and idx < 2293) or (pref == 'aichi' and idx < 16577):
+            if (pref == 'gifu' and idx < 2293) or (pref == 'aichi' and (idx < 16577 or idx in (25753, 25754, 25755))):
                 date = datetime.date.fromisoformat('2020-%02d-%02d' % (m, d))
             else:
                 date = datetime.date.fromisoformat('2021-%02d-%02d' % (m, d))
@@ -676,6 +709,8 @@ class TSVReader():
                 age = description.split('（')[-1].split('）')[0].replace('代', '')
                 if age == '10歳未満':
                     age = 9
+                elif age == '90歳以上':
+                    age = 99
                 elif age == '1歳未満':
                     age = 0
                 elif age == '調査中':
@@ -766,9 +801,21 @@ class TSVReader():
                 connected_nodes.append('gifu4440') # 県立岐南工業高校
             elif node_name in ('gifu4434', 'gifu4433'):
                 connected_nodes.append('gifu4413') # 語学学校
+            elif node_name in ('gifu4637', 'gifu4638', 'gifu4639'):
+                connected_nodes.append('gifu4626')
+            elif node_name in ('gifu4693', 'gifu4694', 'gifu4699', 'gifu4708'): # 各務原市消防本部、職員 5、家族 2
+                connected_nodes.append('gifu4692')
             elif node_name in repos_dict.keys():
                 # 再感染
                 connected_nodes.append(repos_dict[node_name])
+            elif note.find('3月19日発表の集団感染発生施設の関係者') >= 0:
+                connected_nodes.append('aichi26379') # 豊田市医療機関
+            elif node_name in ('gifu4741', 'gifu4742', 'gifu4743', 'gifu4744', 'gifu4745', 'gifu4746', 'gifu4747', 'gifu4757'): # フィリピンパブ
+                connected_nodes.append('gifu4741')
+            elif note.find('感染者が発生した市内医療機関の関係者') >= 0: # 豊橋 3/22
+                connected_nodes.append('aichi26779')
+            elif node_name in ('gifu4783', 'gifu4778', 'gifu4769', 'gifu4766'): # クラスター157
+                connected_nodes.append('gifu4747')
 
             cases['%s%d' % (pref, idx)] = Case(age, city, node_name, note, date, description, connected_nodes)
 
@@ -800,13 +847,16 @@ class TSVReader():
             if n < 1613:
                 continue
 
-            if n == 25188:
+            if n in (25188, 25653):
                 continue # 患者発生届取り下げのため削除
 
             # inpefect. needs to be cleaned up.
             if person.find('10歳未満') >= 0:
                 sex = person.split('10歳未満')[1]
                 age = '10歳未満'
+            elif person.find('90歳以上') >= 0:
+                sex = person.split('90歳以上')[1]
+                age = '90歳以上'
             elif person.find('調査中') == 0:
                 sex = '調査中'
                 age = person.split('・')[0]
@@ -827,6 +877,8 @@ class TSVReader():
                 note = note.replace(tmp, tmp.replace('岐阜県発表', '岐阜県内').replace(',', '例目、') + '例目と接触')
 
             if age == '10歳未満':
+                modified_text += '%d例目\t%s\t%s在住の%s（%s）\t%s\n****' % (n, date, city, sex, age, note)
+            if age == '90歳以上':
                 modified_text += '%d例目\t%s\t%s在住の%s（%s）\t%s\n****' % (n, date, city, sex, age, note)
             elif age == '調査中':
                 modified_text += '%d例目\t%s\t%s在住の%s（%s）\t%s\n****' % (n, date, city, sex, age, note)
@@ -850,6 +902,9 @@ class TSVReader():
 
             if note == '':
                 note = ' '
+
+            if abroad == 'あり':
+                note += '帰国'
 
             modified_text += '%s\t%s\t%s在住の%s（%s）\t%s\n****' % (n, pub_date, city, sex, age, note)
 
@@ -909,7 +964,14 @@ class ROOTPlotter:
 
             age = case.age
             try:
-                self.h_age.Fill(t, age + 5 if age >= 10 else 5)
+                if age == 9:
+                    self.h_age.Fill(t, 5)
+                elif age == 99:
+                    self.h_age.Fill(t, 95)
+                elif age == 0:
+                    self.h_age.Fill(t, 0)
+                else:
+                    self.h_age.Fill(t, age + 5)
             except:
                 print('Ignoring age ', age, ' of ', case.node_name)
 

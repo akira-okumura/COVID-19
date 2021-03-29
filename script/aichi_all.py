@@ -6,12 +6,12 @@
 import sys
 import re
 
-print('No\t発表日\t年代・性別\t国籍\t住居地\t接触状況\t備考')
-
 lines = sys.stdin.readlines()[0].split('\r')
 
 for line in lines:
-    if line == 'No 発表日年代・性別国籍住居地接触状況備考':
+    if line == 'No 発表日年代・性別国籍住居地接触状況備考' or \
+       line == '新型コロナウイルス感染症 県内発生事例' or \
+       line.find('令和') == 0:
         continue
     line = line.replace(' ', '\t')
     line = re.sub('(\d*)月(\d*)日', '\\1月\\2日\t', line)
