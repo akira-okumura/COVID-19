@@ -562,13 +562,13 @@ class CaseGraph:
 
     def make_gv_edges(self, cases):
         for case in cases.values():
-            if before_2021(case.date):
+            if before_4th_wave(case.date):
                 continue
             if len(case.connected_nodes) > 0:
                 node_name = case.node_name
                 for node in case.connected_nodes:
                     source_node_name = cases[node].node_name
-                    if before_2021(cases[node].date):
+                    if before_4th_wave(cases[node].date):
                         continue
                     self.gv_graph.edge(source_node_name, node_name)
 
@@ -621,7 +621,7 @@ class CaseGraph:
         self.date_ranks = {} # stores all cases date by date
         for case in sorted(cases.values(), key=lambda x:x.date):
             date = case.date
-            if before_2021(case.date):
+            if before_4th_wave(case.date):
                 continue
             if date not in self.date_ranks.keys():
                 self.date_ranks[date] = [case,]
@@ -816,6 +816,8 @@ class TSVReader():
                 connected_nodes.append('aichi26779')
             elif node_name in ('gifu4783', 'gifu4778', 'gifu4769', 'gifu4766'): # クラスター157
                 connected_nodes.append('gifu4747')
+            elif node_name in ('gifu4817',): # クラスター160
+                connected_nodes.append('gifu4763')
 
             cases['%s%d' % (pref, idx)] = Case(age, city, node_name, note, date, description, connected_nodes)
 
@@ -1082,19 +1084,19 @@ def main():
     plotter = ROOTPlotter(cases)
     reader = TSVReader()
 
-    '''    
+
     cases = reader.make_aichi_cases()
     cases.update(reader.make_gifu_cases())
     case_graph_anjo = CaseGraph('Anjo')
     #case_graph_anjo.add_selected_city_cases(cases, '安城市')
-    case_graph_anjo.add_selected_city_cases(cases, '尾張旭市')
+    #case_graph_anjo.add_selected_city_cases(cases, '尾張旭市')
+    case_graph_anjo.add_selected_city_cases(cases, '愛西市')
     #case_graph_anjo.add_selected_city_cases(cases, '高浜市')
     #case_graph_anjo.add_selected_city_cases(cases, '知多市')
     #case_graph_anjo.add_selected_city_cases(cases, '蒲郡市')
     #case_graph_anjo.add_selected_city_cases(cases, '豊山町')
     #case_graph_anjo.add_selected_city_cases(cases, '名古屋市')
     case_graph_anjo.gv_graph.view()
-    '''    
 
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
@@ -1119,7 +1121,7 @@ def main():
     cases.update(reader.make_gifu_cases())
     case_graph_aichi = CaseGraph('Aichi_cluster')
     case_graph_aichi.add_only_aichi_cases(cases, 10)
-    link_nodes(case_graph_aichi, cases)
+    #link_nodes(case_graph_aichi, cases)
     case_graph_aichi.gv_graph.view()
 
     reader = TSVReader()
@@ -1127,14 +1129,14 @@ def main():
     cases.update(reader.make_gifu_cases())
     case_graph_aichi = CaseGraph('Aichi')
     case_graph_aichi.add_only_aichi_cases(cases, 1)
-    link_nodes(case_graph_aichi, cases)
+    #link_nodes(case_graph_aichi, cases)
     case_graph_aichi.gv_graph.view()
 
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     case_graph_gifu = CaseGraph('Gifu')
     case_graph_gifu.add_only_gifu_cases(cases, 1)
-    link_nodes(case_graph_gifu, cases)
+    #link_nodes(case_graph_gifu, cases)
     case_graph_gifu.gv_graph.view()
 
 def before_2020Nov(date):
@@ -1142,6 +1144,9 @@ def before_2020Nov(date):
 
 def before_2021(date):
     return str(date)[:-5] in ('2020-',)
+
+def before_4th_wave(date):
+    return str(date)[:-5] in ('2020-',) or str(date)[:-3] in ('2021-01', '2021-02')
 
 if __name__ == '__main__':
     main()
