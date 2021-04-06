@@ -22,7 +22,7 @@ def main(fin1, fin2):
 
     for line in lines:
         n, date, person, nationality, city, note, another_index = line[:-1].split('\t')
-        results = re.findall('(愛知県内[,\d]*|豊田市発表[,\d]*|岡崎市発表[,\d]*|豊橋市発表[,\d]*|名古屋市発表[,\d]*|岐阜県内[,\d]*)', note)
+        results = re.findall('(愛知県内[,\d]*|豊田市発表[,\d]*|一宮市発表[,\d]*|岡崎市発表[,\d]*|豊橋市発表[,\d]*|名古屋市発表[,\d]*|岐阜県内[,\d]*)', note)
         
         indices = ''
         results2 = ''
@@ -35,6 +35,8 @@ def main(fin1, fin2):
                 result = result.replace(',', ',愛知県内')
             elif result.find('豊田市発表') == 0:
                 result = result.replace(',', ',豊田市発表')
+            elif result.find('一宮市発表') == 0:
+                result = result.replace(',', ',一宮市発表')
             elif result.find('岡崎市発表') == 0:
                 result = result.replace(',', ',岡崎市発表')
             elif result.find('豊橋市発表') == 0:

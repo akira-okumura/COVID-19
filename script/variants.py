@@ -291,7 +291,10 @@ class TSVReader():
                     connected_nodes = []
 
                 if symp_date == '無症状':
-                    date = cases[connected_nodes[0]].date
+                    if idx in (42, 43):
+                        date = datetime.date.fromisoformat('2021-03-21')
+                    else:
+                        date = cases[connected_nodes[0]].date
                 else:
                     m = int(symp_date.split('月')[0])
                     if symp_date.find('上旬') >= 0:

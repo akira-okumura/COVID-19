@@ -41,9 +41,10 @@ aichi_gifu_contact_tuple = (
     '1/28発表の集団感染発生施設の関係者', '1月19日発表の集団感染発生施設の関係者',
     '1月28日発表の集団感染発生施設の関係者', 
     '陽性者と同じ施設職員', '陽性者の家族', '陽性者の同僚',
-    '陽性者と同じ施設利用者', '陽性者の友人',
+    '陽性者と同じ施設利用者', '陽性者の友人', '陽性者の知人',
     '愛知県陽性者等の接触者（職場）', '3月19日発表の集団感染発生施設の関係者',
-    '感染者が発生した市内医療機関の関係者')
+    '感染者が発生した市内医療機関の関係者',
+    '4月2日発表の集団感染発生事業所の関係者')
 
 non_aichi_gifu_contact_tuple = (
     '新宿区の劇場利用', '新宿区内の劇場を利用', 'さいたま市発表の陽性患者の家族',
@@ -97,7 +98,7 @@ non_aichi_gifu_contact_tuple = (
     '県外91の接触者', '茨城県陽性者の接触者', '島根事例の濃厚接触者', '高知県事例と接触',
     '県外86の濃厚接触者（家族）', '県外97の濃厚接触者（友人）', '県外97の濃厚接触者（家族）',
     '横浜市事例と接触', '県外102の濃厚接触者（家族）', '沖縄県8333',
-    '静岡県発表5199')
+    '静岡県発表5199', '京都府事例の濃厚接触者', '愛媛県発表1332', '大阪府')
 
 # 再感染 or 再陽性
 repos_dict = {'aichi19770': 'aichi15172',
@@ -110,7 +111,8 @@ repos_dict = {'aichi19770': 'aichi15172',
               'aichi25740': 'aichi9255',
               'aichi25929': 'aichi24213',
               'aichi25935': 'aichi22967',
-              'aichi27000': 'aichi25557'}
+              'aichi27000': 'aichi25557',
+              'aichi27630': 'aichi27630'} # needs to be replaced with a correct number
 
 from enum import Enum
 
@@ -457,9 +459,9 @@ class CaseGraph:
                  ('gifu4747', '各務原市\n老人保健施設「サンバレーかかみ野」'), # 157
                  ('gifu4751', '宿泊・会食（親族）'), # 158
                  ('gifu4774', '大垣市\n接待を伴う飲食店'), # 159
-                 ('gifu4763', '同居（職場）'), # 160
-                 ('gifuX', ''),
-                 ('gifuX', ''),
+                 ('gifu4763', '同居（職場、変異株）'), # 160 変異株
+                 ('gifu4831', '可児市\n職場'), # 161 変異株ではない
+                 ('gifu4782', '各務原市\n職場、変異株'), # 162 変異株
                  ('gifuX', ''),
                  ('gifuX', ''))
         notes += (('aichi6365', '岡崎市\n高齢者施設'),
@@ -553,6 +555,10 @@ class CaseGraph:
                   ('aichi26638', '愛西市\n保育施設（6A）'), # confirmed
                   ('aichi26509', '春日井市\n高齢者施設（6B）'), # confirmed
                   ('aichi26779', '豊橋市\n積善病院（6C）'), # confirmed
+                  ('aichi27214', '弥富市\n会社の寮（6D）'),
+                  ('aichi27432', '豊田市\n事業所（6E）'), # confirmed
+                  ('aichiX', ''),
+                  ('aichiX', ''),
                   ('aichiX', ''))
 
         for note in notes:
@@ -810,13 +816,17 @@ class TSVReader():
                 connected_nodes.append(repos_dict[node_name])
             elif note.find('3月19日発表の集団感染発生施設の関係者') >= 0:
                 connected_nodes.append('aichi26379') # 豊田市医療機関
+            elif note.find('4月2日発表の集団感染発生事業所の関係者') >= 0:
+                connected_nodes.append('aichi27432') # 豊田市事業所
             elif node_name in ('gifu4741', 'gifu4742', 'gifu4743', 'gifu4744', 'gifu4745', 'gifu4746', 'gifu4747', 'gifu4757'): # フィリピンパブ
                 connected_nodes.append('gifu4741')
             elif note.find('感染者が発生した市内医療機関の関係者') >= 0: # 豊橋 3/22
                 connected_nodes.append('aichi26779')
             elif node_name in ('gifu4783', 'gifu4778', 'gifu4769', 'gifu4766'): # クラスター157
                 connected_nodes.append('gifu4747')
-            elif node_name in ('gifu4817',): # クラスター160
+            elif node_name in ('gifu4827',): # クラスター159
+                connected_nodes.append('gifu4801')
+            elif node_name in ('gifu4817', 'gifu'): # クラスター160
                 connected_nodes.append('gifu4763')
 
             cases['%s%d' % (pref, idx)] = Case(age, city, node_name, note, date, description, connected_nodes)
@@ -849,7 +859,7 @@ class TSVReader():
             if n < 1613:
                 continue
 
-            if n in (25188, 25653):
+            if n in (25188, 25653, 27412):
                 continue # 患者発生届取り下げのため削除
 
             # inpefect. needs to be cleaned up.
@@ -1090,7 +1100,10 @@ def main():
     case_graph_anjo = CaseGraph('Anjo')
     #case_graph_anjo.add_selected_city_cases(cases, '安城市')
     #case_graph_anjo.add_selected_city_cases(cases, '尾張旭市')
-    case_graph_anjo.add_selected_city_cases(cases, '愛西市')
+    #case_graph_anjo.add_selected_city_cases(cases, '愛西市')
+    case_graph_anjo.add_selected_city_cases(cases, '蟹江町')
+    #case_graph_anjo.add_selected_city_cases(cases, '弥富市')
+    #case_graph_anjo.add_selected_city_cases(cases, '豊田市')
     #case_graph_anjo.add_selected_city_cases(cases, '高浜市')
     #case_graph_anjo.add_selected_city_cases(cases, '知多市')
     #case_graph_anjo.add_selected_city_cases(cases, '蒲郡市')
@@ -1103,19 +1116,19 @@ def main():
     case_graph_aichi = CaseGraph('Aichi_kids')
     case_graph_aichi.add_only_aichi_kids_cases(cases)
     case_graph_aichi.gv_graph.view()
-    '''    
+    '''
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     case_graph_aichi = CaseGraph('Aichi_returning')
     case_graph_aichi.add_only_aichi_returning_cases(cases)
     case_graph_aichi.gv_graph.view()
-
+    '''    
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     case_graph_aichi = CaseGraph('Aichi_20s')
     case_graph_aichi.add_only_aichi_20s_cases(cases)
     case_graph_aichi.gv_graph.view()
-    '''
+
     reader = TSVReader()
     cases = reader.make_aichi_cases()
     cases.update(reader.make_gifu_cases())

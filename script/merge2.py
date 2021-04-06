@@ -18,7 +18,7 @@ def tsv(fname):
     text = ''
 
     for line in f.readlines():
-        if line.find('症例番号') == 0 or line.find('本市公表') == 0:
+        if line.find('症例番号') == 0 or line.find('本市公表') == 0 or line.find('患者例') == 0:
             continue # skip header           
 
         try:
@@ -92,6 +92,8 @@ def tsv(fname):
             text += '豊橋市発表%d\n' % int(num)
         elif fname.find('Nagoya') == 0:
             text += '名古屋市発表%d\n' % int(num)
+        elif fname.find('Ichinomiya') == 0:
+            text += '一宮市発表%d\n' % int(num)
         
     return text
 
