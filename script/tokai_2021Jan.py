@@ -209,7 +209,7 @@ class Case:
                          '12月6日にロシアより入国', '12月1日海外から入国',
                          '航空機近席に感染者あり', 'フィリピン', 'インドネシア', 'バーレーン',
                          'メキシコ', 'タイ', 'ハンガリー', 'アメリカ', 'アラブ首長国連邦',
-                         'パキスタン')
+                         'パキスタン', '3月30日アメリカから入国')
 
         if self.note.find('帰国') >= 0 or \
            self.description.find('中国籍') >= 0 or \
@@ -553,7 +553,7 @@ class CaseGraph:
                   ('aichi25650', '半田市\n半田市立半田病院（5S）'), # confirmed
                   ('aichi26197', '名古屋市\n高齢者施設（5T）'), # confirmed
                   ('aichi26143', '名古屋市内\n会食（5U）'), # confirmed
-                  ('aichiX', '飲食店（5V）'),
+                  ('aichiX', '飲食店（5V）'), # 10
                   ('aichi26280', '名古屋市\n職場（5W）'), # confirmed
                   ('aichi26379', '豊田市\n医療機関（5X）'), # confirmed
                   ('aichi26504', '名古屋市\n保育施設（5Y）'), # confirmed
@@ -561,9 +561,9 @@ class CaseGraph:
                   ('aichi26638', '愛西市\n保育施設（6A）'), # confirmed
                   ('aichi26509', '春日井市\n高齢者施設（6B）'), # confirmed
                   ('aichi26779', '豊橋市\n積善病院（6C）'), # confirmed
-                  ('aichi27214', '弥富市\n会社の寮（6D）'),
+                  ('aichi27214', '弥富市\n会社の寮（6D）'), # confirmed
                   ('aichi27432', '豊田市\n事業所（6E）'), # confirmed
-                  ('aichiX', ''),
+                  ('aichi27728', '職場（6F）'), # confirmed
                   ('aichiX', ''),
                   ('aichiX', ''))
 
@@ -945,7 +945,7 @@ class ROOTPlotter:
         self.can = [ROOT.ExactSizeCanvas('can%d' % i, 'can%d' % i, 800, 600) for i in range(3)]
 
         t0 = ROOT.TDatime(2020, 7, 1, 0, 0, 0).Convert()
-        nweeks = 40
+        nweeks = 44
         ndays = nweeks * 7
         dt = ndays * 3600 * 24
         t1 = t0 + dt
