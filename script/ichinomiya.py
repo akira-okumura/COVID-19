@@ -19,6 +19,7 @@ for line in lines:
     line = re.sub('(\d+?)月(\d+?)日\n', '\\1月\\2日\t', line)
     line = re.sub('\t(\d+?)例目', '\t一宮市発表\\1例目', line)
     line = re.sub('\t市(\d+?)例目', '\t一宮市発表\\1例目', line)
+    line = re.sub('^市(\d+?)例目', '\t一宮市発表\\1例目', line)
     line = re.sub('\t県(\d+?)例目（.+）', '\t愛知県内\\1例目', line)
     line = re.sub('日\n(\d+)月', '日\t\\1月', line)
     line = line.translate(str.maketrans({chr(0xFF01 + i): chr(0x21 + i) for i in range(94)}))

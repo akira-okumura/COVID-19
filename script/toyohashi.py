@@ -11,6 +11,7 @@ print('症例番号\t年代\t性別\t居住地\t海外渡航歴\t発症日\t陽�
 lines = sys.stdin.readlines()
 
 for line in lines:
+    line = re.sub(' ', '', line)
     line = re.sub('\tー', '\t', line)
     line = re.sub('(\d+?)歳代', '\\1', line)
     line = re.sub('(男|女)\t', '\\1\t豊橋市\t\t', line)

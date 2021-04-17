@@ -4,6 +4,7 @@ import re
 import networkx as nx
 
 debug = False
+#debug = True
 
 from enum import Enum
 
@@ -68,7 +69,7 @@ class Case:
 class CaseGraph:
     def __init__(self, fname):
         self.gv_graph = graphviz.Graph(engine='dot', filename=fname)
-        self.gv_graph.attr('node', fontname='Hiragino UD Sans F StdN', fontsize='14')
+        self.gv_graph.attr('node', fontname='Hiragino UD Sans F StdN', fontsize='12')
         self.gv_graph.attr('edge', arrowhead='normal', arrowsize='0.5', dir='both')
         self.gv_graph.attr(nodesep='0.1', ranksep='0.12')
         self.gv_graph.graph_attr['rankdir'] = 'LR'
@@ -228,7 +229,7 @@ class CaseGraph:
                         sub.attr('node', shape='tripleoctagon', style='filled', color=color+'AA', fontcolor='white')
 
                     if debug: # case number
-                        sub.node(case.node_name, label=case.node_name.replace('aichi', 'A').replace('gifu', 'G'), fontname='Myriad Pro')
+                        sub.node(case.node_name, label=case.gv_label + '\n' + case.node_name.replace('aichi', 'A').replace('gifu', 'G'), fontname='Myriad Pro')
                     else: # age & city
                         sub.node(case.node_name, label=case.gv_label, fontname='Myriad Pro')
 
@@ -293,8 +294,14 @@ class TSVReader():
                 if symp_date == '無症状':
                     if idx in (42, 43):
                         date = datetime.date.fromisoformat('2021-03-21')
+                    elif idx in (74, 75, 76):
+                        date = datetime.date.fromisoformat('2021-04-01')
                     else:
-                        date = cases[connected_nodes[0]].date
+                        try:
+                            date = cases[connected_nodes[0]].date
+                        except:
+                            print('skipping', idx, '...')
+                            date = datetime.date.fromisoformat('2021-05-01')
                 else:
                     m = int(symp_date.split('月')[0])
                     if symp_date.find('上旬') >= 0:
