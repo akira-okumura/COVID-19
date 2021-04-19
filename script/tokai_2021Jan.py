@@ -45,7 +45,7 @@ aichi_gifu_contact_tuple = (
     '愛知県陽性者等の接触者（職場）', '3月19日発表の集団感染発生施設の関係者',
     '感染者が発生した市内医療機関の関係者',
     '4月2日発表の集団感染発生事業所の関係者', '4月10日発表の集団感染発生施設の関係者',
-    '※再陽性事例')
+    '※再陽性事例', '一宮市陽性者の濃厚接触者（親族）')
 
 non_aichi_gifu_contact_tuple = (
     '新宿区の劇場利用', '新宿区内の劇場を利用', 'さいたま市発表の陽性患者の家族',
@@ -101,7 +101,8 @@ non_aichi_gifu_contact_tuple = (
     '横浜市事例と接触', '県外102の濃厚接触者（家族）', '沖縄県8333',
     '静岡県発表5199', '京都府事例の濃厚接触者', '愛媛県発表1332', '大阪府',
     '佐賀県事例と接触', '神奈川県事例の接触者', '宮城県事例と接触',
-    '京都府陽性者の接触者（友人）', '大阪市陽性者の濃厚接触者（親族）', '岡山市1531')
+    '京都府陽性者の接触者（友人）', '大阪市陽性者の濃厚接触者（親族）', '岡山市1531',
+    '滋賀県事例と接触')
 
 # 再感染 or 再陽性
 repos_dict = {'aichi19770': 'aichi15172',
@@ -465,13 +466,13 @@ class CaseGraph:
                  ('gifu4747', '各務原市\n老人保健施設「サンバレーかかみ野」（157）'), # 157
                  ('gifu4751', '宿泊・会食（親族、158）'), # 158
                  ('gifu4774', '大垣市\n接待を伴う飲食店（159）'), # 159
-                 ('gifu4763', '同居・職場（160）㊑'), # 160 変異株
+                 ('gifu4763', '同居・職場・外国籍（160）㊑'), # 160 変異株
                  ('gifu4831', '可児市\n職場（161）'), # 161 変異株ではない
                  ('gifu4782', '各務原市\n職場（162）㊑'), # 162 変異株
                  ('gifu4917', '職場（163）'), # 163
                  ('gifu4908', '職場（164）'), # 164
                  ('gifu4876', '職場（165）'), # 165
-                 ('gifu4896', '加茂郡富加町\n職場（166）㊑'), # 166
+                 ('gifu4896', '加茂郡富加町\n職場・外国籍（166）㊑'), # 166
                  ('gifu4943', '可児郡御嵩町\n教会イースター・外国籍（167）㊑'),
                  ('gifu4995', '土岐市\nデイサービス（168）㊑'),
                  ('gifu4975', '養老町\n職場（169）'),
@@ -479,9 +480,9 @@ class CaseGraph:
                  ('gifu4901', '美濃加茂市・中津川市\n職場・家族・外国籍（171）㊑'),
                  ('gifu5009', '家族（172）'),
                  ('gifu5050', '美濃市\n親族（173）㊑'),
-                 ('gifu5106', '揖斐郡揖斐川町\n同居・会食・外国籍（174）'),
-                 ('gifuX', ''),
-                 ('gifuX', ''),
+                 ('gifu5106', '揖斐郡揖斐川町\n同居・会食・外国籍（174）㊑'),
+                 ('gifu5209', '羽島市\n職場（175）'),
+                 ('gifu5109', '関市\n家族・幼稚園（176）'),
                  ('gifuX', ''),
                  ('gifuX', ''))
         notes += (('aichi6365', '岡崎市\n高齢者施設'),
@@ -585,10 +586,10 @@ class CaseGraph:
                   ('aichi28095', '豊田市\n教会（6H）'), # confirmed
                   ('aichi28752', '南知多町・高齢者施設（6I）'), # confirmed
                   ('aichi27702', '名古屋市大西部医療センター（6J）'), # confirmed
-                  ('aichiX', '若者のカラオケ（6K）'), # 10 as of Apr 16
+                  ('aichi28669', '若者のカラオケ（6K）'), # confirmed
                   ('aichiX', '愛知学院大学・部活（6L）'), # 13 as of Apr 16
-                  ('aichiX', ''),
-                  ('aichiX', ''),
+                  ('aichiX', '医療・高齢者施設等（6M）'), # 11 as of Apr 17
+                  ('aichiX', '医療・高齢者施設等（6N）'), # 12 as of Apr 17
                   ('aichiX', ''),
                   ('aichiX', ''))
 
@@ -982,7 +983,7 @@ class ROOTPlotter:
         self.can = [ROOT.ExactSizeCanvas('can%d' % i, 'can%d' % i, 800, 600) for i in range(3)]
 
         t0 = ROOT.TDatime(2020, 7, 1, 0, 0, 0).Convert()
-        nweeks = 44
+        nweeks = 45
         ndays = nweeks * 7
         dt = ndays * 3600 * 24
         t1 = t0 + dt
@@ -997,7 +998,7 @@ class ROOTPlotter:
         self.h_age = ROOT.TH2D('h_age', ';Date;Age;Number of Cases / Day / Generation', ndays, t0, t1, 11, 0, 110)
         self.h_age.GetXaxis().SetTimeDisplay(1)
         self.h_age.GetXaxis().SetTimeFormat('%b %d')
-        self.h_age.GetXaxis().SetNdivisions(200 + int(ndays/7/4), 0)
+        self.h_age.GetXaxis().SetNdivisions(500 + int(ndays/7/5), 0)
 
         max_bin = 0
         for case in cases.values():
@@ -1089,7 +1090,7 @@ class ROOTPlotter:
         self.can[1].Modified()
         self.stack.GetXaxis().SetTimeDisplay(1)
         self.stack.GetXaxis().SetTimeFormat('%b %d')
-        self.stack.GetXaxis().SetNdivisions(300 + int(ndays/7/4), 0)
+        self.stack.GetXaxis().SetNdivisions(500 + int(ndays/7/5), 0)
         self.stack.GetYaxis().SetNdivisions(110, 1)
         self.stack.SetTitle(';Date;Number of Cases / Day')
 
@@ -1116,7 +1117,7 @@ class ROOTPlotter:
         self.can[2].Modified()
         self.stack2.GetXaxis().SetTimeDisplay(1)
         self.stack2.GetXaxis().SetTimeFormat('%b %d')
-        self.stack2.GetXaxis().SetNdivisions(300 + int(ndays/7/4), 0)
+        self.stack2.GetXaxis().SetNdivisions(500 + int(ndays/7/5), 0)
         self.stack2.GetYaxis().SetNdivisions(110, 1)
         self.stack2.SetTitle(';Date;Number of Cases / Day')
 
@@ -1154,7 +1155,9 @@ def main():
     #case_graph_anjo.add_selected_city_cases(cases, '愛西市')
     #case_graph_anjo.add_selected_city_cases(cases, '蟹江町')
     #case_graph_anjo.add_selected_city_cases(cases, '弥富市')
-    case_graph_anjo.add_selected_city_cases(cases, '豊田市')
+    #case_graph_anjo.add_selected_city_cases(cases, '豊田市')
+    #case_graph_anjo.add_selected_city_cases(cases, '瀬戸市')
+    case_graph_anjo.add_selected_city_cases(cases, '小牧市')
     #case_graph_anjo.add_selected_city_cases(cases, '高浜市')
     #case_graph_anjo.add_selected_city_cases(cases, '知多市')
     #case_graph_anjo.add_selected_city_cases(cases, '蒲郡市')
