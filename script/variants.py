@@ -42,6 +42,8 @@ class Case:
     def make_gv_label(self):
         if self.age == None:
             self.gv_label = ''
+        elif self.age == '1歳未満':
+            self.gv_label = '0歳'
         elif self.age == '10未満' or self.age == '10歳未満':
             self.gv_label = '<10歳'
         elif self.age in ('10', '20', '30', '40', '50', '60', '70', '80', '90'):
