@@ -23,6 +23,8 @@ for line in lines:
     line = re.sub('\t県(\d+?)例目（.+）', '\t愛知県内\\1例目', line)
     line = re.sub('日\n(\d+)月', '日\t\\1月', line)
     line = line.translate(str.maketrans({chr(0xFF01 + i): chr(0x21 + i) for i in range(94)}))
+    line = re.sub('例目\n', '例目\t', line)
+    line = re.sub('\t ', '\t', line)
 
     print(line, end='')
 

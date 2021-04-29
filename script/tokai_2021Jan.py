@@ -45,7 +45,8 @@ aichi_gifu_contact_tuple = (
     '愛知県陽性者等の接触者（職場）', '3月19日発表の集団感染発生施設の関係者',
     '感染者が発生した市内医療機関の関係者',
     '4月2日発表の集団感染発生事業所の関係者', '4月10日発表の集団感染発生施設の関係者',
-    '※再陽性事例', '一宮市陽性者の濃厚接触者（親族）', '一宮市事例と接触')
+    '※再陽性事例', '一宮市陽性者の濃厚接触者（親族）', '一宮市事例と接触',
+    '陽性者の客', '県外123の接触者（職場）')
 
 non_aichi_gifu_contact_tuple = (
     '新宿区の劇場利用', '新宿区内の劇場を利用', 'さいたま市発表の陽性患者の家族',
@@ -103,7 +104,8 @@ non_aichi_gifu_contact_tuple = (
     '佐賀県事例と接触', '神奈川県事例の接触者', '宮城県事例と接触',
     '京都府陽性者の接触者（友人）', '大阪市陽性者の濃厚接触者（親族）', '岡山市1531',
     '滋賀県事例と接触', '福井県事例と接触', '長野県事例と接触',
-    '県外116の濃厚接触者（家族）', '京都事例と接触', '静岡県発表6251')
+    '県外116の濃厚接触者（家族）', '京都事例と接触', '静岡県発表6251',
+    '県外121濃厚接触者（家族）', '大阪市事例と接触')
 
 # 再感染 or 再陽性
 repos_dict = {'aichi19770': 'aichi15172',
@@ -121,7 +123,9 @@ repos_dict = {'aichi19770': 'aichi15172',
               'aichi30384': 'aichi27492',
               'aichi30862': 'aichi22207',
               'aichi31224': 'aichi6101',
-              'aichi31440': 'aichi1225'} # needs to be replaced with a correct number
+              'aichi31440': 'aichi1225',
+              'aichi31624': 'aichi6144',
+              'aichi32595': 'aichi3248'}
 
 from enum import Enum
 
@@ -497,8 +501,8 @@ class CaseGraph:
                  ('gifu5427', '岐阜市\n接待を伴う飲食店（183）㊑'),
                  ('gifu5259', '大垣市\nショートステイ施設（184）㊑'),
                  ('gifu5363', '関市\n会食・3家族（185）'),
-                 ('gifuX', ''),
-                 ('gifuX', ''),
+                 ('gifu5599', '接待を伴う飲食店（186）'),
+                 ('gifu5626', '接待を伴う飲食店（187）'),
                  ('gifuX', ''),
                  ('gifuX', ''))
         notes += (('aichi6365', '岡崎市\n高齢者施設'),
@@ -584,7 +588,8 @@ class CaseGraph:
                   ('aichi25650', '半田市\n半田市立半田病院（5S）'), # confirmed
                   ('aichi26197', '名古屋市\n高齢者施設（5T）'), # confirmed
                   ('aichi26143', '名古屋市内\n会食（5U）'), # confirmed
-                  ('aichiX', '飲食店（5V）'), # 10
+                  ('aichi26327', '飲食店？（5V？）'), # 10
+                  ('aichi26272', '飲食店？（5V？）'), # 10
                   ('aichi26280', '名古屋市\n職場（5W）'), # confirmed
                   ('aichi26379', '豊田市\n医療機関（5X）'), # confirmed
                   ('aichi26504', '名古屋市\n保育施設（5Y）'), # confirmed
@@ -597,7 +602,7 @@ class CaseGraph:
                   ('aichi27214', '弥富市\n会社の寮（6D）'), # confirmed
                   ('aichi27278', '㊑'), # variant No. 139
                   ('aichi27432', '豊田市\n事業所（6E）'), # confirmed
-                  ('aichi27728', '名古屋市\n職場（6F）'), # confirmed
+                  ('aichi27728', '名古屋市\n職場（6F）㊑'), # confirmed
                   ('aichi27596', '名古屋市\n緑区役所（6G）㊑'), # confirmed
                   ('aichi28095', '豊田市\n教会（6H）'), # confirmed
                   ('aichi28752', '南知多町\n高齢者施設（6I）'), # confirmed
@@ -610,11 +615,12 @@ class CaseGraph:
                   ('aichi28856', '豊明市\n高齢者施設（6P）'), # confirmed
                   ('aichi29373', '日進市\n大学部活（6Q）'), # confirmed
                   ('aichi28510', '名古屋市\nスポーツジム（6R）'), # confirmed
-                  ('aichiX', 'みよし市\n会社の寮（6S）'), # 14 (Apr 20)
-                  ('aichi29931', '津島市\n保育施設（6T）'), # confirmed
-                  ('aichiX', 'みよし市\n工場（6U）'), # 13 (Apr 22)
+                  ('aichi29439', 'みよし市\n会社の寮？（6S？）'), # 14 (Apr 20)
+                  ('aichi29931', '津島市\n保育施設（6T）㊑'), # confirmed
+                  ('aichi29031', 'みよし市\n工場？（6U？）'), # 13 (Apr 22)
                   ('aichiX', '職場（6V）'), # 15 (Apr 25)
-                  ('aichiX', ''),
+                  ('aichi30528', '職場（6W）'), # confirmed
+                  ('aichi31342', '医療・高齢者施設等（6X）'), # confirmed
                   ('aichiX', ''),
                   ('aichiX', ''),
                   ('aichiX', ''))
@@ -912,8 +918,12 @@ class TSVReader():
                 connected_nodes.append('gifu5116')
             elif node_name in ('gifu5301', 'gifu5336', 'gifu5337'): # 180、岐阜市 友人
                 connected_nodes.append('gifu5300')
-            elif node_name in ('gifu5428', 'gifu5436', 'gifu5437', 'gifu', 'gifu', ): # 183、岐阜市 接待
+            elif node_name in ('gifu5428', 'gifu5436', 'gifu5437', 'gifu5528', 'gifu5523', ): # 183、岐阜市 接待
                 connected_nodes.append('gifu5427')
+            elif node_name in ('gifu5646', 'gifu5601', 'gifu5602', 'gifu5603'): # 186、岐阜市 接待
+                connected_nodes.append('gifu5599')
+            elif node_name in ('gifu5641',): # 187、岐阜市 接待
+                connected_nodes.append('gifu5626')
 
             cases['%s%d' % (pref, idx)] = Case(age, city, node_name, note, date, description, connected_nodes)
 
@@ -1094,7 +1104,12 @@ class ROOTPlotter:
         n1 = int(ROOT.h_aichi_wo_nagoya.GetBinContent(max_bin) + ROOT.h_nagoya.GetBinContent(max_bin))
         n2 = int(ROOT.h_nagoya.GetBinContent(max_bin))
         n3 = int(ROOT.h_gifu.GetBinContent(max_bin))
+        n1_ = int(ROOT.h_aichi_wo_nagoya.GetBinContent(max_bin - 7) + ROOT.h_nagoya.GetBinContent(max_bin - 7))
+        n3_ = int(ROOT.h_gifu.GetBinContent(max_bin - 7))
+        n1__ = int(ROOT.h_aichi_wo_nagoya.GetBinContent(max_bin - 14) + ROOT.h_nagoya.GetBinContent(max_bin - 14))
+        n3__ = int(ROOT.h_gifu.GetBinContent(max_bin - 14))
         print(f'愛知県 {n1} 名（うち名古屋市 {n2}）、岐阜県 {n3} 名')
+        print(f'先々週から愛知 {n1__}→{n1_}→{n1}、岐阜 {n3__}→{n3_}→{n3}')
 
         self.can[0].cd()
         self.h_age.Draw('colz')
