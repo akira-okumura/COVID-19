@@ -19,6 +19,7 @@ for line in lines:
     line = re.sub('(自宅|宿泊予定)\t', '', line)
     line = re.sub('\t(\d+?)例目', '\t豊橋市発表\\1例目', line)
     line = re.sub('\t愛知県発表(\d+?)例目', '\t愛知県内\\1例目', line)
+    line = re.sub('知人が陽性と知り検査を実施', '知人が陽性者', line)
     line = line.translate(str.maketrans({chr(0xFF01 + i): chr(0x21 + i) for i in range(94)}))
     line = re.sub('なし\t－ (\d+?/\d+?)', '－\t\\1\tなし\t', line)
 
