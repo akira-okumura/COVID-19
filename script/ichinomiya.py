@@ -27,6 +27,8 @@ for line in lines:
     line = line.translate(str.maketrans({chr(0xFF01 + i): chr(0x21 + i) for i in range(94)}))
     line = re.sub('例目\n', '\t', line)
     line = re.sub('\t ', '\t', line)
+    line = line.replace('軽症\n', '軽症\t')
 
-    print(line, end='')
+    if line != ' \n':
+        print(line, end='')
 

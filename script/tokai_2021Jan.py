@@ -51,10 +51,12 @@ aichi_gifu_contact_tuple = (
     '5月1日発表の集団感染発生施設の関係者', '陽性者の親族', '陽性者と同じ施設従事者',
     '東京都発表患者の濃厚接触者', '再感染', '再陽性', '陽性者と接触', '一宮事例と接触',
     '5月6日発表の集団感染発生施設の関係者', '県外126の濃厚接触者（職場）',
-    '県外116の濃厚接触者（家族）', '県外121濃厚接触者（家族）',
+    '県外116の濃厚接触者（家族）', '県外121濃厚接触者（家族）', '県外139の接触者',
     '愛知県発表7Jクラスターの関係者', '豊橋市事例と接触', '岐阜市事例と接触',
     '5月10日発表の集団感染発生施設の関係者', '（リンクあり）', '浜松市発表1479',
-    '5月14日発表の集団感染発生施設の関係者')
+    '5月14日発表の集団感染発生施設の関係者', '5月17日発表の集団感染発生施設の関係者',
+    '5月18日発表の集団感染発生施設の関係者', 'クラスター7I', 'クラスター7K', 'クラスター7V',
+    '5月30日発表の集団感染発生施設の関係者')
 
 non_aichi_gifu_contact_tuple = (
     '新宿区の劇場利用', '新宿区内の劇場を利用', 'さいたま市発表の陽性患者の家族',
@@ -116,7 +118,9 @@ non_aichi_gifu_contact_tuple = (
     '大阪市事例と接触', '浜松市発表1252',
     '奈良県事例と接触', '長野県陽性者の濃厚接触者', '沖縄県陽性者の濃厚接触者（家族）',
     '青森県事例と接触', '静岡県発表6733', '沖縄県陽性者の接触者', '愛媛県事例と接触',
-    '他自治体発表患者の濃厚接触者')
+    '他自治体発表患者の濃厚接触者', '福岡県発表30392',
+    '三重県事例の濃厚接触者', '浜松市1667', '県外156の接触者', '県外158の接触者',
+    '栃木県陽性者の接触者', '県外160の接触者', '山形県事例と接触')
 
 # 再感染 or 再陽性
 repos_dict = {'aichi19770': 'aichi15172',
@@ -144,8 +148,16 @@ repos_dict = {'aichi19770': 'aichi15172',
               'aichi36291': 'aichi19041',
               'aichi36292': 'aichi1077',
               'aichi38448': 'aichi26081',
-              'aichi40226': 'aichi3101',
+              'aichi40226': 'aichi3104',
               'aichi39821': 'aichi32891',
+              'aichi40451': 'aichi31586',
+              'aichi42355': 'aichi6458',
+              'aichi44201': 'aichi32675',
+              'aichi44632': 'aichi1072',
+              'aichi45774': 'aichi27120',
+              'aichi46168': 'aichi27724',
+              'aichi46275': 'aichi28871',
+              'aichi46997': 'aichi39276',
               }
 
 from enum import Enum
@@ -339,7 +351,7 @@ class CaseGraph:
         self.make_gv_edges(cases)
         self.make_gv_notes()
 
-    def add_selected_city_cases(self, cases, city):
+    def add_selected_city_cases(self, cases, city, age=None):
         for case in cases.values():
             for node in case.connected_nodes:
                 cases[node].is_connected = True
@@ -350,9 +362,8 @@ class CaseGraph:
         for comp in nx.connected_components(self.nx_graph):
             subgraph = self.nx_graph.subgraph(comp).copy()
             node_names = subgraph.nodes
-            
-            # Remove clusters not containing < 10 year cases
-            if len([x for x in node_names if cases[x].city == city]) == 0:
+
+            if len([x for x in node_names if (cases[x].city == city or cases[x].city in city) and (age == None or (age != None and cases[x].age == age))]) == 0:
                 for node_name in node_names:
                     cases.pop(node_name)
 
@@ -535,6 +546,7 @@ class CaseGraph:
                  ('gifuX', '各務原市\n飲食店利用者・家族（196）'),
                  ('gifu5577', '可児郡御嵩町\n向陽中学校（197）'),
                  ('gifu5792', '下呂市\n会食（198）'),
+                 # 「土岐市、郡上市、加茂郡富加町、可児市の各職場に広がり」（岐阜日報 5/24）
                  ('gifu5774', '関市\n職場・家族（199）'),
                  ('gifu6024', '岐阜市\n職場・家族（200）'),
                  ('gifu5876', '岐阜市\n家族・飲食（201）'),
@@ -550,10 +562,10 @@ class CaseGraph:
                  ('gifu6131', '本巣市\n職場（211）'),
                  ('gifu6002', '（212）'), # 職場・家族
                  ('gifu6040', '（213）'), # 大垣 職場・家族
-                 ('gifu6265', '（214）'),
+                 ('gifu6265', '本巣市\n職場（214）'),
                  ('gifu6131', '（215）'), # 友人・職場・家族
                  ('gifu6146', '（216）'), # 可児・多治見 家族・親族
-                 ('gifuX', '（217）'),
+                 ('gifu5667', '（217）'),
                  ('gifu6344', '（218）'), # 岐阜 友人
                  ('gifu6331', '（219）'), # 岐阜 友人
                  ('gifu6348', '（220）'), # 岐阜 家族
@@ -583,15 +595,63 @@ class CaseGraph:
                  ('gifuX', '（244）'),
                  ('gifuX', '（245）'), # 5/14
                  ('gifu6631', '羽島郡笠松町\n高齢者福祉施設（246）'),
-                 ('gifu6768', '高山市\n自宅飲食（247）'),
+                 ('gifu6768', '高山市\n自宅飲食・外国人（247）'),
                  ('gifu6621', '瑞浪市・岐阜市\n仕事・家族（248）'),
-                 ('gifu6979', '関市\n中部学院大運動部（249）'), # 5/15
+                 ('gifu6979', '関市\n中部学院大運動部（249?）'), # 5/15
                  ('gifu6658', '本巣市・大垣市\n連休中食事（250）'),
-                 ('gifuX', '（25X）'), # 岐阜市・山県市 連休中食事 5 人
-                 ('gifuX', '（25#）'),
+                 ('gifu7561', '岐阜市・山県市\n連休中食事（249?）'),
+                 ('gifu', '（25X）'), # 県立岐阜商業高校
+                 ('gifu6638', '（252）'), # 
                  ('gifu7204', '岐阜市\n家族（253）'),
-                 ('gifuX', '（25X）'),
-                 ('gifuX', '（）'), # 5/16
+                 ('gifu7192', '（254?）'), # 5/16 関市
+                 ('gifu6923', '関市\nデイサービス（255）'), # 関市のデイサービス、職員、利用者、家族、11 名
+                 ('gifuX', '（256）'), # 
+                 ('gifu6335', '（257）'),
+                 ('gifu7348', '（258）'), # 岐阜市　家族
+                 ('gifu7344', 'カラオケ喫茶？（259）'), # 岐阜市 カラオケ喫茶？
+                 ('gifu6356', '下呂市\n診療所（26X）'), # 5/17
+                 ('gifu7457', '（261）'), # 垂井町
+                 ('gifuX', '（262）'), # 
+                 ('gifu8232', '（263）'), # 
+                 ('gifu6941', '（264）'), # 岐阜  7487
+                 ('gifu6967', '高山市\n障害者入所施設（265）'), # 5/18
+                 ('gifuX', '岐阜市\n知人・連休会食（266）'), # 
+                 ('gifu6427', '羽島市\n羽島北高校（267）'), # 
+                 ('gifuX', '可児市\n家族（26X）'), # 5/19
+                 ('gifu7557', '岐阜市\n高齢者施設（26X）'), #
+                 ('gifu7956', '（269）'), # 
+                 ('gifu8179', '岐阜市\n知人（270）'), # 
+                 ('gifu7084', '連休BBQなど（27X）'), # 5/20
+                 ('gifuX', '羽島郡笠松町\n家族（27X）'), # 
+                 ('gifu6858', '各務原市\nグループホーム（273）'), # 5/21
+                 ('gifu6630', '関市\nデイサービス施設（274）'), # 
+                 ('gifu7024', '瑞穂市\n朝日大運動部・会食（27X）'), # 
+                 ('gifu7390', '山県市\n家族・職場（275）'), # 
+                 ('gifu6978', '中津川市\n中京学院大硬式野球部（277）'), # 
+                 ('gifu6908', '恵那市\n職場関連（278）'), # 5/22
+                 ('gifu7499', '瑞穂市\n家族等（279）'), #
+                 ('gifu8355', '岐阜市\n家族・福祉施設（280）'), # 
+                 ('gifu7868', '可児市\n家族・友人（281）'), # 5/23 
+                 ('gifu8013', '（282）'), # 5/25
+                 ('gifu8221', '土岐市\n聖十字病院（283）'), #
+                 ('gifu7446', '各務原市\nホームパーティー（284）'), # 
+                 ('gifu8172', '土岐市\n会食・カラオケ（285）'), #
+                 ('gifu8214', '（286）'), # 
+                 ('gifu7429', '（287）'), # 5/26 大垣市・各務原市（瑞穂市格闘技ジム?）
+                 ('gifu7636', '岐阜市\n高齢者福祉施設（288）'), # 
+                 ('gifu8283', '岐阜市\n家族（289）'), #
+                 ('gifu7939', '岐阜市・関市\n職場・家族（290）'), # 5/27
+                 ('gifu8063', '不破郡垂井町\n家族（291）'), #
+                 ('gifu7796', '飛騨市民病院（292）'), # 5/28
+                 ('gifu8175', '県警本部交通規制課（293）'), # 
+                 ('gifu8427', '岐阜市\n高齢者福祉施設関連（294）'), # 
+                 ('gifu8157', '土岐市\n土岐商業高校（295）'), # 5/29
+                 ('gifu8311', '安八郡安八町\n酒類を提供する飲食店（296）'), # 岐阜市・瑞穂市、スポーツジム後
+                 ('gifu8166', '多治見市・土岐市\n家族・知人（297）'), #
+                 ('gifu7663', '可児市\n接待を伴う飲食店（298）'), # 可児市
+                 ('gifu8479', '岐阜市\nスポーツジム（299）'), # 
+                 ('gifu8349', '可児市\n会食・外国人（300）'), # 5/30
+                 ('gifuX', '（）'), # 5/31
                  ('gifuX', '（）'), # 
                  ('gifuX', '（）'), # 
                  ('gifuX', '（）'), # 
@@ -730,9 +790,25 @@ class CaseGraph:
                   ('aichi36496', '西尾市\n飲食店（7N）'), # confirmed
                   ('aichi33158', '名古屋市\n職場（7O）'), # confirmed
                   ('aichi36268', '名古屋市\n高齢者施設（7P）'), # confirmed
-                  ('aichi35617', '医療・高齢者施設等（7Q）'), # confirmed
+                  ('aichi35617', '福祉施設（7Q）'), # confirmed
                   ('aichi37476', '豊田市\n高齢者施設（7R）'), # confirmed
-                  ('aichiX', ''),
+                  ('aichi34296', 'あま市\n高齢者施設（7S）'), # confirmed
+                  ('aichi35483', '豊田市\n高齢者施設（7T）'), # confirmed
+                  ('aichi39635', '名古屋市\n劇場（7U）'), # confirmed
+                  ('aichi40510', '一宮市\n高齢者施設（7V）'), # confirmed
+                  ('aichi35802', 'インド変異株'), # 50代男性、5 月上旬感染判明、渡航歴あり
+                  ('aichi36332', '春日井市\n高齢者施設（7W）'), # confirmed
+                  ('aichi39616', '名古屋市\n高齢者施設（7X）'), # confirmed
+                  ('aichi39019', 'あま市\n高齢者施設？（7Y？）'), # 10 (May 22), 12 (May 24)
+                  ('aichi43369', '名古屋市\n高齢者施設（7Z）'), # confirmed
+                  ('aichi41752', '春日井市\n障害者施設（8A）'), # confirmed
+                  ('aichi44652', '江南市\n高齢者施設（8B）'), # confirmed
+                  ('aichi42555', '刈谷市\n学校（8C）'), # confirmed
+                  ('aichi43978', '豊明市\n高齢者施設（8D）'), # confirmed
+                  ('aichiX', '名古屋市\n職場（8E）'), # 10 (May 27), 11 (May 30) aichi46918 も 8E？（CBC）
+                  ('aichi35444', '刈谷市\n高齢者施設（8F）'), # confirmed
+                  ('aichi46336', '豊田市\n大学運動部寮（8G）'), # confirmed 愛知工業大学 フェンシング部
+                  ('aichiX', ''), # 
                   ('aichiX', ''))
 
         for note in notes:
@@ -1004,9 +1080,11 @@ class TSVReader():
                 connected_nodes.append('aichi32610')
             elif note.find('5月1日発表の集団感染発生施設の関係者') >= 0: # 中京大
                 connected_nodes.append('aichi32295')
-            elif note.find('5月6日発表の集団感染発生施設の関係者') >= 0: # 一宮市 7I
+            elif note.find('5月6日発表の集団感染発生施設の関係者') >= 0 or \
+                 note.find('クラスター7I') >= 0: # 一宮市 7I
                 connected_nodes.append('aichi33311')
-            elif note.find('5月10日発表の集団感染発生施設の関係者') >= 0: # 一宮市 7K
+            elif note.find('5月10日発表の集団感染発生施設の関係者') >= 0 or \
+                 note.find('クラスター7K') >= 0: # 一宮市 7K
                 connected_nodes.append('aichi34655')
             elif note.find('愛知県発表7Jクラスターの関係者') >= 0: # 7J
                 connected_nodes.append('aichi34111')
@@ -1014,6 +1092,15 @@ class TSVReader():
                 connected_nodes.append('aichi33330')
             elif note.find('5月14日発表の集団感染発生施設の関係者') >= 0: # 豊田
                 connected_nodes.append('aichi37476')
+            elif note.find('5月17日発表の集団感染発生施設の関係者') >= 0: # 豊田
+                connected_nodes.append('aichi35483')
+            elif note.find('5月18日発表の集団感染発生施設の関係者') >= 0 or \
+                 note.find('クラスター7V') >= 0: # 一宮市 7V
+                connected_nodes.append('aichi40510')
+            elif node_name in ('aichi45270',): # 劇場 7U
+                connected_nodes.append('aichi39635')
+            elif note.find('5月30日発表の集団感染発生施設の関係者') >= 0:
+                connected_nodes.append('aichi46336')
             elif node_name in ('gifu4783', 'gifu4778', 'gifu4769', 'gifu4766'): # クラスター157
                 connected_nodes.append('gifu4747')
             elif node_name in ('gifu4827',): # クラスター159
@@ -1048,6 +1135,8 @@ class TSVReader():
                 connected_nodes.append('gifu5507')
             elif node_name in ('gifu5641', 'gifu5738', 'gifu5802', 'gifu5801', 'gifu5781', 'gifu7206'): # 187、岐阜市 接待
                 connected_nodes.append('gifu5626')
+            elif node_name in ('gifu7041', 'gifu6324',): # 199
+                connected_nodes.append('gifu5774')
             elif node_name in ('gifu6336',): # 211
                 connected_nodes.append('gifu6131')
             elif node_name in ('gifu6345', 'gifu6346'): # 218
@@ -1056,8 +1145,46 @@ class TSVReader():
                 connected_nodes.append('gifu6347')
             elif node_name in ('gifu6343', 'gifu6330'): # 221
                 connected_nodes.append('gifu6329')
+            elif node_name in ('gifu6718',): # 222
+                connected_nodes.append('gifu5788')
+            elif node_name in ('gifu7487', 'gifu7488', ): # 246
+                connected_nodes.append('gifu6631')
             elif node_name in ('gifu7224', 'gifu7223', 'gifu7205', ): # 253
                 connected_nodes.append('gifu7204')
+            elif note.find('県外139の接触者') >= 0:
+                connected_nodes.append('gifu7329')
+            elif node_name in ('gifu7349', 'gifu7350', 'gifu7351', ): # 258
+                connected_nodes.append('gifu7348')
+            elif node_name in ('gifu7345', 'gifu7339', 'gifu7337', 'gifu7955', 'gifu8200', 'gifu8358', 'gifu8359', ): # 259
+                connected_nodes.append('gifu7344')
+            elif node_name in ('gifu7487', 'gifu6998',): # 264
+                connected_nodes.append('gifu6941')
+            elif node_name in ('gifu7911', 'gifu7910', 'gifu7905',): # 267
+                connected_nodes.append('gifu6427')
+            elif node_name in ('gifu7558', 'gifu7710', 'gifu7711', 'gifu7712', 'gifu7713', 'gifu7714', 'gifu7715', 'gifu7716', 'gifu7717', 'gifu7718', 'gifu7719', 'gifu7720', 'gifu7721', ): # 268 or 269
+                connected_nodes.append('gifu7557')
+            elif node_name in ('gifu8366'): # 270
+                connected_nodes.append('gifu8179')
+            elif node_name in ('gifu8354'): # 274
+                connected_nodes.append('gifu6630')
+            elif node_name in ('gifu8204', 'gifu8205', 'gifu8206',): # 285
+                connected_nodes.append('gifu8172')
+            elif node_name in ('gifu8199', 'gifu8198',): # 286
+                connected_nodes.append('gifu8214')
+            elif node_name in ('gifu8029',): # 県外158
+                connected_nodes.append('gifu7994')
+            elif node_name in ('gifu8083',): # 県外160
+                connected_nodes.append('gifu8082')
+            elif node_name in ('gifu8294', 'gifu8295', 'gifu8293', 'gifu8352', 'gifu8426',): # 289
+                connected_nodes.append('gifu8283')
+            elif node_name in ('gifu8401', ): # 293
+                connected_nodes.append('gifu8175')
+            elif node_name in ('gifu8427', 'gifu8555', ): # 294
+                connected_nodes.append('gifu8283')
+            elif node_name in ('gifu8478', 'gifu8569', ): # 296
+                connected_nodes.append('gifu8311')
+            elif node_name in ('gifu8480', 'gifu8481', 'gifu8482', 'gifu8483', 'gifu8484', 'gifu8500', 'gifu8507', 'gifu8570', 'gifu8554', 'gifu8553', 'gifu8548', 'gifu8289', 'gifu8437', ): # 299
+                connected_nodes.append('gifu8479')
 
             cases['%s%d' % (pref, idx)] = Case(age, city, node_name, note, date, description, connected_nodes)
 
@@ -1310,6 +1437,10 @@ class ROOTPlotter:
         self.leg2.SetFillStyle(0)
         self.leg2.Draw()
 
+        for c in self.can:
+            c.Modified()
+            c.Update()
+
 def link_nodes(case_graph, cases):
     link_cases = lambda a, b : case_graph.gv_graph.edge(a, b, style='invis') if a in cases and b in cases else 1
     link_cases('aichi13623', 'aichi12615') # cluster 3Q?
@@ -1354,7 +1485,10 @@ def main():
     #case_graph_anjo.add_selected_city_cases(cases, '豊田市')
     #case_graph_anjo.add_selected_city_cases(cases, '瀬戸市')
     #case_graph_anjo.add_selected_city_cases(cases, '小牧市')
-    case_graph_anjo.add_selected_city_cases(cases, '豊川市')
+    #case_graph_anjo.add_selected_city_cases(cases, '豊川市')
+    #case_graph_anjo.add_selected_city_cases(cases, '豊橋市', 10)
+    #case_graph_anjo.add_selected_city_cases(cases, ('豊橋市', '豊川市', '田原市'), 10)
+    case_graph_anjo.add_selected_city_cases(cases, '刈谷市')
     #case_graph_anjo.add_selected_city_cases(cases, '日進市')
     #case_graph_anjo.add_selected_city_cases(cases, 'みよし市')
     #case_graph_anjo.add_selected_city_cases(cases, '高浜市')
