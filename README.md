@@ -11,17 +11,17 @@ https://fundexapp.jp/nagoya-u/entry.php?purposeCode=200000&supportCode=200027
 
 ### 2021-03-01 以降（第 4 波開始から）のみ表示した PDF
 
-- 2021-05-30（愛知）\
-https://github.com/akira-okumura/COVID-19/raw/master/PDF/Aichi2021-05-30.pdf
+- 2021-06-16（愛知）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Aichi2021-06-16.pdf
 
-- 2021-05-30（愛知、10 人以上のクラスターのみを表示）\
-https://github.com/akira-okumura/COVID-19/raw/master/PDF/Aichi2021-05-30_cluster10.pdf
+- 2021-06-16（愛知、10 人以上のクラスターのみを表示）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Aichi2021-06-16_cluster10.pdf
 
-- 2021-05-30（愛知、10 歳未満の子供を含むクラスターのみを表示）\
-https://github.com/akira-okumura/COVID-19/raw/master/PDF/Aichi2021-05-30_kids.pdf
+- 2021-06-16（愛知、10 歳未満の子供を含むクラスターのみを表示）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Aichi2021-06-16_kids.pdf
 
-- 2021-05-30（岐阜）\
-https://github.com/akira-okumura/COVID-19/raw/master/PDF/Gifu2021-05-30.pdf
+- 2021-06-16（岐阜）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Gifu2021-06-16.pdf
 
 - 2021-04-16（愛知の変異株）\
 https://github.com/akira-okumura/COVID-19/raw/master/PDF/Aichi_Variants2021-04-16.pdf
