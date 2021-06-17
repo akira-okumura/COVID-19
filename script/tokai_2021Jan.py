@@ -56,7 +56,11 @@ aichi_gifu_contact_tuple = (
     '5月10日発表の集団感染発生施設の関係者', '（リンクあり）', '浜松市発表1479',
     '5月14日発表の集団感染発生施設の関係者', '5月17日発表の集団感染発生施設の関係者',
     '5月18日発表の集団感染発生施設の関係者', 'クラスター7I', 'クラスター7K', 'クラスター7V',
-    '5月30日発表の集団感染発生施設の関係者')
+    '5月30日発表の集団感染発生施設の関係者', '6/2発表のクラスター発生施設',
+    '感染者が発生した市内高齢者施設の関係者', '県外174の接触者', '一宮市陽性者の接触者',
+    '県外181の接触者', '6月11日発表の集団感染発生事業所の関係者',
+    '6/12発表のクラスター発生施設', '感染者が発生した市内福祉施設の関係者',
+    '6/14発表のクラスター発生事業所②の従業員')
 
 non_aichi_gifu_contact_tuple = (
     '新宿区の劇場利用', '新宿区内の劇場を利用', 'さいたま市発表の陽性患者の家族',
@@ -120,7 +124,8 @@ non_aichi_gifu_contact_tuple = (
     '青森県事例と接触', '静岡県発表6733', '沖縄県陽性者の接触者', '愛媛県事例と接触',
     '他自治体発表患者の濃厚接触者', '福岡県発表30392',
     '三重県事例の濃厚接触者', '浜松市1667', '県外156の接触者', '県外158の接触者',
-    '栃木県陽性者の接触者', '県外160の接触者', '山形県事例と接触')
+    '栃木県陽性者の接触者', '県外160の接触者', '山形県事例と接触', '新潟県事例と接触',
+    '四日市市1080')
 
 # 再感染 or 再陽性
 repos_dict = {'aichi19770': 'aichi15172',
@@ -158,6 +163,13 @@ repos_dict = {'aichi19770': 'aichi15172',
               'aichi46168': 'aichi27724',
               'aichi46275': 'aichi28871',
               'aichi46997': 'aichi39276',
+              'aichi48912': 'aichi26204',
+              'aichi49021': 'aichi22242',
+              'aichi49395': 'aichi2097',
+              'aichi49411': 'aichi41718',
+              'aichi49571': 'aichi31176',
+              'aichi49940': 'aichi11835',
+              'aichi50086': 'aichi39729',
               }
 
 from enum import Enum
@@ -236,7 +248,7 @@ class Case:
         else:
             return False
 
-    def is_fmale(self):
+    def is_female(self):
         if self.description.find('女性') >= 0:
             return True
         else:
@@ -254,7 +266,8 @@ class Case:
                          '12月6日にロシアより入国', '12月1日海外から入国',
                          '航空機近席に感染者あり', 'フィリピン', 'インドネシア', 'バーレーン',
                          'メキシコ', 'タイ', 'ハンガリー', 'アメリカ', 'アラブ首長国連邦',
-                         'パキスタン', '3月30日アメリカから入国', 'ネパール')
+                         'パキスタン', '3月30日アメリカから入国', 'ネパール',
+                         '6月12日インドネシアから入国')
 
         if self.note.find('帰国') >= 0 or \
            self.description.find('中国籍') >= 0 or \
@@ -337,6 +350,35 @@ class CaseGraph:
             
             # check if the cluster has any non Aichi, Gifu, Mie cases
             if len([x for x in node_names if cases[x].age == 20]) == 0:
+                for node_name in node_names:
+                    cases.pop(node_name)
+
+            # Remove remaining large clusters
+            if len([x for x in node_names if x in ('gifu1603', 'aichi13326', 'aichi13504', 'aichi12324')]) > 0:
+                for node_name in node_names:
+                    cases.pop(node_name)
+
+        self.make_gv_date_rank_ditc(cases, 'aichi')
+        self.make_gv_caption()
+        self.make_gv_date_nodes()
+        self.make_gv_edges(cases)
+        self.make_gv_notes()
+
+    def add_only_aichi_40s_women_cases(self, cases):
+        for case in cases.values():
+            for node in case.connected_nodes:
+                cases[node].is_connected = True
+
+        self.make_nx_nodes(cases)
+
+        # make clusters from the NetworkX graph
+        for comp in nx.connected_components(self.nx_graph):
+            subgraph = self.nx_graph.subgraph(comp).copy()
+            node_names = subgraph.nodes
+            
+            # check if the cluster has any non Aichi, Gifu, Mie cases
+            if len([x for x in node_names if (cases[x].age == 40 and cases[x].is_female())]) == 0 or \
+               len([x for x in node_names if (cases[x].age == 20 and cases[x].is_male())]) == 0:
                 for node_name in node_names:
                     cases.pop(node_name)
 
@@ -649,11 +691,23 @@ class CaseGraph:
                  ('gifu8311', '安八郡安八町\n酒類を提供する飲食店（296）'), # 岐阜市・瑞穂市、スポーツジム後
                  ('gifu8166', '多治見市・土岐市\n家族・知人（297）'), #
                  ('gifu7663', '可児市\n接待を伴う飲食店（298）'), # 可児市
-                 ('gifu8479', '岐阜市\nスポーツジム（299）'), # 
+                 ('gifu8289', '岐阜市\nホットヨガ（299）'), # 
                  ('gifu8349', '可児市\n会食・外国人（300）'), # 5/30
-                 ('gifuX', '（）'), # 5/31
-                 ('gifuX', '（）'), # 
-                 ('gifuX', '（）'), # 
+                 ('gifu7642', '高山市\n友人（301）'), # 5/31
+                 ('gifu8514', '加茂郡八百津町\nデイサービス（302）'), # 
+                 ('gifu8432', '加茂郡七宗町\nデイサービス（303）'), # 6/1
+                 ('gifu8823', '岐阜市\n2家族（304）'), # 
+                 ('gifu8496', '恵那市\n職場関連（305）'), # 6/2
+                 ('gifu8308', '安八郡輪之内町\n職場関連（30X）'), # 6/7
+                 ('gifu8807', '大垣市\n障害者福祉施設関連（307）'), # 
+                 ('gifuX', '岐阜市・瑞穂市\n家族・親族（30X）'), # 
+                 ('gifuX', '岐阜市\n2家族（309）'), # 6/10
+                 ('gifu8663', '可児市\n病院・家族（310）'), # 6/11
+                 ('gifu8855', '可児市\n2家族（311）'), # 
+                 ('gifu8948', '美濃加茂市\n職場（312）'), # 6
+                 ('gifuX', '岐阜市\nデイサービス（31X）'), # 5 
+                 ('gifu9043', '不破郡垂井町\n2家族（314）'), # 6/14
+                 ('gifuX', '岐阜市\n職場（315）'), # 6/15
                  ('gifuX', '（）'), # 
                  ('gifuX', ''))
         notes += (('aichi6365', '岡崎市\n高齢者施設'),
@@ -799,15 +853,32 @@ class CaseGraph:
                   ('aichi35802', 'インド変異株'), # 50代男性、5 月上旬感染判明、渡航歴あり
                   ('aichi36332', '春日井市\n高齢者施設（7W）'), # confirmed
                   ('aichi39616', '名古屋市\n高齢者施設（7X）'), # confirmed
-                  ('aichi39019', 'あま市\n高齢者施設？（7Y？）'), # 10 (May 22), 12 (May 24)
+                  ('aichi39019', 'あま市\n高齢者施設（7Y）'), # confirmed
                   ('aichi43369', '名古屋市\n高齢者施設（7Z）'), # confirmed
-                  ('aichi41752', '春日井市\n障害者施設（8A）'), # confirmed
+                  ('aichi41752', '春日井市\n障害者入所施設（8A）'), # confirmed
                   ('aichi44652', '江南市\n高齢者施設（8B）'), # confirmed
                   ('aichi42555', '刈谷市\n学校（8C）'), # confirmed
                   ('aichi43978', '豊明市\n高齢者施設（8D）'), # confirmed
-                  ('aichiX', '名古屋市\n職場（8E）'), # 10 (May 27), 11 (May 30) aichi46918 も 8E？（CBC）
+                  ('aichi43102', '名古屋市\n職場（8E）'), # confirmed, 10 (May 27), 11 (May 30) aichi46918 も 8E？（CBC）, 12 (Jun 5)
                   ('aichi35444', '刈谷市\n高齢者施設（8F）'), # confirmed
                   ('aichi46336', '豊田市\n大学運動部寮（8G）'), # confirmed 愛知工業大学 フェンシング部
+                  ('aichi44011', '名古屋市\n高齢者施設（8H）'), # confirmed 11 (May 31), 12 (Jun 9)
+                  ('aichi44236', '北名古屋市\n職場？（8I？）'), # 13 (Jun 1)
+                  ('aichi38976', '名古屋市\n職場（8J）'), # confirmed 11 (Jun 1), 19 (Jun 2), 21 (Jun 3), 24 (Jun 9), 25 (Jun 10)
+                  ('aichi42524', '半田市\n高齢者施設（8K）'), # confirmed
+                  ('aichi39011', '名古屋市\n高齢者施設（8L）'), # confirmed
+                  ('aichi38920', '名古屋市\n医療機関（8M）'), # confirmed
+                  ('aichi42722', '豊橋市\n高齢者施設'), #  8Q?
+                  ('aichi47281', '岡崎市\n岡崎市民病院（8N）'), # confirmed
+                  ('aichi42775', '名古屋市\n専門学校（8O）'), # confirmed 24 (Jun 5), 35 (Jun 6), 43 (Jun 7)
+                  ('aichi46547', '名古屋市\n専門学校（8P）'), # confirmed 21 (Jun 7), 22 (Jun 9), 23 (Jun 10)
+                  ('aichiX', '豊橋市\n高齢者施設（8Q）'), # 10 (Jun 8), 11 (Jun 12), 10 (Jun 13) 訂正
+                  ('aichi47490', '豊田市\n事業所（8R)'), #  confirmed 11 (Jun 11)
+                  ('aichi46374', '岡崎市\n高齢者施設'), # 
+                  ('aichi49082', '豊橋市\n福祉施設'), # 
+                  ('aichi45983', '岡崎市\n事業所（8S）'), # 10 (Jun 14) 20-60
+                  ('aichi49220', '岡崎市\n事業所（8T）'), # 11 (Jun 14) 20-50, 12 (Jun 16)
+                  ('aichiX', ''), # 
                   ('aichiX', ''), # 
                   ('aichiX', ''))
 
@@ -914,7 +985,7 @@ class CaseGraph:
                     sub.attr('node', shape='octagon', color='black', style='diagonals', fontcolor='black')
                     if case.is_male():
                         color = '#0000ff' # blue
-                    elif case.is_fmale():
+                    elif case.is_female():
                         color = '#ff0000' # red
                     elif case.is_unknown_sex():
                         color = '#ff00ff' # purple
@@ -1092,6 +1163,8 @@ class TSVReader():
                 connected_nodes.append('aichi33330')
             elif note.find('5月14日発表の集団感染発生施設の関係者') >= 0: # 豊田
                 connected_nodes.append('aichi37476')
+                if node_name in ('aichi44343'): # これは '5月14日発表の集団感染発生施設の関係者' となっているが、件発表だと 37477 と接触、訂正もなし
+                    connected_nodes.append('aichi37477') 
             elif note.find('5月17日発表の集団感染発生施設の関係者') >= 0: # 豊田
                 connected_nodes.append('aichi35483')
             elif note.find('5月18日発表の集団感染発生施設の関係者') >= 0 or \
@@ -1101,6 +1174,24 @@ class TSVReader():
                 connected_nodes.append('aichi39635')
             elif note.find('5月30日発表の集団感染発生施設の関係者') >= 0:
                 connected_nodes.append('aichi46336')
+            elif note.find('6/2発表のクラスター発生施設') >= 0: # 岡崎 医療機関
+                connected_nodes.append('aichi47281')
+            elif (note.find('感染者が発生した市内高齢者施設の関係者') >= 0 and int(node_name.split('aichi')[1]) <= 49400) or \
+                 node_name in ('aichi45185', 'aichi45188', 'aichi47292'): # 豊橋 1935, 1938, 2046
+                connected_nodes.append('aichi42722') # 豊橋 1840
+            elif node_name in ('aichi44510', 'aichi45427', 'aichi46424', 'aichi49537', ): # 職場 8J
+                connected_nodes.append('aichi38976')
+            elif node_name in ('aichi47304', 'aichi46783'): # 学校 8O
+                connected_nodes.append('aichi42775')
+            elif note.find('6月11日発表の集団感染発生事業所の関係者') >= 0: # 豊田 8R
+                connected_nodes.append('aichi47490')
+            elif note.find('6/12発表のクラスター発生施設') >= 0: # 岡崎 高齢者施設
+                connected_nodes.append('aichi46374')
+            elif note.find('6/14発表のクラスター発生事業所②の従業員') >= 0: # 岡崎 事業所 8T
+                connected_nodes.append('aichi49220')
+            elif (note.find('感染者が発生した市内福祉施設の関係者') >= 0 and int(node_name.split('aichi')[1]) >= 49715) or \
+                 node_name in ('aichi49089', 'aichi49503'): # 豊橋 2163, 2216 6/12
+                connected_nodes.append('aichi49082') # 豊橋 2156
             elif node_name in ('gifu4783', 'gifu4778', 'gifu4769', 'gifu4766'): # クラスター157
                 connected_nodes.append('gifu4747')
             elif node_name in ('gifu4827',): # クラスター159
@@ -1175,16 +1266,34 @@ class TSVReader():
                 connected_nodes.append('gifu7994')
             elif node_name in ('gifu8083',): # 県外160
                 connected_nodes.append('gifu8082')
-            elif node_name in ('gifu8294', 'gifu8295', 'gifu8293', 'gifu8352', 'gifu8426',): # 289
+            elif node_name in ('gifu8294', 'gifu8295', 'gifu8293', 'gifu8352', 'gifu8426', ): # 289
                 connected_nodes.append('gifu8283')
+            elif node_name in ('gifu8594', ): # 290
+                connected_nodes.append('gifu7939')
             elif node_name in ('gifu8401', ): # 293
                 connected_nodes.append('gifu8175')
-            elif node_name in ('gifu8427', 'gifu8555', ): # 294
+            elif node_name in ('gifu8427', 'gifu8555', 'gifu8612', 'gifu8590', 'gifu8808', 'gifu8798', 'gifu8762', 'gifu8870', 'gifu8871', 'gifu8992', ): # 294
                 connected_nodes.append('gifu8283')
+            elif node_name in ('gifu8330', ): # 295
+                connected_nodes.append('gifu8157')
             elif node_name in ('gifu8478', 'gifu8569', ): # 296
                 connected_nodes.append('gifu8311')
-            elif node_name in ('gifu8480', 'gifu8481', 'gifu8482', 'gifu8483', 'gifu8484', 'gifu8500', 'gifu8507', 'gifu8570', 'gifu8554', 'gifu8553', 'gifu8548', 'gifu8289', 'gifu8437', ): # 299
-                connected_nodes.append('gifu8479')
+            elif node_name in ('gifu8636', ): # 298
+                connected_nodes.append('gifu7663')
+            elif node_name in ('gifu8480', 'gifu8481', 'gifu8482', 'gifu8483', 'gifu8484', 'gifu8500', 'gifu8507', 'gifu8570', 'gifu8554', 'gifu8553', 'gifu8548', 'gifu8479', 'gifu8437', 'gifu8589', 'gifu8819', 'gifu8854', 'gifu8853', 'gifu8852', 'gifu8851', 'gifu8977',): # 299
+                connected_nodes.append('gifu8289')
+            elif node_name in ('gifu8611', 'gifu8684', 'gifu8669', ): # 302
+                connected_nodes.append('gifu8514')
+            elif node_name in ('gifu8638', ): # 305
+                connected_nodes.append('gifu8496')
+
+            for c in ('aichi46595',):
+                try:
+                    # remove non-exisisting connect due to a retrracted case
+                    c_idx = connected_nodes.index(c)
+                    connected_nodes.pop(c_idx)
+                except:
+                    pass
 
             cases['%s%d' % (pref, idx)] = Case(age, city, node_name, note, date, description, connected_nodes)
 
@@ -1461,6 +1570,12 @@ def main():
 
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
+    case_graph_aichi = CaseGraph('Aichi_40s_women')
+    case_graph_aichi.add_only_aichi_40s_women_cases(cases)
+    case_graph_aichi.gv_graph.view()
+
+    reader = TSVReader()
+    cases = reader.make_aichi_gifu_cases()
     case_graph_gifu = CaseGraph('Gifu')
     case_graph_gifu.add_only_gifu_cases(cases, 1)
     #link_nodes(case_graph_gifu, cases)
@@ -1478,6 +1593,7 @@ def main():
     cases.update(reader.make_gifu_cases())
     case_graph_anjo = CaseGraph('Anjo')
     #case_graph_anjo.add_selected_city_cases(cases, '安城市')
+    case_graph_anjo.add_selected_city_cases(cases, '岡崎市')
     #case_graph_anjo.add_selected_city_cases(cases, '尾張旭市')
     #case_graph_anjo.add_selected_city_cases(cases, '愛西市')
     #case_graph_anjo.add_selected_city_cases(cases, '蟹江町')
@@ -1488,7 +1604,8 @@ def main():
     #case_graph_anjo.add_selected_city_cases(cases, '豊川市')
     #case_graph_anjo.add_selected_city_cases(cases, '豊橋市', 10)
     #case_graph_anjo.add_selected_city_cases(cases, ('豊橋市', '豊川市', '田原市'), 10)
-    case_graph_anjo.add_selected_city_cases(cases, '刈谷市')
+    #case_graph_anjo.add_selected_city_cases(cases, '刈谷市')
+    #case_graph_anjo.add_selected_city_cases(cases, '清須市')
     #case_graph_anjo.add_selected_city_cases(cases, '日進市')
     #case_graph_anjo.add_selected_city_cases(cases, 'みよし市')
     #case_graph_anjo.add_selected_city_cases(cases, '高浜市')
