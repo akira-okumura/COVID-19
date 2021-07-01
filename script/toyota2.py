@@ -20,7 +20,7 @@ for i in range(len(df)):
             raise BaseException(df[0][i])
 
     try:
-        n, age, sex, symp, day1 = df[0][i], df[1][i].replace(' 歳代', ''), df[2][i],\
+        n, age, sex, symp, day1 = df[0][i], df[1][i].replace(' 歳代', '').replace('歳代', ''), df[2][i],\
             df[4][i], re.sub('(.*)（.*曜日）', '\\1', df[5][i])
     except:
         print(df[0][i])
