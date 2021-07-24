@@ -61,7 +61,8 @@ aichi_gifu_contact_tuple = (
     '県外181の接触者', '6月11日発表の集団感染発生事業所の関係者',
     '6/12発表のクラスター発生施設', '感染者が発生した市内福祉施設の関係者',
     '6/14発表のクラスター発生事業所②の従業員', '愛知県発表8Uクラスターの関係者',
-    'クラスター8W', '県外183の接触者', 'クラスター9A')
+    'クラスター8W', '県外183の接触者', 'クラスター9A',
+    '感染者が発生した市内高等学校部活動の関係者')
 
 non_aichi_gifu_contact_tuple = (
     '新宿区の劇場利用', '新宿区内の劇場を利用', 'さいたま市発表の陽性患者の家族',
@@ -127,7 +128,8 @@ non_aichi_gifu_contact_tuple = (
     '三重県事例の濃厚接触者', '浜松市1667', '県外156の接触者', '県外158の接触者',
     '栃木県陽性者の接触者', '県外160の接触者', '山形県事例と接触', '新潟県事例と接触',
     '四日市市1080', '静岡県発表8874', '浜松市発表2212', '静岡市発表2269',
-    '金沢市事例と接触', '岩手県事例と接触')
+    '金沢市事例と接触', '岩手県事例と接触', '福島県事例と接触',  '函館市事例と接触',
+    '東京都発表患者の濃厚接触者', '川崎市15386')
 
 # 再感染 or 再陽性
 repos_dict = {'aichi19770': 'aichi15172',
@@ -175,6 +177,15 @@ repos_dict = {'aichi19770': 'aichi15172',
               'aichi50304': 'aichi49431',
               'aichi50399': 'aichi25802',
               'aichi50400': 'aichi29359',
+              'aichi51210': 'aichi35803',
+              'aichi51355': 'aichi43382',
+              'aichi51428': 'aichi23124',
+              'aichi51953': 'aichi45853',
+              'aichi52080': 'aichi6543',
+              'aichi52155': 'aichi32679',
+              'aichi52379': 'aichi38551',
+              'aichi52388': 'aichi51437',
+              'aichi52488': 'aichi14216',
               }
 
 from enum import Enum
@@ -272,7 +283,8 @@ class Case:
                          '航空機近席に感染者あり', 'フィリピン', 'インドネシア', 'バーレーン',
                          'メキシコ', 'タイ', 'ハンガリー', 'アメリカ', 'アラブ首長国連邦',
                          'パキスタン', '3月30日アメリカから入国', 'ネパール',
-                         '6月12日インドネシアから入国', '6月17日インドネシアから帰国')
+                         '6月12日インドネシアから入国', '6月17日インドネシアから帰国',
+                         '海外から入国')
 
         if self.note.find('帰国') >= 0 or \
            self.description.find('中国籍') >= 0 or \
@@ -731,7 +743,7 @@ class CaseGraph:
                  ('gifu8663', '可児市\n病院・家族（310）'), # 6/11
                  ('gifu8855', '可児市\n2家族（311）'), # 
                  ('gifu8948', '美濃加茂市\n職場（312）'), # 6
-                 ('gifuX', '岐阜市\nデイサービス（31X）'), # 5 
+                 ('gifu9107', '岐阜市\nデイサービス（313）'), # 5 
                  ('gifu9043', '不破郡垂井町\n2家族（314）'), # 6/14
                  ('gifu8837', '岐阜市\n職場（315）'), # 6/15
                  ('gifu9100', '多治見市・恵那市\n家族（316）'), # 6/17
@@ -739,6 +751,14 @@ class CaseGraph:
                  ('gifu9044', '可児市\n職場・家族（318）'), # 6/18
                  ('gifu9001', '土岐市\n教会・外国籍（319）'), # 6/22
                  ('gifu9160', '各務原市\n高齢者福祉施設（320）'), # 
+                 ('gifu9152', '岐阜市\n職場関連・デルタ株（321）'), # 7/2
+                 ('gifu9278', '名古屋市\n職場'), # 7/4
+                 ('gifu9237', '羽島市\n職場関連（322）'), # 7/8
+                 ('gifu9314', '美濃加茂市\n職場関連（323）'), # 7/14
+                 ('gifu9313', '可児郡御嵩町\n職場関連（324）'), # 7/16
+                 ('gifu9368', '各務原市\n職場（325）'), # 7/23
+                 ('gifu9420', '大阪から旅行'), # 
+                 ('gifuX', '（）'), # 
                  ('gifuX', '（）'), # 
                  ('gifuX', '（）'), # 
                  ('gifuX', ''))
@@ -917,6 +937,11 @@ class CaseGraph:
                   ('aichi50227', '蒲郡市\n自宅会食（8Y）'), # confirmed 15 (Jun 19), 18 (Jun 22)
                   ('aichi48489', '名古屋市\n高齢者施設（8Z）'), # confirmed 16 (Jun 21), 17 (Jun 22)
                   ('aichi50338', '一宮市\n医療機関（9A）'), # confirmed 12 (Jun 26), 14 (Jun 27)
+                  ('aichi51328', '名古屋市\n医療機関（9B）'), # confirmed 14 (Jul 4), 17 (Jul 5)
+                  ('aichi51112', 'みよし市\nスポーツチーム（9C）'), # 10 (Jul 9)
+                  ('aichi51588', '碧南市\n医療機関（9D）'), # confirmed 18 (Jul 11)
+                  ('aichi51203', '瀬戸市\n高齢者施設（9E）'), # 13 (Jul 13)
+                  ('aichi52116', '豊橋市\n高校部活（9F）'), # 11 (Jul 20)
                   ('aichiX', ''),
                   ('aichiX', ''),
                   ('aichiX', ''))
@@ -928,13 +953,15 @@ class CaseGraph:
 
     def make_gv_edges(self, cases):
         for case in cases.values():
-            if before_4th_wave(case.date):
+            #if before_4th_wave(case.date):
+            if before_2021May(case.date):
                 continue
             if len(case.connected_nodes) > 0:
                 node_name = case.node_name
                 for node in case.connected_nodes:
                     source_node_name = cases[node].node_name
-                    if before_4th_wave(cases[node].date):
+                    #if before_4th_wave(cases[node].date):
+                    if before_2021May(cases[node].date):   
                         continue
                     self.gv_graph.edge(source_node_name, node_name)
 
@@ -987,7 +1014,8 @@ class CaseGraph:
         self.date_ranks = {} # stores all cases date by date
         for case in sorted(cases.values(), key=lambda x:x.date):
             date = case.date
-            if before_4th_wave(case.date):
+            #if before_4th_wave(case.date):
+            if before_2021May(case.date):
                 continue
             if date not in self.date_ranks.keys():
                 self.date_ranks[date] = [case,]
@@ -1237,6 +1265,9 @@ class TSVReader():
                 connected_nodes.append('aichi49953')
             elif note.find('クラスター9A') >= 0:
                 connected_nodes.append('aichi50338')
+            elif note.find('感染者が発生した市内高等学校部活動の関係者') >= 0 or \
+                 node_name in ('aichi52265', 'aichi52266', 'aichi52267'):
+                connected_nodes.append('aichi52116')
             elif node_name in ('gifu4783', 'gifu4778', 'gifu4769', 'gifu4766'): # クラスター157
                 connected_nodes.append('gifu4747')
             elif node_name in ('gifu4827', ): # クラスター159
@@ -1331,6 +1362,10 @@ class TSVReader():
                 connected_nodes.append('gifu8514')
             elif node_name in ('gifu8638', ): # 305
                 connected_nodes.append('gifu8496')
+            elif node_name in ('gifu9264', 'gifu9294', 'gifu9295', ): # 321
+                connected_nodes.append('gifu9152')
+            elif node_name in ('gifu9318', ): # 322
+                connected_nodes.append('gifu9237')
 
             for c in ('aichi46595', ):
                 try:
@@ -1389,7 +1424,7 @@ class TSVReader():
             else:
                 age, sex = person.split('代')
 
-            if note.find('No.') >= 0 and note.find('と接触') >= 0:
+            if note.find('No.') >= 0 and note.find('と接触') >= 0 and n != 51355:
                 tmp = re.findall('No\.[,\d]*と接触', note)[0]
                 note = note.replace(tmp, tmp.replace('No.', '愛知県内').replace(',', '例目、').replace('と接触', '例目と接触'))
             elif note == '':
@@ -1442,7 +1477,7 @@ class ROOTPlotter:
         self.can = [ROOT.ExactSizeCanvas('can%d' % i, 'can%d' % i, 800, 600) for i in range(3)]
 
         t0 = ROOT.TDatime(2020, 7, 1, 0, 0, 0).Convert()
-        nweeks = 54
+        nweeks = 60
         ndays = nweeks * 7
         dt = ndays * 3600 * 24
         t1 = t0 + dt
@@ -1650,11 +1685,11 @@ def main():
     #case_graph_anjo.add_selected_city_cases(cases, '蟹江町')
     #case_graph_anjo.add_selected_city_cases(cases, '弥富市')
     #case_graph_anjo.add_selected_city_cases(cases, '豊田市')
-    #case_graph_anjo.add_selected_city_cases(cases, '瀬戸市')
+    case_graph_anjo.add_selected_city_cases(cases, '瀬戸市')
     #case_graph_anjo.add_selected_city_cases(cases, '小牧市')
     #case_graph_anjo.add_selected_city_cases(cases, '豊川市')
     #case_graph_anjo.add_selected_city_cases(cases, '豊橋市', 10)
-    case_graph_anjo.add_selected_city_cases(cases, '豊橋市')
+    #case_graph_anjo.add_selected_city_cases(cases, '豊橋市')
     #case_graph_anjo.add_selected_city_cases(cases, ('豊橋市', '豊川市', '田原市'), 10)
     #case_graph_anjo.add_selected_city_cases(cases, ('清須市', '稲沢市', 'あま市'))
     #case_graph_anjo.add_selected_city_cases(cases, '刈谷市')
@@ -1666,6 +1701,7 @@ def main():
     #case_graph_anjo.add_selected_city_cases(cases, '蒲郡市')
     #case_graph_anjo.add_selected_city_cases(cases, '豊山町')
     #case_graph_anjo.add_selected_city_cases(cases, '名古屋市')
+    #case_graph_anjo.add_selected_city_cases(cases, '碧南市')
     case_graph_anjo.gv_graph.view()
 
     reader = TSVReader()
@@ -1697,11 +1733,14 @@ def main():
 def before_2020Nov(date):
     return str(date)[:-3] in ('2020-01', '2020-02', '2020-03', '2020-04', '2020-05', '2020-06', '2020-07', '2020-08', '2020-09', '2020-10')
 
+def before_2021May(date):
+    return before_2021(date) or str(date)[:-3] in ('2021-01', '2021-02', '2021-03', '2021-04',)
+
 def before_2021(date):
     return str(date)[:-5] in ('2020-',)
 
 def before_4th_wave(date):
-    return str(date)[:-5] in ('2020-',) or str(date)[:-3] in ('2021-01', '2021-02')
+    return before_2021(date) or str(date)[:-3] in ('2021-01', '2021-02')
 
 if __name__ == '__main__':
     main()

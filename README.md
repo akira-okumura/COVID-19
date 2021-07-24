@@ -9,6 +9,20 @@ https://fundexapp.jp/nagoya-u/entry.php?purposeCode=200000&supportCode=200027
 
 ## 愛知県・岐阜県の全体経路図（PDF）
 
+### 2021-05-01 以降（第 4 波ピーク直前から）のみ表示した PDF
+
+- 2021-07-23（愛知）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Aichi2021-07-23.pdf
+
+- 2021-07-23（愛知、10 人以上のクラスターのみを表示）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Aichi2021-07-23_cluster10.pdf
+
+- 2021-07-23（愛知、10 歳未満の子供を含むクラスターのみを表示）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Aichi2021-07-23_kids.pdf
+
+- 2021-07-23（岐阜）\
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Gifu2021-07-23.pdf
+
 ### 2021-03-01 以降（第 4 波開始から）のみ表示した PDF
 
 - 2021-06-30（愛知）\
