@@ -11,11 +11,14 @@ print('患者例\t年代\t性別\t居住地\t海外渡航歴\t発症日\t採取�
 lines = sys.stdin.readlines()
 
 for line in lines:
+    line = re.sub('(\d+?)\n例目\n', '\\1\t', line)
     line = re.sub('(\d+?)例目\t', '\\1\t', line)
+    line = re.sub('(\d+?)歳\n代\n', '\\1\t', line)
     line = re.sub('(\d+?)歳代', '\\1', line)
     line = re.sub('(男|女)性\t\n', '\\1\t一宮市\t\t', line)
     line = re.sub('(男|女)性\t', '\\1\t一宮市\t\t', line)
     line = re.sub('(抗原|PCR)\n', '', line)
+    line = re.sub('(\d+?)月(\d+?)日\n(\d+?)月(\d+?)日\n', '\\1月\\2日\t\\3月\\4日\t', line)
     line = re.sub('(\d+?)月(\d+?)日\t\n', '\\1月\\2日\t', line)
     line = re.sub('(\d+?)月(\d+?)日\n', '\\1月\\2日\t', line)
     line = re.sub('\t(\d+?)例目', '\t一宮市発表\\1例目', line)

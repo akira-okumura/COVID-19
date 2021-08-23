@@ -62,7 +62,10 @@ aichi_gifu_contact_tuple = (
     '6/12発表のクラスター発生施設', '感染者が発生した市内福祉施設の関係者',
     '6/14発表のクラスター発生事業所②の従業員', '愛知県発表8Uクラスターの関係者',
     'クラスター8W', '県外183の接触者', 'クラスター9A',
-    '感染者が発生した市内高等学校部活動の関係者')
+    '感染者が発生した市内高等学校部活動の関係者', '県外189',
+    '感染者が発生した市内医療機関の感染者', '県外197の接触者',
+    '8月13日発表の集団感染発生施設の関係者', '8/13発表のクラスター発生施設の患者',
+    'クラスター9P', 'クラスター9G', '8/13発表のクラスター発生施設の学生',)
 
 non_aichi_gifu_contact_tuple = (
     '新宿区の劇場利用', '新宿区内の劇場を利用', 'さいたま市発表の陽性患者の家族',
@@ -129,10 +132,21 @@ non_aichi_gifu_contact_tuple = (
     '栃木県陽性者の接触者', '県外160の接触者', '山形県事例と接触', '新潟県事例と接触',
     '四日市市1080', '静岡県発表8874', '浜松市発表2212', '静岡市発表2269',
     '金沢市事例と接触', '岩手県事例と接触', '福島県事例と接触',  '函館市事例と接触',
-    '東京都発表患者の濃厚接触者', '川崎市15386')
+    '東京都発表患者の濃厚接触者', '川崎市15386', '西宮市事例と接触', '大分県陽性者の接触者',
+    '北九州市事例と接触', '京都市事例と接触', '島根県陽性者の接触者', '鹿児島市事例と接触',
+    '京都府陽性者の接触者', '岩手県事例と接触', '岩手県2224',
+    '沖縄県発表患者の濃厚接触者', '岡山県陽性者の接触者', '山梨県陽性者の接触者',
+    '山梨県事例と接触', '沖縄県事例の濃厚接触者', '山梨県発表患者の濃厚接触者',
+    '和歌山県発表1382', '福岡県陽性者の接触者', '鳥取県事例と接触',
+    '鹿児島県陽性者の接触者', '兵庫県陽性者の接触者', '茨城県発表患者の濃厚接触者',
+    '富山県発表患者の濃厚接触者', '千葉県発表患者の濃厚接触者', '鹿児島県事例と接触',
+    '愛媛県事例の濃厚接触者', '静岡市事例と接触', '大分県事例の濃厚接触者',
+    '滋賀県事例の濃厚接触者', '滋賀県発表8552')
 
 # 再感染 or 再陽性
-repos_dict = {'aichi19770': 'aichi15172',
+repos_dict = {'aichi8896': 'aichi3783',
+              'aichi12906': 'aichi7951',
+              'aichi19770': 'aichi15172',
               'aichi20403': 'aichi15384',
               'aichi21078': 'aichi13970',
               'aichi21939': 'aichi18198',
@@ -144,6 +158,7 @@ repos_dict = {'aichi19770': 'aichi15172',
               'aichi25935': 'aichi22967',
               'aichi27000': 'aichi25557',
               'aichi27630': 'aichi27630',
+              'aichi29575': 'aichi25891',
               'aichi30384': 'aichi27492',
               'aichi30862': 'aichi22207',
               'aichi31224': 'aichi6101',
@@ -152,13 +167,14 @@ repos_dict = {'aichi19770': 'aichi15172',
               'aichi32595': 'aichi3248',
               'aichi33517': 'aichi29000',
               'aichi33887': 'aichi4280',
-              'aichi34541': 'aichi1727',
               'aichi34315': 'aichi17166',
+              'aichi34541': 'aichi1727',
               'aichi36291': 'aichi19041',
               'aichi36292': 'aichi1077',
+              'aichi37503': 'aichi17908',
               'aichi38448': 'aichi26081',
-              'aichi40226': 'aichi3104',
               'aichi39821': 'aichi32891',
+              'aichi40226': 'aichi3104',
               'aichi40451': 'aichi31586',
               'aichi42355': 'aichi6458',
               'aichi44201': 'aichi32675',
@@ -170,6 +186,7 @@ repos_dict = {'aichi19770': 'aichi15172',
               'aichi48912': 'aichi26204',
               'aichi49021': 'aichi22242',
               'aichi49395': 'aichi2097',
+              'aichi49402': 'aichi37796',
               'aichi49411': 'aichi41718',
               'aichi49571': 'aichi31176',
               'aichi49940': 'aichi11835',
@@ -177,6 +194,7 @@ repos_dict = {'aichi19770': 'aichi15172',
               'aichi50304': 'aichi49431',
               'aichi50399': 'aichi25802',
               'aichi50400': 'aichi29359',
+              'aichi50509': 'aichi36861',
               'aichi51210': 'aichi35803',
               'aichi51355': 'aichi43382',
               'aichi51428': 'aichi23124',
@@ -186,7 +204,600 @@ repos_dict = {'aichi19770': 'aichi15172',
               'aichi52379': 'aichi38551',
               'aichi52388': 'aichi51437',
               'aichi52488': 'aichi14216',
+              'aichi52660': 'aichi23474',
+              'aichi52982': 'aichi34607',
+              'aichi53125': 'aichi37746',
+              'aichi53390': 'aichi50483',
+              'aichi53404': 'aichi49402',
+              'aichi53870': 'aichi48617',
+              'aichi53911': 'aichi32832',
+              'aichi54535': 'aichi30509',
+              'aichi54536': 'aichi13317',
+              'aichi55169': 'aichi3112',
+              'aichi54867': 'aichi41801',
+              'aichi54847': 'aichi48530',
+              'aichi54848': 'aichi47978',
+              'aichi55920': 'aichi758',
+              'aichi55538': 'aichi34111',
+              'aichi55995': 'aichi33545',
+              'aichi55999': 'aichi15266',
+              'aichi56794': 'aichi14981',
+              'aichi57785': 'aichi23121',
+              'aichi58488': 'aichi8475',
+              'aichi59126': 'aichi48398',
+              'aichi59824': 'aichi49940',
+              'aichi60455': 'aichi51158',
+              'aichi60702': 'aichi9021',
+              'aichi60717': 'aichi14791',
+              'aichi61004': 'aichi38278',
+              'aichi61971': 'aichi732',
+              'aichi61970': 'aichi36158',
+              'aichi62069': 'aichi36316',
+              'aichi62312': 'aichi5678',
+              'aichi62328': 'aichi30623',
+              'aichi62632': 'aichi4444',
+              'aichi62793': 'aichi49887',
+              'aichi63197': 'aichi11580',
+              'aichi63198': 'aichi7235',
+              'aichi65761': 'aichi11442',
+              'aichi65762': 'aichi4238',
+              'aichi65763': 'aichi740',
+              'aichi65764': 'aichi17048',
+              'aichi65765': 'aichi9533',
+              'aichi65766': 'aichi37188',
+              'aichi65920': 'aichi6474',
+              'aichi66257': 'aichi1124',
+              'aichi67209': 'aichi50075',
+              'aichi67210': 'aichi255',
+              'aichi67211': 'aichi3104',
+              'aichi67490': 'aichi20830',
+              'aichi67943': 'aichi23405',
+              'aichi68001': 'aichi29702',
+              'aichi68026': 'aichi6261',
+              'aichi68413': 'aichi21069',
+              'aichiX': 'aichiY',
+              'aichiX': 'aichiY',
+              'aichiX': 'aichiY',
               }
+# 再感染 or 再陽性
+
+note_dict = {'gifu708': '岐阜市\n芸能事務所',
+             'gifu741': '美濃加茂市\n外国人学校',
+             'gifu1078': '美濃加茂市\nデイサービス',
+             'gifu1041': '岐阜市\n河村病院',
+             'gifu1270': '大垣日大高校',
+             'gifu1378': '多治見市\nケアハウスビアンカ\n（老人ホーム）',
+             'gifu1491': '中津川市\n中京学院大学\n硬式野球部',
+             'gifu1603': '中津川市\nサンシャインプレミアム中津川\nグループホーム',
+             'gifu1463': '複数大学の会食',
+             'gifu1086': '岐阜協立大学\n男子バレーボール部',
+             'gifu1559': '岐南町\n障碍者福祉施設',
+             'gifu1673': '本巣市\n職場',
+             'gifu2106': '本巣郡北方町\nGAS PANIC（接待）',
+             'gifu1924': '岐阜市折立\nオイコットクラブ（接待）',
+             'gifu1950': '朝日大学\n運動部',
+             'gifu1783': '可児市\nスターダストフィリピンクラブ',
+             'gifu1930': '羽島市\n入所型高齢者福祉施設',
+             'gifu2193': '複数大学の飲食',
+             'gifu1377': '羽島市\n職場関連',
+             'gifu2250': '岐阜市\n高齢者福祉施設',
+             'gifu2079': '会食',
+             'gifu2108': '親族の会食',
+             'gifu1857': '可児郵便局',
+             'gifu1254': '帝京大可児高校',
+             'gifu1134': 'さわやかナーシング\n可児デイサービスセンター',
+             'gifu1206': '複数の飲食店',
+             'gifu1887': '各務原市\n職場',
+             'gifu1256': '岐阜協立大\nサッカー部（飲食）',
+             'gifu1243': '不破郡垂井町\n不破高校',
+             'gifu1257': '飲食店会食\nから親族へ',
+             'gifu956': '揖斐郡池田町\nイビデン樹脂',
+             'gifu1662': '海津市\n学童保育',
+             'gifu1253': '高山市\n久美愛厚生病院',
+             'gifu1152': '親族',
+             'gifu2440': '居酒屋・カラオケ',
+             'gifu2491': '各務原市\nデイサービスセンター\n岐阜市\n県総合医療センター',
+             'gifu2447': '会食',
+             'gifu2250': '岐阜市\n高齢者福祉施設',
+             'gifu2593': '関市\n事業所',
+             'gifu2356': '会食',
+             'gifu2604': '会食',
+             'gifu2595': '親族会食',
+             'gifu2655': '海津市\n事業所',
+             'gifu2739': '家族',
+             'gifu2740': '職場', # 3 つの飲食店クラスター? 人数足りない
+             'gifu2882': '職場\n年始パーティー',
+             'gifu3197': '高山西高校運動部',
+             'gifu3095': '職場',
+             'gifu3125': '山県市\nショートステイ\nデイサービスセンター',
+             'gifu3622': '岐阜市\n介護老人保健施設',
+             'gifu3676': '職場・家族',
+             'gifu3704': '会食',
+             'gifu3442': '岐阜市\nデイサービスセンター',
+             'gifu3135': '関市\n中濃厚生病院',
+             'gifu3558': '親族飲食・職場',
+             'gifu3305': '岐阜市\n清流病院',
+             'gifu3297': '美濃市\nデイサービス',
+             'gifu3502': '家族',
+             'gifu3763': '可児市\nデイサービス',
+             'gifu3828': '可児市\nルグラン（キャバクラ）',
+             'gifu3805': '岐阜市\n老人ホーム',
+             'gifu3895': '会食・職場',
+             'gifu3972': '知人同士\n一部同居',
+             'gifu3878': '親族会食',
+             'gifu4017': '可児市\nクラブプレミアム（接待）',
+             'gifu4130': '大垣市\n職場',
+             'gifu4175': '美濃加茂市\n木沢記念病院',
+             'gifu4158': '親族・職場',
+             'gifu4102': '大垣市\n学習塾',
+             'gifu4227': '海津市\n家族・知人',
+             'gifu4376': '瑞浪市\n市立みどり幼児園',
+             'gifu4413': '各務原市\n語学学校',
+             'gifu4440': '岐阜市\n県立岐南工業高校',
+             'gifu4587': '瑞浪市\n東濃厚生病院',
+             'gifu4604': '土岐市\n高井病院',
+             'gifu4551': '可児市\n人材派遣会社',
+             'gifu4570': '㊑', # variant No. 1
+             'gifu4662': '㊑', # variant No. 7
+             'gifu4691': '㊑', # variant No. 11
+             'gifu4692': '各務原市\n消防本部（155）',
+             'gifu4635': '羽島郡岐南町\n事業所',
+             'gifu4741': '岐阜市弥生町\nフィリピンパブ（156）', # 156
+             'gifu4747': '各務原市\n老人保健施設「サンバレーかかみ野」（157）', # 157
+             'gifu4751': '宿泊・会食（親族、158）', # 158
+             'gifu4774': '大垣市\n接待を伴う飲食店（159）㊑', # 159
+             'gifu4763': '神戸町\n同居・職場・外国籍（160）㊑', # 160 変異株
+             'gifu4831': '可児市\n職場（161）', # 161 変異株ではない
+             'gifu4782': '各務原市\n職場（162）㊑', # 162 変異株
+             'gifu4917': '職場（163）', # 163
+             'gifu4908': '職場（164）', # 164
+             'gifu4876': '職場（165）', # 165
+             'gifu4896': '加茂郡富加町\n職場・外国籍（166）㊑', # 166
+             'gifu4943': '可児郡御嵩町\n教会イースター・外国籍（167）㊑',
+             'gifu4995': '土岐市\nデイサービス（168）㊑',
+             'gifu4975': '養老町\n職場（169）',
+             'gifu4976': '親族（170）',
+             'gifu4901': '美濃加茂市・中津川市\n職場・家族・外国籍（171）㊑',
+             'gifu5009': '家族（172）',
+             'gifu5050': '美濃市\n親族（173）㊑',
+             'gifu5106': '揖斐郡揖斐川町\n同居・会食・外国籍（174）㊑',
+             'gifu5209': '羽島市\n職場（175）㊑',
+             'gifu5109': '関市\n家族・幼稚園（176）',
+             'gifu5174': '大垣市\nデイサービス（177）㊑',
+             'gifu5108': '可児市\n親族・会食・外国籍（178）㊑',
+             'gifu5116': '美濃加茂市\n接待を伴う飲食店（179）',
+             'gifu5300': '岐阜市\n家族・友人（180）㊑',
+             'gifu5328': '加茂郡川辺町\n職場（181）㊑',
+             'gifu5327': '各務原市・可児郡御嵩町\n仕事（182）',
+             'gifu5427': '岐阜市\n接待を伴う飲食店（183）㊑',
+             'gifu5259': '大垣市\nショートステイ施設（184）㊑',
+             'gifu5363': '関市\n会食・3家族（185）',
+             'gifu5507': '岐阜市\n接待を伴う飲食店（186）㊑',
+             'gifu5626': '岐阜市\n接待を伴う飲食店（187）㊑',
+             'gifu5630': '可児市\n親族・会食・外国籍（188）',
+             'gifu5526': '羽島市\n小学校（189）㊑',
+             'gifu5632': '可児市\n家族・小学校関係者（190）',
+             'gifuX': '瑞穂市\n職場（191）',
+             'gifu5570': '多治見市\n訪問看護ステーション（192）',
+             'gifu5548': '大垣市\n酒類を提供する飲食店（193）',
+             'gifu5581': '中津川市\n職場・家族（194）',
+             'gifu5705': '瑞穂市\n職場喫煙所（195）',
+             'gifuX': '各務原市\n飲食店利用者・家族（196）',
+             'gifu5577': '可児郡御嵩町\n向陽中学校（197）',
+             'gifu5792': '下呂市\n会食（198）',
+             # 「土岐市、郡上市、加茂郡富加町、可児市の各職場に広がり」（岐阜日報 5/24）
+             'gifu5774': '関市\n職場・家族（199）',
+             'gifu6024': '岐阜市\n職場・家族（200）',
+             'gifu5876': '岐阜市\n家族・飲食（201）',
+             'gifuX': '岐阜市\n職場（202）',
+             'gifuX': '大垣市\n家族・会食（203）',
+             'gifu5968': '羽島市\n職場（204）',
+             'gifuX': '大垣市\n家族・仕事（205）',
+             'gifu5893': '美濃加茂市\n太田小学校（206）',
+             'gifu5932': '（207）',
+             'gifu6000': '多治見市\nバーベキュー（208）',
+             'gifu6016': '大垣市\n職場（209）',
+             'gifu5900': '岐阜市\n飲食店（210）',
+             'gifu6131': '本巣市\n職場（211）',
+             'gifu6002': '（212）', # 職場・家族
+             'gifu6040': '（213）', # 大垣 職場・家族
+             'gifu6265': '本巣市\n職場（214）',
+             'gifu6131': '（215）', # 友人・職場・家族
+             'gifu6146': '（216）', # 可児・多治見 家族・親族
+             'gifu5667': '（217）',
+             'gifu6344': '（218）', # 岐阜 友人
+             'gifu6331': '（219）', # 岐阜 友人
+             'gifu6348': '（220）', # 岐阜 家族
+             'gifu6329': '（221）', # 岐阜 同僚・家族
+             'gifu5788': '御嵩町\n飲食店（222）', # 可児市
+             'gifu6093': '土岐市\n大学生・家族（223）', # 
+             'gifu6091': '大垣市\n会食・カラオケ（224）', # 大垣, May 9
+             'gifuX': '（225）', # 
+             'gifu6202': '大垣市\n岐阜協立大運動部（226）', # 
+             'gifu6145': '瑞穂市\n朝日大運動部（227）', # 
+             'gifu5709': '各務原市\n職場（228）',
+             'gifu6100': '大垣市\n職場・家族（229）',
+             'gifu6184': '瑞浪市\n家族など（230）',
+             'gifu6439': '瑞穂市\n朝日大運動部（231）',
+             'gifuX': '岐阜市\n会食（232）',
+             'gifu6435': '下呂市・大垣市\n親族BBQ（23X）', # 5/12
+             'gifu6120': '大垣市\n親族BBQ（234）',
+             'gifu6409': '美濃加茂市・可児市\n会食（235）',
+             'gifu6367': '大垣市・不破郡垂井町\n親族BBQ（236）',
+             'gifu6273': '可児市\n親族（237）',
+             'gifuX': '岐阜市\n知人（23X）',
+             'gifuX': '岐阜市\n高齢者福祉施設（23X）',
+             'gifu6406': '岐阜市・関市\nBBQ（24X）',# 岐阜 5/13
+             'gifu6441': '可児市・可児郡御嵩町\nBBQ（241）',
+             'gifu6506': '高山市\n飲食店（242）',
+             'gifu6312': '羽島郡岐南町\nデイサービス（24X）',
+             'gifuX': '（244）',
+             'gifuX': '（245）', # 5/14
+             'gifu6631': '羽島郡笠松町\n高齢者福祉施設（246）',
+             'gifu6768': '高山市\n自宅飲食・外国人（247）',
+             'gifu6621': '瑞浪市・岐阜市\n仕事・家族（248）',
+             'gifu6979': '関市\n中部学院大運動部（249?）', # 5/15
+             'gifu6658': '本巣市・大垣市\n連休中食事（250）',
+             'gifu7561': '岐阜市・山県市\n連休中食事（249?）',
+             'gifuX': '（25X）', # 県立岐阜商業高校
+             'gifu6638': '（252）', # 
+             'gifu7204': '岐阜市\n家族（253）',
+             'gifu7192': '（254?）', # 5/16 関市
+             'gifu6923': '関市\nデイサービス（255）', # 関市のデイサービス、職員、利用者、家族、11 名
+             'gifuX': '（256）', # 
+             'gifu6335': '（257）',
+             'gifu7348': '（258）', # 岐阜市　家族
+             'gifu7344': 'カラオケ喫茶？（259）', # 岐阜市 カラオケ喫茶？
+             'gifu6356': '下呂市\n診療所（26X）', # 5/17
+             'gifu7457': '（261）', # 垂井町
+             'gifuX': '（262）', # 
+             'gifu8232': '（263）', # 
+             'gifu6941': '（264）', # 岐阜  7487
+             'gifu6967': '高山市\n障害者入所施設（265）', # 5/18
+             'gifuX': '岐阜市\n知人・連休会食（266）', # 
+             'gifu6427': '羽島市\n羽島北高校（267）', # 
+             'gifuX': '可児市\n家族（26X）', # 5/19
+             'gifu7557': '岐阜市\n高齢者施設（26X）', #
+             'gifu7956': '（269）', # 
+             'gifu8179': '岐阜市\n知人（270）', # 
+             'gifu7084': '連休BBQなど（27X）', # 5/20
+             'gifuX': '羽島郡笠松町\n家族（27X）', # 
+             'gifu6858': '各務原市\nグループホーム（273）', # 5/21
+             'gifu6630': '関市\nデイサービス施設（274）', # 
+             'gifu7024': '瑞穂市\n朝日大運動部・会食（27X）', # 
+             'gifu7390': '山県市\n家族・職場（275）', # 
+             'gifu6978': '中津川市\n中部学院大硬式野球部（277）', # 
+             'gifu6908': '恵那市\n職場関連（278）', # 5/22
+             'gifu7499': '瑞穂市\n家族等（279）', #
+             'gifu8355': '岐阜市\n家族・福祉施設（280）', # 
+             'gifu7868': '可児市\n家族・友人（281）', # 5/23 
+             'gifu8013': '（282）', # 5/25
+             'gifu8221': '土岐市\n聖十字病院（283）', #
+             'gifu7446': '各務原市\nホームパーティー（284）', # 
+             'gifu8172': '土岐市\n会食・カラオケ（285）', #
+             'gifu8214': '（286）', # 
+             'gifu7429': '（287）', # 5/26 大垣市・各務原市（瑞穂市格闘技ジム?）
+             'gifu7636': '岐阜市\n高齢者福祉施設（288）', # 
+             'gifu8283': '岐阜市\n家族（289）', #
+             'gifu7939': '岐阜市・関市\n職場・家族（290）', # 5/27
+             'gifu8063': '不破郡垂井町\n家族（291）', #
+             'gifu7796': '飛騨市民病院（292）', # 5/28
+             'gifu8175': '県警本部交通規制課（293）', # 
+             'gifu8425': '岐阜市\n高齢者福祉施設関連（294）', # 
+             'gifu8157': '土岐市\n土岐商業高校（295）', # 5/29
+             'gifu8311': '安八郡安八町\n酒類を提供する飲食店（296）', # 岐阜市・瑞穂市、スポーツジム後
+             'gifu8166': '多治見市・土岐市\n家族・知人（297）', #
+             'gifu7663': '可児市\n接待を伴う飲食店（298）', # 可児市
+             'gifu8289': '岐阜市\nホットヨガ（299）', # 
+             'gifu8349': '可児市\n会食・外国人（300）', # 5/30
+             'gifu7642': '高山市\n友人（301）', # 5/31
+             'gifu8514': '加茂郡八百津町\nデイサービス（302）', # 
+             'gifu8432': '加茂郡七宗町\nデイサービス（303）', # 6/1
+             'gifu8823': '岐阜市\n2家族（304）', # 
+             'gifu8496': '恵那市\n職場関連（305）', # 6/2
+             'gifu8308': '安八郡輪之内町\n職場関連（30X）', # 6/7
+             'gifu8807': '大垣市\n障害者福祉施設関連（307）', # 
+             'gifuX': '岐阜市・瑞穂市\n家族・親族（30X）', # 
+             'gifuX': '岐阜市\n2家族（309）', # 6/10
+             'gifu8663': '可児市\n病院・家族（310）', # 6/11
+             'gifu8855': '可児市\n2家族（311）', # 
+             'gifu8948': '美濃加茂市\n職場（312）', # 6
+             'gifu9107': '岐阜市\nデイサービス（313）', # 5 
+             'gifu9043': '不破郡垂井町\n2家族（314）', # 6/14
+             'gifu8837': '岐阜市\n職場（315）', # 6/15
+             'gifu9100': '多治見市・恵那市\n家族（316）', # 6/17
+             'gifu9025': '関市\n複数家族（317）', # 
+             'gifu9044': '可児市\n職場・家族（318）', # 6/18
+             'gifu9001': '土岐市\n教会・外国籍（319）', # 6/22
+             'gifu9160': '各務原市\n高齢者福祉施設（320）', # 
+             'gifu9152': '岐阜市\n職場関連・デルタ株（321）', # 7/2
+             'gifu9278': '名古屋市\n職場', # 7/4
+             'gifu9237': '羽島市\n職場関連（322）', # 7/8
+             'gifu9314': '美濃加茂市\n職場関連（323）', # 7/14
+             'gifu9313': '可児郡御嵩町\n職場関連（324）', # 7/16
+             'gifu9368': '各務原市\n職場（325）', # 7/23
+             'gifu9420': '大阪から旅行', # 
+             'gifu9447': '実家に帰省中', # 
+             'gifu9412': '美濃加茂市\n会社・家族（326）', # 7/26
+             'gifu9480': '実家に帰省中', # 7/27
+             'gifu9492': '岐阜市\n20代男性複数回会食・家族（327）', # 7/28
+             'gifu9525': '岐阜市\n社会人スポーツサークル（328）', # 7/29
+             'gifu9613': '実家に帰省中', # 8/1
+             'gifu9438': '可児郡御嵩町・可児市\n職場・家族（329）', # 
+             'gifu9619': '実家に帰省中', # 8/2
+             'gifu9647': '親族宅へ訪問', # 8/3
+             'gifu9654': '実家に帰省中', # 
+             'gifu9669': '実家に帰省中', # 
+             'gifu9643': '岐阜市\n職場（330）', # 
+             'gifu9677': '6/6ワクチン2回目接種済み\n無症状', # 
+             'gifu9536': '恵那市\n家族・職場（331）', # 8/4
+             'gifu9796': '本巣市\n職場（332）', # 8/6
+             'gifu9734': '中津川市\n会食（333）', # 
+             'gifu9792': '瑞穂市\n親族BBQ（334）', # 
+             'gifu9735': '中津川市\nカラオケ飲食店（335）', # 8/7
+             'gifu9794': '養老郡養老町\n帰省・家族・親族（336）', # 
+             'gifu9733': '多治見市\n愛知で飲食（337）', # 
+             'gifu9722': '各務原市\n高齢者福祉施設（338）', # 8/8
+             'gifu9760': '本巣郡北方町\n同居外国人（339）', # 
+             'gifu9862': '可児市・加茂郡川辺町\n会食（340）', # 
+             'gifu9878': '各務原市\n保育園・家族（341）', # 8/9
+             'gifu10087': '関市\n福祉施設', # 
+             'gifu9725': '各務原市\n家族（342）', # 8/10
+             'gifu9830': '可児市\n家族・友人（343）', # 
+             'gifu9633': '岐阜市\n職場（344）', # 
+             'gifu9951': '可児市\n友人関西旅行・家族（345）', #  8/11
+             'gifu10071': '岐阜市\n親族・複数回食事（346）', # 
+             'gifu10044': '岐阜市\n山田病院・ワクチン2人接種完了（347）', #
+             'gifu9918': '愛知県\n大学関連（348）', # 8/12
+             'gifu9835': '中津川市\n大学運動部・家族（349）', # 
+             'gifu9934': '羽島市\n職場（350）', # 
+             'gifu9892': '多治見市\n職場（351）', # 
+             'gifu9950': '可児郡御嵩町\n職場（352）', # 
+             'gifu10214': '岐阜市\n職場で一緒に運動（353）', # 
+             'gifu10046': '本巣市\n職場関連（354）', # 8/13
+             'gifu10083': '多治見市\n習い事教室（355）', # 
+             'gifu10062': '海津市\n県外旅行家族（356）', # 
+             'gifu9970': '大垣市\n家族等（357）', # 
+             'gifu9564': '岐阜市\n職場（358）', # 
+             'gifu10149': '本巣市\n職場関連・会食（359）', # 8/14
+             'gifu9654': '帰省（360）', # 
+             'gifu10064': '瑞浪市\n家族関連（361）', # 
+             'gifu10180': '大垣市\n大学運動部（362）', # 8/15
+             'gifu10184': '中津川市\n大学運動部（363）', # 
+             'gifu10142': '大垣市・瑞穂市\n3家族BBQ（364）', # 
+             'gifu10538': '大垣市・安八郡安八町\n2家族会食（365）', # 
+             'gifu10309': '複数グループ会食（367）', # 8/16
+             'gifu10706': '下呂市\n帰省（368）', # 
+             'gifu9939': '職場（369）', # 
+             'gifuX': '岐阜市\n県外ドライブ（）', # 
+             'gifu10317': '職場（371）', #
+             'gifu10726': '\n（372）', # 
+             'gifu10756': '職場（373）', # 
+             'gifu10326': '岐南町\n職場同僚県外出掛け?（374?）', # 8/17
+             'gifu10784': '多治見市\n職場同僚?（375?）', # 
+             'gifuX': '岐阜市\n複数親族飲食店（）', # 
+             'gifuX': '岐阜市\n複数親族会食（）', # 
+             'gifu10842': '岐阜市\n高校部活（）', # 
+             'gifu10688': '多治見市\n友人会食?（）', # 8/18
+             'gifuX': '可児市\n友人会食（）', # 
+             'gifu10652': '岐阜市・羽島市\n友人（）', # 9 (Aug 18)
+             'gifu10674': '関市\n職場（）', # 
+             'gifu10296': '加茂郡七宗町\n家族（）', # 
+             'gifuX': '岐阜市\n職場（）', # 8/19
+             'gifu10824': '高山市\n職場（）', # 
+             'gifuX': '関市\n職場（）', # 
+             'gifu10828': '郡上市\n帰省（）', # 
+             'gifuX': '可児市\n複数家族・外国籍（）', # 20-50 代 5 名
+             'gifuX': '\n（）', # 
+             'gifuX': '\n（）', # 
+             'gifuX': '岐阜市\n親族・友人（）', # 8/20
+             'gifuX': '\n（）', # 8/21
+             'gifuX': '\n（）', # 
+             'gifuX': '\n（）', # 
+             'gifuX': '\n（）', # 
+             'gifuX': '\n（）', # 
+             'gifuX': '\n（）', # 
+             'gifuX': '',
+             'aichi6365': '岡崎市\n高齢者施設',
+             'aichi7301': '名古屋市\n高齢者施設',
+             'aichi8406': '名古屋市\n地域活動グループなど',
+             'aichi9161': '医療・高齢者施設\n（3A）', # confirmed
+             'aichi10826': '幸田町\n京ヶ峰岡田病院\n（3B）', # confirmed
+             'aichi11540': '豊川市民病院\n（3C）', # confirmed
+             'aichi10681': '名古屋市\n繁華街の飲食店\n（3D）', # confirmed
+             'aichi11028': '名古屋市\n保育施設\n（3E）', # confirmed
+             'aichi11043': '豊川市\n病院\n（3F）', # confirmed
+             'aichi12093': '保育施設・学校\n（3G）', # confirmed
+             'aichi11818': '医療・高齢者施設\n（3H）', # confirmed
+             'aichi12583': '職場（3I）', # confirmed (30 = 32 - 2 Gifu)
+             'aichi12324': '医療・高齢者施設\n（3J）', # confirmed (1 common case in 3R?)
+             'aichi11946': '医療・高齢者施設\n（3K）', # confirmed (all 12 cases as of Jan 5)
+             'aichi12868': '藤田医科大学\n学生\n（3L）', # confirmed
+             'aichi13326': '春日井市民病院\n（3M）', # confirmed
+             'aichi13541': 'クラブチーム\n（3N）', # confirmed
+             'aichi12495': '医療・高齢者施設\n（3O?）', # ? 44 cases as of Jan 5, but official says 33 (Jan 5 and 8)
+             'aichi13174': '豊橋市\n医療施設（3P）', # confirmed
+             'aichi12615': '医療・高齢者施設\n（3Q）', # 23 as of Jan 5 (碧南?)
+             'aichi13504': '名古屋市\n障碍者施設\n（3R）', # confirmed
+             'aichi13623': '碧南市\n看護ステーション（3Q?）', # 17 cases as of Jan 5
+             'aichi12834': '船舶\n（3S）',  # confirmed
+             'aichi14892': '高齢者施設\n（3T）', # confirmed
+             'aichi13191': '医療・高齢者施設\n（3U）', # confirmed
+             'aichi14725': '弥富市\n海南病院\n（3V）', # confirmed
+             'aichi14370': '職場（3W）', # confirmed (count 18 direct cases only as of Jan 5)
+             'aichiX': '医療・高齢者施設等\n（3X）', # 20 as of Jan 5
+             'aichi14408': '名古屋市\n名古屋記念病院\n（3Y）', # confirmed
+             'aichi14683': '瀬戸市\nあさい病院\n（3Z）', # confirmed
+             'aichi13890': '豊橋市\n高齢者施設\n（4A）', # confirmed
+             'aichi14219': '名古屋市\n高齢者施設\n（4B）', # confirmed (asahi.com Jan 3)
+             'aichi15147': '名古屋市\n高齢者施設\n（4C）', # confirmed (asahi.com Jan 3)
+             'aichi16036': '名古屋市\n職場（4D）','aichi16039': '名古屋市\n職場（4D）', #  (asahi.com Jan 3)
+             'aichi15111': '名古屋市\n福祉施設\n（4E）', # confirmed (asahi.com Jan 3)
+             'aichi16822': '名古屋市\n東部医療センター\n（4F）', # confirmed (asahi.com Jan 3)
+             'aichi14284': '名古屋市\n高齢者施設\n（4G）', # confirmed (asahi.com Jan 3)
+             'aichi15662': '高齢者施設\n（4H）', # confirmed
+             'aichi15955': '医療・高齢者施設\n（4I）', # 25 as of Jan 8, 26 as of Jan 12
+             'aichi18323': '会食\n（4J）', # confirmed
+             'aichi18776': 'トヨタ自動車ヴェルブリッツ\nラグビーチーム\n（4K）', # 13 as of Jan 11
+             'aichi19047': '医療・高齢者施設等（4L）', # confirmed
+             'aichi18942': '年末年始親族',
+             'aichi19003': '愛知県警警察学校（4M）',
+             'aichiX': '名古屋市\n高齢者施設\n（4N）', # 12 as of Jan 17
+             'aichi18855': '刈谷市クラブチーム?\n（4O?）', # 10 as of Jan 17
+             'aichi18959': '豊橋市\n東部環境センター\n（4P）', # confirmed
+             'aichi20230': '豊田市\n医療機関（4Q）', # confirmed
+             'aichi19271': '飲食店?（4R?）', # 9 as of Jan 23
+             'aichi21152': '大府市\n保育施設',
+             'aichi21557': '蒲郡市\n高齢者施設（4S）', # confirmed
+             'aichi21342': '大府市\n成人式二次会（4T）', # confirmed
+             'aichi21601': '名古屋市\n職場（4U）', # confirmed
+             'aichi21837': '岡崎市\n高齢者施設（4V）', # confirmed
+             'aichi21065': '名古屋市\n医療・高齢者施設等（4W）', # confirmed
+             # 4X 1/26 13, 1/27 14, 1/28-29 ?, 1/30 15, 1/31 15
+                 'aichi17875': '名古屋市\n医療・高齢者施設等（4X）', # confirmed by hibcbc data
+             # 4X official(hicbc), 1/28 23559(23533), 1/27 23389(23363), 1/25 22944(22914), 1/24 22860(22834)
+                 'aichi22944': '名古屋市\n医療・高齢者施設等（4X）', # hicbc says it belongs to 4X
+             'aichi21591': '豊橋市\n寮（4Y）', # confirmed
+             'aichi21617': '名古屋市\n保育園（4Z）', # confirmed
+             'aichi18725': '医療・高齢者施設等（5A）', # confirmed
+             'aichi21620': '名古屋市\n高齢者施設（5B）', # confirmed
+             'aichi21869': '医療・高齢者施設等（5C）', # confirmed
+             'aichi20961': '豊橋市\n接待を伴う飲食店（5D）', # confirmed
+             'aichi22085': '豊橋市\n接待を伴う飲食店',
+             'aichi22680': '名古屋市\n中部ろうさい病院\n（5E）', # confirmed
+             'aichi22401': '名古屋市\n医療機関（5F）', # confirmed
+             'aichi20933': '豊田市\n介護施設（5G）', # confirmed
+             'aichi22072': '豊橋市\n高齢者施設（5H）', # confirmed
+             'aichi21746': '弥富市\n高齢者施設?（5I?）', # 11 as of Jan 30
+             'aichi22861': '名古屋市\n高齢者施設（5J）', # confirmed
+             'aichi23759': '名古屋市\n高齢者施設（5K）', # confirmed
+             'aichi23356': '名古屋市\n高齢者施設（5L）', # confirmed
+             'aichi23222': '安城市\n高齢者施設（5M）',
+             'aichi24449': '一宮市\n医療機関（5N）', # confirmed
+             'aichi24390': '豊田市\n介護事業所（5O?）',
+             'aichi23181': '春日井市\n高齢者施設（5P）', # confirmed
+             'aichi24902': '刈谷市\n医療機関（5Q）', # confirmed
+             'aichi25565': '名古屋市\nカラオケ喫茶（5R）', # confirmed
+             'aichi25650': '半田市\n半田市立半田病院（5S）', # confirmed
+             'aichi26197': '名古屋市\n高齢者施設（5T）', # confirmed
+             'aichi26143': '名古屋市内\n会食（5U）', # confirmed
+             'aichi26327': '飲食店？（5V？）', # 10
+             'aichi26272': '飲食店？（5V？）', # 10
+             'aichi26280': '名古屋市\n職場（5W）', # confirmed
+             'aichi26379': '豊田市\n医療機関（5X）', # confirmed
+             'aichi26504': '名古屋市\n保育施設（5Y）', # confirmed
+             'aichi26625': '愛知学院大学\n硬式野球部寮（5Z）', # confirmed
+             'aichi26638': '愛西市\n保育施設（6A）㊑', # confirmed
+             'aichi26509': '春日井市\n高齢者施設（6B）', # confirmed
+             'aichi26779': '豊橋市\n積善病院（6C）', # confirmed
+             'aichi26898': '㊑', # variant No. 36
+             'aichi26999': '㊑', # variant No. 65
+             'aichi27214': '弥富市\n会社の寮（6D）', # confirmed
+             'aichi27278': '㊑', # variant No. 139
+             'aichi27432': '豊田市\n事業所（6E）', # confirmed
+             'aichi27728': '名古屋市\n職場（6F）㊑', # confirmed
+             'aichi27596': '名古屋市\n緑区役所（6G）㊑', # confirmed
+             'aichi28095': '豊田市\n教会（6H）', # confirmed
+             'aichi28752': '南知多町\n高齢者施設（6I）', # confirmed
+             'aichi27702': '名古屋市大西部医療センター（6J）', # confirmed
+             'aichi28669': '名古屋市\n県立高校生・カラオケ（6K）', # confirmed
+             'aichi29158': '日進市\n愛知学院大学・部活（6L）', # confirmed
+             'aichi28358': '大府市\n医療機関（6M）', # confirmed
+             'aichi28122': '名古屋市\n高齢者施設（6N）', # confirmed
+             'aichi29023': '高浜市\n保育園（6O）', # confirmed
+             'aichi28856': '豊明市\n高齢者施設（6P）', # confirmed
+             'aichi29373': '日進市\n大学部活（6Q）', # confirmed
+             'aichi28510': '名古屋市\nスポーツジム（6R）', # confirmed
+             'aichi29439': 'みよし市\n会社の寮？（6S？）', # 14 (Apr 20)
+             'aichi29931': '津島市\n保育施設（6T）㊑', # confirmed
+             'aichi29031': 'みよし市\n工場？（6U？）', # 13 (Apr 22)
+             'aichiX': '職場（6V）', # 15 (Apr 25)
+             'aichi30528': '職場（6W）', # confirmed
+             'aichi31342': '医療・高齢者施設等（6X）', # confirmed
+             'aichi32610': '岡崎市\n障害者施設（6Y）', # confirmed
+             'aichi32241': '半田市\n障害者施設（6Z）', # confirmed
+             'aichi31666': '名古屋市\n工業高校（7A）', # confirmed
+             'aichi32295': '中京大\n水泳部（7B）', # confirmed
+             'aichi31705': '名古屋市\n保育施設？（7C？）', # 10 (May 2)
+             'aichi34212': '名古屋市\n医療機関（7D）', # confirmed
+             'aichi32352': '名古屋市\n医療機関（7E）', # confirmed
+             'aichi33202': '瀬戸市\n高齢者施設（7F）', # confirmed
+             'aichi33263': '東浦町\n高齢者施設（7G）', # confirmed
+             'aichi33330': '豊川市\n高齢者施設（7H）', # confirmed
+             'aichi33311': '一宮市\n医療機関（7I）', # confirmed
+             'aichi34111': '名古屋市\n高齢者施設（7J）', # confirmed
+             'aichi34655': '一宮市\n医療機関（7K）', # confirmed
+             'aichi36090': '名古屋市\n高齢者施設（7L）', # confirmed
+             'aichi37602': '名古屋市\n医療機関（7M）', # confirmed
+             'aichi36496': '西尾市\n飲食店（7N）', # confirmed
+             'aichi33158': '名古屋市\n職場（7O）', # confirmed
+             'aichi36268': '名古屋市\n高齢者施設（7P）', # confirmed
+             'aichi35617': '福祉施設（7Q）', # confirmed
+             'aichi37476': '豊田市\n高齢者施設（7R）', # confirmed
+             'aichi34296': 'あま市\n高齢者施設（7S）', # confirmed
+             'aichi35483': '豊田市\n高齢者施設（7T）', # confirmed
+             'aichi39635': '名古屋市\n劇場（7U）', # confirmed
+             'aichi40510': '一宮市\n高齢者施設（7V）', # confirmed
+             'aichi35802': 'インド変異株', # 50代男性、5 月上旬感染判明、渡航歴あり
+             'aichi36332': '春日井市\n高齢者施設（7W）', # confirmed
+             'aichi39616': '名古屋市\n高齢者施設（7X）', # confirmed
+             'aichi39019': 'あま市\n高齢者施設（7Y）', # confirmed
+             'aichi43369': '名古屋市\n高齢者施設（7Z）', # confirmed
+             'aichi41752': '春日井市\n障害者入所施設（8A）', # confirmed
+             'aichi44652': '江南市\n高齢者施設（8B）', # confirmed
+             'aichi42555': '刈谷市\n学校（8C）', # confirmed
+             'aichi43978': '豊明市\n高齢者施設（8D）', # confirmed
+             'aichi43102': '名古屋市\n職場（8E）', # confirmed, 10 (May 27), 11 (May 30) aichi46918 も 8E？（CBC）, 12 (Jun 5)
+             'aichi35444': '刈谷市\n高齢者施設（8F）', # confirmed
+             'aichi46336': '豊田市\n大学運動部寮（8G）', # confirmed 愛知工業大学 フェンシング部
+             'aichi44011': '名古屋市\n高齢者施設（8H）', # confirmed 11 (May 31), 12 (Jun 9)
+             'aichi44236': '北名古屋市\n職場？（8I？）', # 13 (Jun 1)
+             'aichi38976': '名古屋市\n職場（8J）', # confirmed 11 (Jun 1), 19 (Jun 2), 21 (Jun 3), 24 (Jun 9), 25 (Jun 10)
+             'aichi42524': '半田市\n高齢者施設（8K）', # confirmed
+             'aichi39011': '名古屋市\n高齢者施設（8L）', # confirmed
+             'aichi38920': '名古屋市\n医療機関（8M）', # confirmed
+             'aichi42722': '豊橋市\n高齢者施設', #  8Q?
+             'aichi47281': '岡崎市\n岡崎市民病院（8N）', # confirmed
+             'aichi42775': '名古屋市\n専門学校（8O）', # confirmed 24 (Jun 5), 35 (Jun 6), 43 (Jun 7)
+             'aichi46547': '名古屋市\n専門学校（8P）', # confirmed 21 (Jun 7), 22 (Jun 9), 23 (Jun 10)
+             'aichiX': '豊橋市\n高齢者施設（8Q）', # 10 (Jun 8), 11 (Jun 12), 10 (Jun 13) 訂正
+             'aichi47490': '豊田市\n事業所（8R)', #  confirmed 11 (Jun 11)
+             'aichi46374': '岡崎市\n高齢者施設', # 
+             'aichi49082': '豊橋市\n福祉施設', # 
+             'aichi45983': '岡崎市\n事業所（8S）', # confirmed 10 (Jun 14) 20-60
+             'aichi49220': '岡崎市\n事業所（8T）', # confirmed 11 (Jun 14) 20-50, 12 (Jun 16)
+             'aichi49290': '豊川市\n集会所（8U）', # confirmed 23 (Jun 16), 24 (Jun 17)
+             'aichi49362': '名古屋市\n職場（8V）', # confirmed 10 (Jun 18), 11 (Jun 19)
+             'aichi49953': '一宮市\n高齢者施設（8W）', # confirmed 13 (Jun 18)
+             'aichi49040': '大口町\n職場（8X）', # confirmed 10 (Jun 19)
+             'aichi50227': '蒲郡市\n自宅会食（8Y）', # confirmed 15 (Jun 19), 18 (Jun 22)
+             'aichi48489': '名古屋市\n高齢者施設（8Z）', # confirmed 16 (Jun 21), 17 (Jun 22)
+             'aichi50338': '一宮市\n医療機関（9A）', # confirmed 12 (Jun 26), 14 (Jun 27)
+             'aichi51328': '名古屋市\n医療機関（9B）', # confirmed 14 (Jul 4), 17 (Jul 5)
+             'aichi51112': 'みよし市\nスポーツチーム（9C）', # confirmed 10 (Jul 9)
+             'aichi51588': '碧南市\n医療機関（9D）', # confirmed 18 (Jul 11)
+             'aichi51203': '瀬戸市\n高齢者施設（9E）', # confirmed 13 (Jul 13)
+             'aichi52116': '豊橋市\n高校部活（9F）', # confirmed 11 (Jul 20)
+             'aichi53016': '蒲郡市\n高齢者施設（9G）', # confirmed 10 (Jul 31), 13 (Aug 16), 14 (Aug 20)
+             'aichiX': '名古屋市\n飲食店（9H）', # 15 (Aug 1)
+             'aichi56174': '豊橋市\n医療機関（9I）', # confirmed 15 (Aug 8), 19 (Aug 9), 22 (Aug 12), 28 (Aug 13), 29 (Aug 14), 31 (Aug 20)
+             'aichi55404': '名古屋市\n高齢者施設（9J）', # confirmed 10 (Aug 8), 11 (Aug 9), 12 (Aug 13)
+             'aichi55260': '美浜町\n日本福祉大学運動部（9K）', # confirmed 10 (Aug 9)
+             'aichi55230': '名古屋市\n保育施設（9L）', # confirmed 10 (Aug 9), 12 (Aug 12)
+             'aichi53996': '小牧市\n職場（9M）', # confirmed 11 (Aug 12), 13 (Aug 13), 14 (Aug 16), 16 (Aug 17), 17 (Aug 19), 18 (Aug 20)
+             'aichi56375': '名古屋市\n保育施設（9N）', # confirmed 11 (Aug 12), 12 (Aug 14), 15 (Au 15), 16 (Aug 18), 17 (Aug 19)
+             'aichi54662': '豊田市\n大学運動部（9O）', # confirmed 10 (Aug 13), 12 (Aug 14) 中京大ラクビー部
+             'aichi55136': '一宮市\n事業所（9P）', # confirmed 10 (Aug 13), 12 (Aug 14), 14 (Aug 15), 16 (Aug 18), 17 (Aug 19), 18 (Aug 20), 19 (Aug 21), 22 (Aug 22)
+             'aichi54702': '岡崎市\n大学運動部（9Q）', # confirmed 18 (Aug 13), 20 (Aug 18), 21 (Aug 19)
+             'aichi57413': '常滑市\n保育施設（9R）', # 10 (Aug 14), 11 (Aug 18), 12 (Aug 21)
+             'aichi54832': '小牧市\n職場?（9S?)', # 10 (Aug 15), 11 (Aug 16)
+             'aichi57266': '名古屋市\n職場?（9T?）', # 12 (Aug 16), 13 (Aug 17), 14 (Aug 20)
+             'aichiX': '飲食店（9U）', # 21 (Aug 22)
+             'aichiX': '', # 
+             'aichiX': '', # 
+             'aichiX': '', # 
+             'aichiX': '', # 
+             'aichiX': ''}
 
 from enum import Enum
 
@@ -208,6 +819,7 @@ class Case:
         self.connected_nodes = connected_nodes
         self.is_connected = False
         self.cluster_duration = 1
+        self.beginning = False
         self.make_gv_label()
         self.set_contact_category()
 
@@ -218,8 +830,7 @@ class Case:
             self.contact_category = ContactCategory.UNKNOWN
         elif len([x for x in non_aichi_gifu_contact_tuple if self.note.find(x) >= 0]) > 0 or \
              self.node_name in ('aichi10002', 'aichi10003') or \
-             self.node_name in ('aichi1220', 'aichi1414') or \
-             self.node_name in repos_dict.keys():
+             self.node_name in ('aichi1220', 'aichi1414'):
             self.contact_category = ContactCategory.NON_AICHI_GIFU
         elif self.node_name not in ('aichi1402', 'aichi1435', 'aichi1722', 'aichi3768', 'aichi3775') and \
              (len([x for x in aichi_gifu_contact_tuple if self.note.find(x) >= 0]) > 0 or \
@@ -284,7 +895,7 @@ class Case:
                          'メキシコ', 'タイ', 'ハンガリー', 'アメリカ', 'アラブ首長国連邦',
                          'パキスタン', '3月30日アメリカから入国', 'ネパール',
                          '6月12日インドネシアから入国', '6月17日インドネシアから帰国',
-                         '海外から入国')
+                         '海外から入国', 'イギリス')
 
         if self.note.find('帰国') >= 0 or \
            self.description.find('中国籍') >= 0 or \
@@ -338,7 +949,7 @@ class CaseGraph:
             if len([x for x in node_names if (cases[x].city not in ('愛知県', '岐阜県', '三重県') and cases[x].city[-1] in ('都', '道', '府', '県'))]) == 0 and \
                len([x for x in node_names if cases[x].contact_category in (ContactCategory.NON_AICHI_GIFU, ContactCategory.NON_AICHI_GIFU_UNKNOWN)]) == 0:
             '''
-            if len([x for x in node_names if (cases[x].city not in ('愛知県', '岐阜県', '三重県') and cases[x].city[-1] in ('都', '道', '府', '県'))]) == 0:
+            if len([x for x in node_names if ((cases[x].city not in ('愛知県', '岐阜県') and cases[x].city[-1] in ('都', '道', '府', '県'))) or cases[x].contact_category == ContactCategory.NON_AICHI_GIFU]) == 0 :
                 for node_name in node_names:
                     cases.pop(node_name)
 
@@ -372,6 +983,29 @@ class CaseGraph:
 
             # Remove remaining large clusters
             if len([x for x in node_names if x in ('gifu1603', 'aichi13326', 'aichi13504', 'aichi12324')]) > 0:
+                for node_name in node_names:
+                    cases.pop(node_name)
+
+        self.make_gv_date_rank_ditc(cases, 'aichi')
+        self.make_gv_caption()
+        self.make_gv_date_nodes()
+        self.make_gv_edges(cases)
+        self.make_gv_notes()
+
+    def add_only_elder_cases(self, cases):
+        for case in cases.values():
+            for node in case.connected_nodes:
+                cases[node].is_connected = True
+
+        self.make_nx_nodes(cases)
+
+        # make clusters from the NetworkX graph
+        for comp in nx.connected_components(self.nx_graph):
+            subgraph = self.nx_graph.subgraph(comp).copy()
+            node_names = subgraph.nodes
+            
+            # check if the cluster has any non Aichi, Gifu, Mie cases
+            if len([x for x in node_names if cases[x].age in (70, 80, 90, 100)]) == 0:
                 for node_name in node_names:
                     cases.pop(node_name)
 
@@ -523,6 +1157,8 @@ class CaseGraph:
 
             for node_name in node_names:
                 cases[node_name].cluster_duration = days
+                if cases[node_name].date == first_day:
+                    cases[node_name].beginning = True
             
             # check if the cluster has 'aichiXXX' or 'gifuYYY'
             if len([x for x in node_names if x.find(pref) >= 0]) == 0:
@@ -530,441 +1166,24 @@ class CaseGraph:
                     cases.pop(node_name) # remove the node if it is not relevant to 'pref'
 
     def make_gv_notes(self):
-        source = self.gv_graph.source
-        notes = (('gifu708', '岐阜市\n芸能事務所'), ('gifu741', '美濃加茂市\n外国人学校'), ('gifu1078', '美濃加茂市\nデイサービス'),
-                 ('gifu1041', '岐阜市\n河村病院'), ('gifu1270', '大垣日大高校'), ('gifu1378', '多治見市\nケアハウスビアンカ\n（老人ホーム）'),
-                 ('gifu1491', '中京学院大学\n硬式野球部'), ('gifu1603', '中津川市\nサンシャインプレミアム中津川\nグループホーム'), ('gifu1463', '複数大学の会食'),
-                 ('gifu1086', '岐阜協立大学\n男子バレーボール部'), ('gifu1559', '岐南町\n障碍者福祉施設'), ('gifu1673', '本巣市\n職場'),
-                 ('gifu2106', '本巣郡北方町\nGAS PANIC（接待）'), ('gifu1924', '岐阜市折立\nオイコットクラブ（接待）'), ('gifu1950', '朝日大学\n運動部'),
-                 ('gifu1783', '可児市\nスターダストフィリピンクラブ'), ('gifu1930', '羽島市\n入所型高齢者福祉施設'), ('gifu2193', '複数大学の飲食'),
-                 ('gifu1377', '羽島市\n職場関連'), ('gifu2250', '岐阜市\n高齢者福祉施設'), ('gifu2079', '会食'),
-                 ('gifu2108', '親族の会食'), ('gifu1857', '可児郵便局'), ('gifu1254', '帝京大可児高校'),
-                 ('gifu1134', 'さわやかナーシング\n可児デイサービスセンター'), ('gifu1206', '複数の飲食店'), ('gifu1887', '各務原市\n職場'),
-                 ('gifu1256', '岐阜協立大\nサッカー部（飲食）'), ('gifu1243', '不破郡垂井町\n不破高校'), ('gifu1257', '飲食店会食\nから親族へ'),
-                 ('gifu956', '揖斐郡池田町\nイビデン樹脂'), ('gifu1662', '海津市\n学童保育'), ('gifu1253', '高山市\n久美愛厚生病院'),
-                 ('gifu1152', '親族'), ('gifu2440', '居酒屋・カラオケ'),
-                 ('gifu2491', '各務原市\nデイサービスセンター\n岐阜市\n県総合医療センター'), ('gifu2447', '会食'),
-                 ('gifu2250', '岐阜市\n高齢者福祉施設'), ('gifu2593', '関市\n事業所'),
-                 ('gifu2356', '会食'), ('gifu2604', '会食'), ('gifu2595', '親族会食'), ('gifu2655', '海津市\n事業所'),
-                 ('gifu2739', '家族'),
-                 ('gifu2740', '職場'), # 3 つの飲食店クラスター? 人数足りない
-                 ('gifu2882', '職場\n年始パーティー'),
-                 ('gifu3197', '高山西高校運動部'), ('gifu3095', '職場'),
-                 ('gifu3125', '山県市\nショートステイ\nデイサービスセンター'),
-                 ('gifu3622', '岐阜市\n介護老人保健施設'),
-                 ('gifu3676', '職場・家族'),
-                 ('gifu3704', '会食'),
-                 ('gifu3442', '岐阜市\nデイサービスセンター'),
-                 ('gifu3135', '関市\n中濃厚生病院'),
-                 ('gifu3558', '親族飲食・職場'),
-                 ('gifu3305', '岐阜市\n清流病院'),
-                 ('gifu3297', '美濃市\nデイサービス'),
-                 ('gifu3502', '家族'),
-                 ('gifu3763', '可児市\nデイサービス'),
-                 ('gifu3828', '可児市\nルグラン（キャバクラ）'),
-                 ('gifu3805', '岐阜市\n老人ホーム'),
-                 ('gifu3895', '会食・職場'),
-                 ('gifu3972', '知人同士\n一部同居'),
-                 ('gifu3878', '親族会食'),
-                 ('gifu4017', '可児市\nクラブプレミアム（接待）'),
-                 ('gifu4130', '大垣市\n職場'),
-                 ('gifu4175', '美濃加茂市\n木沢記念病院'),
-                 ('gifu4158', '親族・職場'),
-                 ('gifu4102', '大垣市\n学習塾'),
-                 ('gifu4227', '海津市\n家族・知人'),
-                 ('gifu4376', '瑞浪市\n市立みどり幼児園'),
-                 ('gifu4413', '各務原市\n語学学校'),
-                 ('gifu4440', '岐阜市\n県立岐南工業高校'),
-                 ('gifu4587', '瑞浪市\n東濃厚生病院'),
-                 ('gifu4604', '土岐市\n高井病院'),
-                 ('gifu4551', '可児市\n人材派遣会社'),
-                 ('gifu4570', '㊑'), # variant No. 1
-                 ('gifu4662', '㊑'), # variant No. 7
-                 ('gifu4691', '㊑'), # variant No. 11
-                 ('gifu4692', '各務原市\n消防本部（155）'),
-                 ('gifu4635', '羽島郡岐南町\n事業所'),
-                 ('gifu4741', '岐阜市弥生町\nフィリピンパブ（156）'), # 156
-                 ('gifu4747', '各務原市\n老人保健施設「サンバレーかかみ野」（157）'), # 157
-                 ('gifu4751', '宿泊・会食（親族、158）'), # 158
-                 ('gifu4774', '大垣市\n接待を伴う飲食店（159）㊑'), # 159
-                 ('gifu4763', '神戸町\n同居・職場・外国籍（160）㊑'), # 160 変異株
-                 ('gifu4831', '可児市\n職場（161）'), # 161 変異株ではない
-                 ('gifu4782', '各務原市\n職場（162）㊑'), # 162 変異株
-                 ('gifu4917', '職場（163）'), # 163
-                 ('gifu4908', '職場（164）'), # 164
-                 ('gifu4876', '職場（165）'), # 165
-                 ('gifu4896', '加茂郡富加町\n職場・外国籍（166）㊑'), # 166
-                 ('gifu4943', '可児郡御嵩町\n教会イースター・外国籍（167）㊑'),
-                 ('gifu4995', '土岐市\nデイサービス（168）㊑'),
-                 ('gifu4975', '養老町\n職場（169）'),
-                 ('gifu4976', '親族（170）'),
-                 ('gifu4901', '美濃加茂市・中津川市\n職場・家族・外国籍（171）㊑'),
-                 ('gifu5009', '家族（172）'),
-                 ('gifu5050', '美濃市\n親族（173）㊑'),
-                 ('gifu5106', '揖斐郡揖斐川町\n同居・会食・外国籍（174）㊑'),
-                 ('gifu5209', '羽島市\n職場（175）㊑'),
-                 ('gifu5109', '関市\n家族・幼稚園（176）'),
-                 ('gifu5174', '大垣市\nデイサービス（177）㊑'),
-                 ('gifu5108', '可児市\n親族・会食・外国籍（178）㊑'),
-                 ('gifu5116', '美濃加茂市\n接待を伴う飲食店（179）'),
-                 ('gifu5300', '岐阜市\n家族・友人（180）㊑'),
-                 ('gifu5328', '加茂郡川辺町\n職場（181）㊑'),
-                 ('gifu5327', '各務原市・可児郡御嵩町\n仕事（182）'),
-                 ('gifu5427', '岐阜市\n接待を伴う飲食店（183）㊑'),
-                 ('gifu5259', '大垣市\nショートステイ施設（184）㊑'),
-                 ('gifu5363', '関市\n会食・3家族（185）'),
-                 ('gifu5507', '岐阜市\n接待を伴う飲食店（186）㊑'),
-                 ('gifu5626', '岐阜市\n接待を伴う飲食店（187）㊑'),
-                 ('gifu5630', '可児市\n親族・会食・外国籍（188）'),
-                 ('gifu5526', '羽島市\n小学校（189）㊑'),
-                 ('gifu5632', '可児市\n家族・小学校関係者（190）'),
-                 ('gifuX', '瑞穂市\n職場（191）'),
-                 ('gifu5570', '多治見市\n訪問看護ステーション（192）'),
-                 ('gifu5548', '大垣市\n酒類を提供する飲食店（193）'),
-                 ('gifu5581', '中津川市\n職場・家族（194）'),
-                 ('gifu5705', '瑞穂市\n職場喫煙所（195）'),
-                 ('gifuX', '各務原市\n飲食店利用者・家族（196）'),
-                 ('gifu5577', '可児郡御嵩町\n向陽中学校（197）'),
-                 ('gifu5792', '下呂市\n会食（198）'),
-                 # 「土岐市、郡上市、加茂郡富加町、可児市の各職場に広がり」（岐阜日報 5/24）
-                 ('gifu5774', '関市\n職場・家族（199）'),
-                 ('gifu6024', '岐阜市\n職場・家族（200）'),
-                 ('gifu5876', '岐阜市\n家族・飲食（201）'),
-                 ('gifuX', '岐阜市\n職場（202）'),
-                 ('gifuX', '大垣市\n家族・会食（203）'),
-                 ('gifu5968', '羽島市\n職場（204）'),
-                 ('gifuX', '大垣市\n家族・仕事（205）'),
-                 ('gifu5893', '美濃加茂市\n太田小学校（206）'),
-                 ('gifu5932', '（207）'),
-                 ('gifu6000', '多治見市\nバーベキュー（208）'),
-                 ('gifu6016', '大垣市\n職場（209）'),
-                 ('gifu5900', '岐阜市\n飲食店（210）'),
-                 ('gifu6131', '本巣市\n職場（211）'),
-                 ('gifu6002', '（212）'), # 職場・家族
-                 ('gifu6040', '（213）'), # 大垣 職場・家族
-                 ('gifu6265', '本巣市\n職場（214）'),
-                 ('gifu6131', '（215）'), # 友人・職場・家族
-                 ('gifu6146', '（216）'), # 可児・多治見 家族・親族
-                 ('gifu5667', '（217）'),
-                 ('gifu6344', '（218）'), # 岐阜 友人
-                 ('gifu6331', '（219）'), # 岐阜 友人
-                 ('gifu6348', '（220）'), # 岐阜 家族
-                 ('gifu6329', '（221）'), # 岐阜 同僚・家族
-                 ('gifu5788', '御嵩町\n飲食店（222）'), # 可児市
-                 ('gifu6093', '土岐市\n大学生・家族（223）'), # 
-                 ('gifu6091', '大垣市\n会食・カラオケ（224）'), # 大垣, May 9
-                 ('gifuX', '（225）'), # 
-                 ('gifu6202', '大垣市\n岐阜協立大運動部（226）'), # 
-                 ('gifu6145', '瑞穂市\n朝日大運動部（227）'), # 
-                 ('gifu5709', '各務原市\n職場（228）'),
-                 ('gifu6100', '大垣市\n職場・家族（229）'),
-                 ('gifu6184', '瑞浪市\n家族など（230）'),
-                 ('gifu6439', '瑞穂市\n朝日大運動部（231）'),
-                 ('gifuX', '岐阜市\n会食（232）'),
-                 ('gifu6435', '下呂市・大垣市\n親族BBQ（23X）'), # 5/12
-                 ('gifu6120', '大垣市\n親族BBQ（234）'),
-                 ('gifu6409', '美濃加茂市・可児市\n会食（235）'),
-                 ('gifu6367', '大垣市・不破郡垂井町\n親族BBQ（236）'),
-                 ('gifu6273', '可児市\n親族（237）'),
-                 ('gifuX', '岐阜市\n知人（23X）'),
-                 ('gifuX', '岐阜市\n高齢者福祉施設（23X）'),
-                 ('gifu6406', '岐阜市・関市\nBBQ（24X）'),# 岐阜 5/13
-                 ('gifu6441', '可児市・可児郡御嵩町\nBBQ（241）'),
-                 ('gifu6506', '高山市\n飲食店（242）'),
-                 ('gifu6312', '羽島郡岐南町\nデイサービス（24X）'),
-                 ('gifuX', '（244）'),
-                 ('gifuX', '（245）'), # 5/14
-                 ('gifu6631', '羽島郡笠松町\n高齢者福祉施設（246）'),
-                 ('gifu6768', '高山市\n自宅飲食・外国人（247）'),
-                 ('gifu6621', '瑞浪市・岐阜市\n仕事・家族（248）'),
-                 ('gifu6979', '関市\n中部学院大運動部（249?）'), # 5/15
-                 ('gifu6658', '本巣市・大垣市\n連休中食事（250）'),
-                 ('gifu7561', '岐阜市・山県市\n連休中食事（249?）'),
-                 ('gifuX', '（25X）'), # 県立岐阜商業高校
-                 ('gifu6638', '（252）'), # 
-                 ('gifu7204', '岐阜市\n家族（253）'),
-                 ('gifu7192', '（254?）'), # 5/16 関市
-                 ('gifu6923', '関市\nデイサービス（255）'), # 関市のデイサービス、職員、利用者、家族、11 名
-                 ('gifuX', '（256）'), # 
-                 ('gifu6335', '（257）'),
-                 ('gifu7348', '（258）'), # 岐阜市　家族
-                 ('gifu7344', 'カラオケ喫茶？（259）'), # 岐阜市 カラオケ喫茶？
-                 ('gifu6356', '下呂市\n診療所（26X）'), # 5/17
-                 ('gifu7457', '（261）'), # 垂井町
-                 ('gifuX', '（262）'), # 
-                 ('gifu8232', '（263）'), # 
-                 ('gifu6941', '（264）'), # 岐阜  7487
-                 ('gifu6967', '高山市\n障害者入所施設（265）'), # 5/18
-                 ('gifuX', '岐阜市\n知人・連休会食（266）'), # 
-                 ('gifu6427', '羽島市\n羽島北高校（267）'), # 
-                 ('gifuX', '可児市\n家族（26X）'), # 5/19
-                 ('gifu7557', '岐阜市\n高齢者施設（26X）'), #
-                 ('gifu7956', '（269）'), # 
-                 ('gifu8179', '岐阜市\n知人（270）'), # 
-                 ('gifu7084', '連休BBQなど（27X）'), # 5/20
-                 ('gifuX', '羽島郡笠松町\n家族（27X）'), # 
-                 ('gifu6858', '各務原市\nグループホーム（273）'), # 5/21
-                 ('gifu6630', '関市\nデイサービス施設（274）'), # 
-                 ('gifu7024', '瑞穂市\n朝日大運動部・会食（27X）'), # 
-                 ('gifu7390', '山県市\n家族・職場（275）'), # 
-                 ('gifu6978', '中津川市\n中京学院大硬式野球部（277）'), # 
-                 ('gifu6908', '恵那市\n職場関連（278）'), # 5/22
-                 ('gifu7499', '瑞穂市\n家族等（279）'), #
-                 ('gifu8355', '岐阜市\n家族・福祉施設（280）'), # 
-                 ('gifu7868', '可児市\n家族・友人（281）'), # 5/23 
-                 ('gifu8013', '（282）'), # 5/25
-                 ('gifu8221', '土岐市\n聖十字病院（283）'), #
-                 ('gifu7446', '各務原市\nホームパーティー（284）'), # 
-                 ('gifu8172', '土岐市\n会食・カラオケ（285）'), #
-                 ('gifu8214', '（286）'), # 
-                 ('gifu7429', '（287）'), # 5/26 大垣市・各務原市（瑞穂市格闘技ジム?）
-                 ('gifu7636', '岐阜市\n高齢者福祉施設（288）'), # 
-                 ('gifu8283', '岐阜市\n家族（289）'), #
-                 ('gifu7939', '岐阜市・関市\n職場・家族（290）'), # 5/27
-                 ('gifu8063', '不破郡垂井町\n家族（291）'), #
-                 ('gifu7796', '飛騨市民病院（292）'), # 5/28
-                 ('gifu8175', '県警本部交通規制課（293）'), # 
-                 ('gifu8425', '岐阜市\n高齢者福祉施設関連（294）'), # 
-                 ('gifu8157', '土岐市\n土岐商業高校（295）'), # 5/29
-                 ('gifu8311', '安八郡安八町\n酒類を提供する飲食店（296）'), # 岐阜市・瑞穂市、スポーツジム後
-                 ('gifu8166', '多治見市・土岐市\n家族・知人（297）'), #
-                 ('gifu7663', '可児市\n接待を伴う飲食店（298）'), # 可児市
-                 ('gifu8289', '岐阜市\nホットヨガ（299）'), # 
-                 ('gifu8349', '可児市\n会食・外国人（300）'), # 5/30
-                 ('gifu7642', '高山市\n友人（301）'), # 5/31
-                 ('gifu8514', '加茂郡八百津町\nデイサービス（302）'), # 
-                 ('gifu8432', '加茂郡七宗町\nデイサービス（303）'), # 6/1
-                 ('gifu8823', '岐阜市\n2家族（304）'), # 
-                 ('gifu8496', '恵那市\n職場関連（305）'), # 6/2
-                 ('gifu8308', '安八郡輪之内町\n職場関連（30X）'), # 6/7
-                 ('gifu8807', '大垣市\n障害者福祉施設関連（307）'), # 
-                 ('gifuX', '岐阜市・瑞穂市\n家族・親族（30X）'), # 
-                 ('gifuX', '岐阜市\n2家族（309）'), # 6/10
-                 ('gifu8663', '可児市\n病院・家族（310）'), # 6/11
-                 ('gifu8855', '可児市\n2家族（311）'), # 
-                 ('gifu8948', '美濃加茂市\n職場（312）'), # 6
-                 ('gifu9107', '岐阜市\nデイサービス（313）'), # 5 
-                 ('gifu9043', '不破郡垂井町\n2家族（314）'), # 6/14
-                 ('gifu8837', '岐阜市\n職場（315）'), # 6/15
-                 ('gifu9100', '多治見市・恵那市\n家族（316）'), # 6/17
-                 ('gifu9025', '関市\n複数家族（317）'), # 
-                 ('gifu9044', '可児市\n職場・家族（318）'), # 6/18
-                 ('gifu9001', '土岐市\n教会・外国籍（319）'), # 6/22
-                 ('gifu9160', '各務原市\n高齢者福祉施設（320）'), # 
-                 ('gifu9152', '岐阜市\n職場関連・デルタ株（321）'), # 7/2
-                 ('gifu9278', '名古屋市\n職場'), # 7/4
-                 ('gifu9237', '羽島市\n職場関連（322）'), # 7/8
-                 ('gifu9314', '美濃加茂市\n職場関連（323）'), # 7/14
-                 ('gifu9313', '可児郡御嵩町\n職場関連（324）'), # 7/16
-                 ('gifu9368', '各務原市\n職場（325）'), # 7/23
-                 ('gifu9420', '大阪から旅行'), # 
-                 ('gifuX', '（）'), # 
-                 ('gifuX', '（）'), # 
-                 ('gifuX', '（）'), # 
-                 ('gifuX', ''))
-        notes += (('aichi6365', '岡崎市\n高齢者施設'),
-                  ('aichi7301', '名古屋市\n高齢者施設'),
-                  ('aichi8406', '名古屋市\n地域活動グループなど'),
-                  ('aichi9161', '医療・高齢者施設\n（3A）'), # confirmed
-                  ('aichi10826', '幸田町\n京ヶ峰岡田病院\n（3B）'), # confirmed
-                  ('aichi11540', '豊川市民病院\n（3C）'), # confirmed
-                  ('aichi10681', '名古屋市\n繁華街の飲食店\n（3D）'), # confirmed
-                  ('aichi11028', '名古屋市\n保育施設\n（3E）'), # confirmed
-                  ('aichi11043', '豊川市\n病院\n（3F）'), # confirmed
-                  ('aichi12093', '保育施設・学校\n（3G）'), # confirmed
-                  ('aichi11818', '医療・高齢者施設\n（3H）'), # confirmed
-                  ('aichi12583', '職場（3I）'), # confirmed (30 = 32 - 2 Gifu)
-                  ('aichi12324', '医療・高齢者施設\n（3J）'), # confirmed (1 common case in 3R?)
-                  ('aichi11946', '医療・高齢者施設\n（3K）'), # confirmed (all 12 cases as of Jan 5)
-                  ('aichi12868', '藤田医科大学\n学生\n（3L）'), # confirmed
-                  ('aichi13326', '春日井市民病院\n（3M）'), # confirmed
-                  ('aichi13541', 'クラブチーム\n（3N）'), # confirmed
-                  ('aichi12495', '医療・高齢者施設\n（3O?）'), # ? 44 cases as of Jan 5, but official says 33 (Jan 5 and 8)
-                  ('aichi13174', '豊橋市\n医療施設（3P）'), # confirmed
-                  ('aichi12615', '医療・高齢者施設\n（3Q）'), # 23 as of Jan 5 (碧南?)
-                  ('aichi13504', '名古屋市\n障碍者施設\n（3R）'), # confirmed
-                  ('aichi13623', '碧南市\n看護ステーション（3Q?）'), # 17 cases as of Jan 5
-                  ('aichi12834', '船舶\n（3S）'),  # confirmed
-                  ('aichi14892', '高齢者施設\n（3T）'), # confirmed
-                  ('aichi13191', '医療・高齢者施設\n（3U）'), # confirmed
-                  ('aichi14725', '弥富市\n海南病院\n（3V）'), # confirmed
-                  ('aichi14370', '職場（3W）'), # confirmed (count 18 direct cases only as of Jan 5)
-                  ('aichiX', '医療・高齢者施設等\n（3X）'), # 20 as of Jan 5
-                  ('aichi14408', '名古屋市\n名古屋記念病院\n（3Y）'), # confirmed
-                  ('aichi14683', '瀬戸市\nあさい病院\n（3Z）'), # confirmed
-                  ('aichi13890', '豊橋市\n高齢者施設\n（4A）'), # confirmed
-                  ('aichi14219', '名古屋市\n高齢者施設\n（4B）'), # confirmed (asahi.com Jan 3)
-                  ('aichi15147', '名古屋市\n高齢者施設\n（4C）'), # confirmed (asahi.com Jan 3)
-                  ('aichi16036', '名古屋市\n職場（4D）'), ('aichi16039', '名古屋市\n職場（4D）'), #  (asahi.com Jan 3)
-                  ('aichi15111', '名古屋市\n福祉施設\n（4E）'), # confirmed (asahi.com Jan 3)
-                  ('aichi16822', '名古屋市\n東部医療センター\n（4F）'), # confirmed (asahi.com Jan 3)
-                  ('aichi14284', '名古屋市\n高齢者施設\n（4G）'), # confirmed (asahi.com Jan 3)
-                  ('aichi15662', '高齢者施設\n（4H）'), # confirmed
-                  ('aichi15955', '医療・高齢者施設\n（4I）'), # 25 as of Jan 8, 26 as of Jan 12
-                  ('aichi18323', '会食\n（4J）'), # confirmed
-                  ('aichi18776', 'トヨタ自動車ヴェルブリッツ\nラグビーチーム\n（4K）'), # 13 as of Jan 11
-                  ('aichi19047', '医療・高齢者施設等（4L）'), # confirmed
-                  ('aichi18942', '年末年始親族'),
-                  ('aichi19003', '愛知県警警察学校（4M）'),
-                  ('aichiX', '名古屋市\n高齢者施設\n（4N）'), # 12 as of Jan 17
-                  ('aichi18855', '刈谷市クラブチーム?\n（4O?）'), # 10 as of Jan 17
-                  ('aichi18959', '豊橋市\n東部環境センター\n（4P）'), # confirmed
-                  ('aichi20230', '豊田市\n医療機関（4Q）'), # confirmed
-                  ('aichi19271', '飲食店?（4R?）'), # 9 as of Jan 23
-                  ('aichi21152', '大府市\n保育施設'),
-                  ('aichi21557', '蒲郡市\n高齢者施設（4S）'), # confirmed
-                  ('aichi21342', '大府市\n成人式二次会（4T）'), # confirmed
-                  ('aichi21601', '名古屋市\n職場（4U）'), # confirmed
-                  ('aichi21837', '岡崎市\n高齢者施設（4V）'), # confirmed
-                  ('aichi21065', '名古屋市\n医療・高齢者施設等（4W）'), # confirmed
-                  # 4X 1/26 13, 1/27 14, 1/28-29 ?, 1/30 15, 1/31 15
-                  ('aichi17875', '名古屋市\n医療・高齢者施設等（4X）'), # confirmed by hibcbc data
-                  # 4X official(hicbc), 1/28 23559(23533), 1/27 23389(23363), 1/25 22944(22914), 1/24 22860(22834)
-                  ('aichi22944', '名古屋市\n医療・高齢者施設等（4X）'), # hicbc says it belongs to 4X
-                  ('aichi21591', '豊橋市\n寮（4Y）'), # confirmed
-                  ('aichi21617', '名古屋市\n保育園（4Z）'), # confirmed
-                  ('aichi18725', '医療・高齢者施設等（5A）'), # confirmed
-                  ('aichi21620', '名古屋市\n高齢者施設（5B）'), # confirmed
-                  ('aichi21869', '医療・高齢者施設等（5C）'), # confirmed
-                  ('aichi20961', '豊橋市\n接待を伴う飲食店（5D）'), # confirmed
-                  ('aichi22085', '豊橋市\n接待を伴う飲食店'),
-                  ('aichi22680', '名古屋市\n中部ろうさい病院\n（5E）'), # confirmed
-                  ('aichi22401', '名古屋市\n医療機関（5F）'), # confirmed
-                  ('aichi20933', '豊田市\n介護施設（5G）'), # confirmed
-                  ('aichi22072', '豊橋市\n高齢者施設（5H）'), # confirmed
-                  ('aichi21746', '弥富市\n高齢者施設?（5I?）'), # 11 as of Jan 30
-                  ('aichi22861', '名古屋市\n高齢者施設（5J）'), # confirmed
-                  ('aichi23759', '名古屋市\n高齢者施設（5K）'), # confirmed
-                  ('aichi23356', '名古屋市\n高齢者施設（5L）'), # confirmed
-                  ('aichi23222', '安城市\n高齢者施設（5M）'),
-                  ('aichi24449', '一宮市\n医療機関（5N）'), # confirmed
-                  ('aichi24390', '豊田市\n介護事業所（5O?）'),
-                  ('aichi23181', '春日井市\n高齢者施設（5P）'), # confirmed
-                  ('aichi24902', '刈谷市\n医療機関（5Q）'), # confirmed
-                  ('aichi25565', '名古屋市\nカラオケ喫茶（5R）'), # confirmed
-                  ('aichi25650', '半田市\n半田市立半田病院（5S）'), # confirmed
-                  ('aichi26197', '名古屋市\n高齢者施設（5T）'), # confirmed
-                  ('aichi26143', '名古屋市内\n会食（5U）'), # confirmed
-                  ('aichi26327', '飲食店？（5V？）'), # 10
-                  ('aichi26272', '飲食店？（5V？）'), # 10
-                  ('aichi26280', '名古屋市\n職場（5W）'), # confirmed
-                  ('aichi26379', '豊田市\n医療機関（5X）'), # confirmed
-                  ('aichi26504', '名古屋市\n保育施設（5Y）'), # confirmed
-                  ('aichi26625', '愛知学院大学\n硬式野球部寮（5Z）'), # confirmed
-                  ('aichi26638', '愛西市\n保育施設（6A）㊑'), # confirmed
-                  ('aichi26509', '春日井市\n高齢者施設（6B）'), # confirmed
-                  ('aichi26779', '豊橋市\n積善病院（6C）'), # confirmed
-                  ('aichi26898', '㊑'), # variant No. 36
-                  ('aichi26999', '㊑'), # variant No. 65
-                  ('aichi27214', '弥富市\n会社の寮（6D）'), # confirmed
-                  ('aichi27278', '㊑'), # variant No. 139
-                  ('aichi27432', '豊田市\n事業所（6E）'), # confirmed
-                  ('aichi27728', '名古屋市\n職場（6F）㊑'), # confirmed
-                  ('aichi27596', '名古屋市\n緑区役所（6G）㊑'), # confirmed
-                  ('aichi28095', '豊田市\n教会（6H）'), # confirmed
-                  ('aichi28752', '南知多町\n高齢者施設（6I）'), # confirmed
-                  ('aichi27702', '名古屋市大西部医療センター（6J）'), # confirmed
-                  ('aichi28669', '名古屋市\n県立高校生・カラオケ（6K）'), # confirmed
-                  ('aichi29158', '日進市\n愛知学院大学・部活（6L）'), # confirmed
-                  ('aichi28358', '大府市\n医療機関（6M）'), # confirmed
-                  ('aichi28122', '名古屋市\n高齢者施設（6N）'), # confirmed
-                  ('aichi29023', '高浜市\n保育園（6O）'), # confirmed
-                  ('aichi28856', '豊明市\n高齢者施設（6P）'), # confirmed
-                  ('aichi29373', '日進市\n大学部活（6Q）'), # confirmed
-                  ('aichi28510', '名古屋市\nスポーツジム（6R）'), # confirmed
-                  ('aichi29439', 'みよし市\n会社の寮？（6S？）'), # 14 (Apr 20)
-                  ('aichi29931', '津島市\n保育施設（6T）㊑'), # confirmed
-                  ('aichi29031', 'みよし市\n工場？（6U？）'), # 13 (Apr 22)
-                  ('aichiX', '職場（6V）'), # 15 (Apr 25)
-                  ('aichi30528', '職場（6W）'), # confirmed
-                  ('aichi31342', '医療・高齢者施設等（6X）'), # confirmed
-                  ('aichi32610', '岡崎市\n障害者施設（6Y）'), # confirmed
-                  ('aichi32241', '半田市\n障害者施設（6Z）'), # confirmed
-                  ('aichi31666', '名古屋市\n工業高校（7A）'), # confirmed
-                  ('aichi32295', '中京大\n水泳部（7B）'), # confirmed
-                  ('aichi31705', '名古屋市\n保育施設？（7C？）'), # 10 (May 2)
-                  ('aichi34212', '名古屋市\n医療機関（7D）'), # confirmed
-                  ('aichi32352', '名古屋市\n医療機関（7E）'), # confirmed
-                  ('aichi33202', '瀬戸市\n高齢者施設（7F）'), # confirmed
-                  ('aichi33263', '東浦町\n高齢者施設（7G）'), # confirmed
-                  ('aichi33330', '豊川市\n高齢者施設（7H）'), # confirmed
-                  ('aichi33311', '一宮市\n医療機関（7I）'), # confirmed
-                  ('aichi34111', '名古屋市\n高齢者施設（7J）'), # confirmed
-                  ('aichi34655', '一宮市\n医療機関（7K）'), # confirmed
-                  ('aichi36090', '名古屋市\n高齢者施設（7L）'), # confirmed
-                  ('aichi37602', '名古屋市\n医療機関（7M）'), # confirmed
-                  ('aichi36496', '西尾市\n飲食店（7N）'), # confirmed
-                  ('aichi33158', '名古屋市\n職場（7O）'), # confirmed
-                  ('aichi36268', '名古屋市\n高齢者施設（7P）'), # confirmed
-                  ('aichi35617', '福祉施設（7Q）'), # confirmed
-                  ('aichi37476', '豊田市\n高齢者施設（7R）'), # confirmed
-                  ('aichi34296', 'あま市\n高齢者施設（7S）'), # confirmed
-                  ('aichi35483', '豊田市\n高齢者施設（7T）'), # confirmed
-                  ('aichi39635', '名古屋市\n劇場（7U）'), # confirmed
-                  ('aichi40510', '一宮市\n高齢者施設（7V）'), # confirmed
-                  ('aichi35802', 'インド変異株'), # 50代男性、5 月上旬感染判明、渡航歴あり
-                  ('aichi36332', '春日井市\n高齢者施設（7W）'), # confirmed
-                  ('aichi39616', '名古屋市\n高齢者施設（7X）'), # confirmed
-                  ('aichi39019', 'あま市\n高齢者施設（7Y）'), # confirmed
-                  ('aichi43369', '名古屋市\n高齢者施設（7Z）'), # confirmed
-                  ('aichi41752', '春日井市\n障害者入所施設（8A）'), # confirmed
-                  ('aichi44652', '江南市\n高齢者施設（8B）'), # confirmed
-                  ('aichi42555', '刈谷市\n学校（8C）'), # confirmed
-                  ('aichi43978', '豊明市\n高齢者施設（8D）'), # confirmed
-                  ('aichi43102', '名古屋市\n職場（8E）'), # confirmed, 10 (May 27), 11 (May 30) aichi46918 も 8E？（CBC）, 12 (Jun 5)
-                  ('aichi35444', '刈谷市\n高齢者施設（8F）'), # confirmed
-                  ('aichi46336', '豊田市\n大学運動部寮（8G）'), # confirmed 愛知工業大学 フェンシング部
-                  ('aichi44011', '名古屋市\n高齢者施設（8H）'), # confirmed 11 (May 31), 12 (Jun 9)
-                  ('aichi44236', '北名古屋市\n職場？（8I？）'), # 13 (Jun 1)
-                  ('aichi38976', '名古屋市\n職場（8J）'), # confirmed 11 (Jun 1), 19 (Jun 2), 21 (Jun 3), 24 (Jun 9), 25 (Jun 10)
-                  ('aichi42524', '半田市\n高齢者施設（8K）'), # confirmed
-                  ('aichi39011', '名古屋市\n高齢者施設（8L）'), # confirmed
-                  ('aichi38920', '名古屋市\n医療機関（8M）'), # confirmed
-                  ('aichi42722', '豊橋市\n高齢者施設'), #  8Q?
-                  ('aichi47281', '岡崎市\n岡崎市民病院（8N）'), # confirmed
-                  ('aichi42775', '名古屋市\n専門学校（8O）'), # confirmed 24 (Jun 5), 35 (Jun 6), 43 (Jun 7)
-                  ('aichi46547', '名古屋市\n専門学校（8P）'), # confirmed 21 (Jun 7), 22 (Jun 9), 23 (Jun 10)
-                  ('aichiX', '豊橋市\n高齢者施設（8Q）'), # 10 (Jun 8), 11 (Jun 12), 10 (Jun 13) 訂正
-                  ('aichi47490', '豊田市\n事業所（8R)'), #  confirmed 11 (Jun 11)
-                  ('aichi46374', '岡崎市\n高齢者施設'), # 
-                  ('aichi49082', '豊橋市\n福祉施設'), # 
-                  ('aichi45983', '岡崎市\n事業所（8S）'), # confirmed 10 (Jun 14) 20-60
-                  ('aichi49220', '岡崎市\n事業所（8T）'), # confirmed 11 (Jun 14) 20-50, 12 (Jun 16)
-                  ('aichi49290', '豊川市\n集会所（8U）'), # confirmed 23 (Jun 16), 24 (Jun 17)
-                  ('aichi49362', '名古屋市\n職場（8V）'), # confirmed 10 (Jun 18), 11 (Jun 19)
-                  ('aichi49953', '一宮市\n高齢者施設（8W）'), # confirmed 13 (Jun 18)
-                  ('aichi49040', '大口町\n職場（8X）'), # confirmed 10 (Jun 19)
-                  ('aichi50227', '蒲郡市\n自宅会食（8Y）'), # confirmed 15 (Jun 19), 18 (Jun 22)
-                  ('aichi48489', '名古屋市\n高齢者施設（8Z）'), # confirmed 16 (Jun 21), 17 (Jun 22)
-                  ('aichi50338', '一宮市\n医療機関（9A）'), # confirmed 12 (Jun 26), 14 (Jun 27)
-                  ('aichi51328', '名古屋市\n医療機関（9B）'), # confirmed 14 (Jul 4), 17 (Jul 5)
-                  ('aichi51112', 'みよし市\nスポーツチーム（9C）'), # 10 (Jul 9)
-                  ('aichi51588', '碧南市\n医療機関（9D）'), # confirmed 18 (Jul 11)
-                  ('aichi51203', '瀬戸市\n高齢者施設（9E）'), # 13 (Jul 13)
-                  ('aichi52116', '豊橋市\n高校部活（9F）'), # 11 (Jul 20)
-                  ('aichiX', ''),
-                  ('aichiX', ''),
-                  ('aichiX', ''))
-
-        for note in notes:
-            if source.find(note[0]) >= 0:
-                self.gv_graph.node('%s_caption' % note[0], label=note[1], shape='plaintext', fixedsize='1', width='0.5', height='0.5', fontsize='12')
-                self.gv_graph.edge(note[0], '%s_caption' % note[0], style='dashed', color='gray', arrowhead='odot')
+        return
 
     def make_gv_edges(self, cases):
         for case in cases.values():
             #if before_4th_wave(case.date):
-            if before_2021May(case.date):
+            #if before_2021May(case.date):
+            if before_5th_wave(case.date):
                 continue
             if len(case.connected_nodes) > 0:
                 node_name = case.node_name
                 for node in case.connected_nodes:
                     source_node_name = cases[node].node_name
                     #if before_4th_wave(cases[node].date):
-                    if before_2021May(cases[node].date):   
+                    #if before_2021May(cases[node].date):
+                    if before_5th_wave(cases[node].date):   
                         continue
-                    self.gv_graph.edge(source_node_name, node_name)
-
+                    self.gv_graph.edge(source_node_name, node_name, weight='10')
+                    #self.gv_graph.edge(source_node_name, node_name)
 
     def make_gv_caption(self):
         with self.gv_graph.subgraph() as s:
@@ -1015,7 +1234,8 @@ class CaseGraph:
         for case in sorted(cases.values(), key=lambda x:x.date):
             date = case.date
             #if before_4th_wave(case.date):
-            if before_2021May(case.date):
+            #if before_2021May(case.date):
+            if before_5th_wave(case.date):
                 continue
             if date not in self.date_ranks.keys():
                 self.date_ranks[date] = [case,]
@@ -1047,7 +1267,7 @@ class CaseGraph:
                 #self.date_ranks[date] = sorted(self.date_ranks[date], key=lambda x:x.is_connected, reverse=True)
                 self.date_ranks[date] = sorted(self.date_ranks[date], key=lambda x:x.cluster_duration, reverse=True)
 
-                for case in self.date_ranks[date]:
+                for i, case in enumerate(self.date_ranks[date]):
                     # Default values. To be changed according to the case specs later.
                     sub.attr('node', shape='octagon', color='black', style='diagonals', fontcolor='black')
                     if case.is_male():
@@ -1060,20 +1280,43 @@ class CaseGraph:
                         color='#000000' # black
 
                     if case.contact_category == ContactCategory.FOREIGN_ROUTE:
-                        sub.attr('node', shape='circle', style='', color=color, fontcolor='black')
+                        shape, style, color, fontcolor = 'circle', '', color, 'black'
+                        #sub.attr('node', shape='circle', style='', color=color, fontcolor='black')
                     elif case.contact_category == ContactCategory.UNKNOWN:
-                        sub.attr('node', shape='circle', style='filled', color=color+'AA', fontcolor='white')
+                        shape, style, color, fontcolor = 'circle', 'filled', color + 'AA', 'white'
+                        #sub.attr('node', shape='circle', style='filled', color=color+'AA', fontcolor='white')
                     elif case.contact_category == ContactCategory.NON_AICHI_GIFU:
-                        sub.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
+                        #sub.attr('node', shape='tripleoctagon', style='', color=color, fontcolor='black')
+                        shape, style, color, fontcolor = 'tripleoctagon', '', color, 'black'
+                    elif case.node_name in repos_dict.keys():
+                        #sub.attr('node', shape='doubleoctagon', style='', color=color, fontcolor='black')
+                        shape, style, color, fontcolor = 'doubleoctagon', '', color, 'black'
                     elif case.contact_category == ContactCategory.AICHI_GIFU:
-                        sub.attr('node', shape='square', style='', color=color, fontcolor='black')
+                        #sub.attr('node', shape='square', style='', color=color, fontcolor='black')
+                        shape, style, color, fontcolor = 'square', '', color, 'black'
                     elif case.contact_category == ContactCategory.NON_AICHI_GIFU_UNKNOWN:
-                        sub.attr('node', shape='tripleoctagon', style='filled', color=color+'AA', fontcolor='white')
-
+                        #sub.attr('node', shape='tripleoctagon', style='filled', color=color+'AA', fontcolor='white')
+                        shape, style, color, fontcolor = 'tripleoctagon', 'filled', color + 'AA', 'white'
+                        
                     if debug: # case number
-                        sub.node(case.node_name, label=case.node_name.replace('aichi', 'A').replace('gifu', 'G'), fontname='Myriad Pro')
+                        sub.node(case.node_name, label=case.node_name.replace('aichi', 'A').replace('gifu', 'G'))
                     else: # age & city
-                        sub.node(case.node_name, label=case.gv_label, fontname='Myriad Pro')
+                        #sub.node(case.node_name, label=case.gv_label)
+                        sub.node(case.node_name, label=case.gv_label, shape=shape, style=style, color=color, fontcolor=fontcolor, fixedsize='1', width='0.5')
+
+                    try:
+                        note = note_dict[case.node_name]
+                        sub.node('%s_caption' % case.node_name, shape='plaintext', label=note, style='', color='black', fontcolor='black',fixedsize='1', width='0.5')
+                        self.gv_graph.edge(case.node_name, '%s_caption' % case.node_name, style='dashed', color='gray', arrowhead='odot')
+                    except:
+                        pass
+
+                    if i != 0:
+                        case1 = self.date_ranks[date][i]
+                        case2 = self.date_ranks[date][i - 1]
+                        if case1.cluster_duration > 1 and case2.cluster_duration > 1 and case1.beginning and case2.beginning:
+                            pass
+                            #self.gv_graph.edge(case1.node_name, case2.node_name, style='invis', weight='0')
 
         self.gv_graph.edge('date', self.date_nodes[0], style='invis')
 
@@ -1143,6 +1386,10 @@ class TSVReader():
                     else:
                         connected_nodes.append('gifu%d' % n)
 
+            if node_name in repos_dict.keys():
+                # 再感染
+                connected_nodes.append(repos_dict[node_name])
+
             if note in ('11月6日岐阜県公表のクラスターの関連から検査', '11月6日岐阜県内のクラスターの関連から検', '岐阜のクラスターの関連から検査', '11月6日の岐阜県クラスターの関連から検査'):
                 connected_nodes.append('gifu708')
             elif note.find('11月6日の集団感染が発生した市内事業所の') >= 0 or note.find('11月6日岡崎市発表の集団感染が発生した市内事業所の') >= 0:
@@ -1201,9 +1448,6 @@ class TSVReader():
                 connected_nodes.append('gifu4692')
             elif node_name in ('gifu4697', 'gifu4696', 'gifu4698'): # フィリピン帰国
                 connected_nodes.append('gifu4691')
-            elif node_name in repos_dict.keys():
-                # 再感染
-                connected_nodes.append(repos_dict[node_name])
             elif note.find('3月19日発表の集団感染発生施設の関係者') >= 0:
                 connected_nodes.append('aichi26379') # 豊田市医療機関
             elif note.find('4月2日発表の集団感染発生事業所の関係者') >= 0:
@@ -1212,7 +1456,7 @@ class TSVReader():
                 connected_nodes.append('aichi28095') # 豊田市民間施設
             elif node_name in ('gifu4741', 'gifu4742', 'gifu4743', 'gifu4744', 'gifu4745', 'gifu4746', 'gifu4747', 'gifu4757'): # フィリピンパブ
                 connected_nodes.append('gifu4741')
-            elif note.find('感染者が発生した市内医療機関の関係者') >= 0: # 豊橋 3/22
+            elif note.find('感染者が発生した市内医療機関の関係者') >= 0 and int(node_name.split('aichi')[1]) <= 50000: # 豊橋 3/22
                 connected_nodes.append('aichi26779')
             elif note.find('4/29発表のクラスター発生施設の') >= 0: # 岡崎 障害者施設
                 connected_nodes.append('aichi32610')
@@ -1266,8 +1510,29 @@ class TSVReader():
             elif note.find('クラスター9A') >= 0:
                 connected_nodes.append('aichi50338')
             elif note.find('感染者が発生した市内高等学校部活動の関係者') >= 0 or \
-                 node_name in ('aichi52265', 'aichi52266', 'aichi52267'):
+                 node_name in ('aichi52265', 'aichi52266', 'aichi52267') or \
+                 node_name in ('aichi52660', ):
+                # https://www.tokai-tv.com/tokainews/article_20210723_10187
+                # 7/23 の 1 人は再陽性（再感染？）とのことなので 52660 が該当
                 connected_nodes.append('aichi52116')
+            elif (note.find('感染者が発生した市内医療機関の関係者') >= 0 or note.find('感染者が発生した市内医療機関の感染者') >= 0) and \
+                 int(node_name.split('aichi')[1]) > 56000: # 豊橋 8/8
+                connected_nodes.append('aichi56174')
+            elif note.find('8/13発表のクラスター発生施設の患者') >= 0 or\
+                 note.find('8/13発表のクラスター発生施設の学生') >= 0: # 岡崎 大学
+                connected_nodes.append('aichi54702')
+            elif note.find('8月13日発表の集団感染発生施設の関係者') >= 0: # 豊田 大学
+                connected_nodes.append('aichi54662')
+            elif note.find('クラスター9P') >= 0:
+                connected_nodes.append('aichi55136')
+            elif note.find('クラスター9G') >= 0:
+                connected_nodes.append('aichi53016')
+            elif node_name in ('aichi60455', ): # 9M
+                # https://www.tokai-tv.com/tokainews/article_20210816_10833
+                # 長久手市の20代の男性は、クラスターとなっている小牧市の職場の従業員で、
+                # このクラスターは14人となりました。この男性は再感染だということです。
+                connected_nodes.append('aichi53996')
+            # Gifu
             elif node_name in ('gifu4783', 'gifu4778', 'gifu4769', 'gifu4766'): # クラスター157
                 connected_nodes.append('gifu4747')
             elif node_name in ('gifu4827', ): # クラスター159
@@ -1366,6 +1631,30 @@ class TSVReader():
                 connected_nodes.append('gifu9152')
             elif node_name in ('gifu9318', ): # 322
                 connected_nodes.append('gifu9237')
+            elif node_name in ('gifu9736', 'gifu9736', 'gifu10085'): # 330
+                connected_nodes.append('gifu9643')
+            elif node_name in ('gifu9822', 'gifu9823', 'gifu9824', 'gifu9825',): # 332
+                connected_nodes.append('gifu9792')
+            elif node_name in ('gifu9772',): # 335
+                connected_nodes.append('gifu9735')
+            elif node_name in ('gifu9778',): # 337
+                connected_nodes.append('gifu9733')
+            elif node_name in ('gifu10171', 'gifu10172', 'gifu10173', 'gifu10174', 'gifu10175', 'gifu10176', 'gifu10177', 'gifu10178', 'gifu10260', 'gifu10336', 'gifu10435', 'gifu10436', 'gifu10437', 'gifu10571', 'gifu10572', 'gifu10573', 'gifu10574', 'gifu10575', 'gifu10772', 'gifu10909', 'gifu10910'): # 347
+                connected_nodes.append('gifu10044')
+            elif node_name in ('gifu10072', 'gifu9868'): # 346
+                connected_nodes.append('gifu10071')
+            elif node_name in ('gifu10218', 'gifu10219'): # 353
+                connected_nodes.append('gifu10214')
+            elif node_name in ('gifu10533', ): # 354
+                connected_nodes.append('gifu10046')
+            elif node_name in ('gifu10525', 'gifu10278',): # 348
+                connected_nodes.append('gifu9918')
+            elif node_name in ('gifu10707', 'gifu10708', 'gifu10709', 'gifu10710', 'gifu10836', ): # 368
+                connected_nodes.append('gifu10706')
+            elif node_name in ('gifu10727', ): # 372
+                connected_nodes.append('gifu10726')
+            elif node_name in ('gifu10843', 'gifu10844', 'gifu10845', 'gifu10846', 'gifu10847', 'gifu10843', 'gifu10848', 'gifu10849', ): # 高校, unconfirmed
+                connected_nodes.append('gifu10842')
 
             for c in ('aichi46595', ):
                 try:
@@ -1424,9 +1713,14 @@ class TSVReader():
             else:
                 age, sex = person.split('代')
 
-            if note.find('No.') >= 0 and note.find('と接触') >= 0 and n != 51355:
-                tmp = re.findall('No\.[,\d]*と接触', note)[0]
-                note = note.replace(tmp, tmp.replace('No.', '愛知県内').replace(',', '例目、').replace('と接触', '例目と接触'))
+            if n in (65765, 68413, 67943): # ex. 一宮市事例と接触、再感染（No.9533）
+                pass
+            elif note.find('No.') >= 0 and note.find('と接触') >= 0 and n != 51355:
+                try:
+                    tmp = re.findall('No\.[,\d]*と接触', note)[0]
+                    note = note.replace(tmp, tmp.replace('No.', '愛知県内').replace(',', '例目、').replace('と接触', '例目と接触'))
+                except:
+                    raise BaseException(note)
             elif note == '':
                 note = ' '
 
@@ -1474,13 +1768,14 @@ class ROOTPlotter:
     def __init__(self, cases):
         ROOT.gStyle.SetOptStat(0)
 
-        self.can = [ROOT.ExactSizeCanvas('can%d' % i, 'can%d' % i, 800, 600) for i in range(3)]
+        self.can = [ROOT.ExactSizeCanvas('can%d' % i, 'can%d' % i, 800, 600) for i in range(4)]
 
         t0 = ROOT.TDatime(2020, 7, 1, 0, 0, 0).Convert()
-        nweeks = 60
-        ndays = nweeks * 7
-        dt = ndays * 3600 * 24
+        nweeks, nweeks2 = 60, 10
+        ndays, ndays2 = nweeks * 7, nweeks2 * 7
+        dt, dt2 = ndays * 3600 * 24, ndays2 * 3600 * 24
         t1 = t0 + dt
+        t02 = t1 - dt
 
         self.h_aichi_wo_nagoya = ROOT.TH1D('h_aichi_wo_nagoya', ';Date;Number of Cases / Day', ndays, t0, t1)
         self.h_nagoya = ROOT.TH1D('h_nagoya', ';Date;Number of Cases / Day', ndays, t0, t1)
@@ -1574,35 +1869,51 @@ class ROOTPlotter:
         self.px_age.SetLineWidth(3)
         self.px_age.Draw('same e')
 
-        self.can[1].cd()
-        self.can[1].SetGridx()
-        self.can[1].SetGridy()
-        self.h_aichi_wo_nagoya.SetFillColorAlpha(2, 0.5)
-        self.h_nagoya.SetFillColorAlpha(5, 0.5)
-        self.h_gifu.SetFillColorAlpha(4, 0.5)
-        self.stack = ROOT.THStack('stack', '')
-        for h in (self.h_aichi_wo_nagoya, self.h_nagoya, self.h_gifu):
-            self.stack.Add(h)
-        self.stack.Draw()
+        #for i in (1, 3):
+        for i in (1, ):
+            self.can[i].cd()
+            self.can[i].SetGridx()
+            self.can[i].SetGridy()
+            if i == 1:
+                self.h_aichi_wo_nagoya.SetFillColorAlpha(2, 0.5)
+                self.h_nagoya.SetFillColorAlpha(5, 0.5)
+                self.h_gifu.SetFillColorAlpha(4, 0.5)
+                self.stack = ROOT.THStack('stack', '')
+                for h in (self.h_aichi_wo_nagoya, self.h_nagoya, self.h_gifu):
+                    self.stack.Add(h)
 
-        self.stack_ave7.Draw('hist c same noclear')
-        self.can[1].Modified()
-        self.stack.GetXaxis().SetTimeDisplay(1)
-        self.stack.GetXaxis().SetTimeFormat('%b %d')
-        self.stack.GetXaxis().SetNdivisions(600 + int(ndays/7/6), 0)
-        self.stack.GetYaxis().SetNdivisions(110, 1)
-        self.stack.SetTitle(';Date;Number of Cases / Day')
+                self.stack.Draw()
+            else:
+                self.clone = self.stack.DrawClone('stack_clone')
 
-        self.leg = ROOT.TLegend(0.15, 0.7, 0.65, 0.85)
-        self.leg.AddEntry(self.h_gifu, 'Gifu', 'f')
-        self.leg.AddEntry(self.h_ave7[2], 'Seven-day Average', 'l')
-        self.leg.AddEntry(self.h_nagoya, 'Aichi (Nagoya)', 'f')
-        self.leg.AddEntry(self.h_ave7[1], '', 'l')
-        self.leg.AddEntry(self.h_aichi_wo_nagoya, 'Aichi (Other)', 'f')
-        self.leg.AddEntry(self.h_ave7[0], '', 'l')
-        self.leg.SetNColumns(2)
-        self.leg.SetFillStyle(0)
-        self.leg.Draw()
+            self.stack_ave7.Draw('hist l same noclear')
+            self.can[i].Modified()
+
+            if i == 1:
+                h = self.stack
+            else:
+                h = self.clone
+            h.GetXaxis().SetTimeDisplay(1)
+            h.GetXaxis().SetTimeFormat('%b %d')
+            if i == 1:
+                h.GetXaxis().SetNdivisions(600 + int(ndays/7/6), 0)
+            else:
+                h.GetXaxis().SetNdivisions(100 + int(ndays2/7/1), 0)
+            h.GetYaxis().SetNdivisions(110, 1)
+            h.SetTitle(';Date;Number of Cases / Day')
+
+            if i == 1:
+                self.leg = ROOT.TLegend(0.15, 0.7, 0.65, 0.85)
+                self.leg.AddEntry(self.h_gifu, 'Gifu', 'f')
+                self.leg.AddEntry(self.h_ave7[2], 'Seven-day Average', 'l')
+                self.leg.AddEntry(self.h_nagoya, 'Aichi (Nagoya)', 'f')
+                self.leg.AddEntry(self.h_ave7[1], '', 'l')
+                self.leg.AddEntry(self.h_aichi_wo_nagoya, 'Aichi (Other)', 'f')
+                self.leg.AddEntry(self.h_ave7[0], '', 'l')
+                self.leg.SetNColumns(2)
+                self.leg.SetFillStyle(0)
+                
+            self.leg.Draw()
 
         self.can[2].cd()
         self.can[2].SetGridx()
@@ -1625,6 +1936,39 @@ class ROOTPlotter:
         self.leg2.AddEntry(self.h_untraced, 'Unknown Source', 'f')
         self.leg2.SetFillStyle(0)
         self.leg2.Draw()
+        self.g_untraced = ROOT.TGraphErrors()
+        for i in range(1, max_bin + 1):
+            total = 0
+            for j, h in enumerate((ROOT.h_aichi_wo_nagoya, ROOT.h_nagoya, ROOT.h_gifu, ROOT.h_untraced)):
+                if j < 3:
+                    total += h.GetBinContent(i)
+                else:
+                    if total == 0:
+                        p, e = 0, 0
+                    else:
+                        p =  h.GetBinContent(i)/total
+                        e = (total * p * (1 - p))**0.5 / total
+
+            scale = ROOT.gPad.GetUymax()
+            self.g_untraced.SetPoint(i - 1, h.GetBinCenter(i), p * scale)
+            self.g_untraced.SetPointError(i - 1, 0, e * scale)
+
+        self.g_untraced.SetLineColor(2)
+        self.g_untraced.SetMarkerColor(2)
+        self.g_untraced.Draw('e same')
+
+        self.gaxis = ROOT.TGaxis(ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymin(),
+                                 ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymax(), 0, 100, 105, '+L')
+        self.gaxis.SetLineColor(2)
+        self.gaxis.SetLabelColor(2)
+        self.gaxis.SetTextColor(2)
+        self.gaxis.SetTextFont(132)
+        self.gaxis.SetTitleFont(132)
+        self.gaxis.SetLabelFont(132)
+        self.gaxis.SetTickLength(0)
+        self.gaxis.SetTickSize(0)
+        self.gaxis.SetTitle('(%)')
+        self.gaxis.Draw()
 
         for c in self.can:
             c.Modified()
@@ -1665,7 +2009,8 @@ def main():
     cases = reader.make_aichi_cases()
     cases.update(reader.make_gifu_cases())
     case_graph_aichi = CaseGraph('Aichi_cluster')
-    case_graph_aichi.add_only_aichi_cases(cases, 10)
+    #case_graph_aichi.add_only_aichi_cases(cases, 10)
+    case_graph_aichi.add_only_aichi_cases(cases, 5)
     #link_nodes(case_graph_aichi, cases)
     case_graph_aichi.gv_graph.view()
 
@@ -1679,18 +2024,20 @@ def main():
     cases.update(reader.make_gifu_cases())
     case_graph_anjo = CaseGraph('Anjo')
     #case_graph_anjo.add_selected_city_cases(cases, '安城市')
-    #case_graph_anjo.add_selected_city_cases(cases, '岡崎市')
+    case_graph_anjo.add_selected_city_cases(cases, '岡崎市')
+    #case_graph_anjo.add_selected_city_cases(cases, '一宮市')
     #case_graph_anjo.add_selected_city_cases(cases, '尾張旭市')
     #case_graph_anjo.add_selected_city_cases(cases, '愛西市')
     #case_graph_anjo.add_selected_city_cases(cases, '蟹江町')
+    #case_graph_anjo.add_selected_city_cases(cases, '蒲郡市')
     #case_graph_anjo.add_selected_city_cases(cases, '弥富市')
     #case_graph_anjo.add_selected_city_cases(cases, '豊田市')
-    case_graph_anjo.add_selected_city_cases(cases, '瀬戸市')
+    #case_graph_anjo.add_selected_city_cases(cases, '瀬戸市')
     #case_graph_anjo.add_selected_city_cases(cases, '小牧市')
     #case_graph_anjo.add_selected_city_cases(cases, '豊川市')
     #case_graph_anjo.add_selected_city_cases(cases, '豊橋市', 10)
     #case_graph_anjo.add_selected_city_cases(cases, '豊橋市')
-    #case_graph_anjo.add_selected_city_cases(cases, ('豊橋市', '豊川市', '田原市'), 10)
+    #case_graph_anjo.add_selected_city_cases(cases, ('豊橋市', '豊川市', '田原市', '蒲郡市'), 10)
     #case_graph_anjo.add_selected_city_cases(cases, ('清須市', '稲沢市', 'あま市'))
     #case_graph_anjo.add_selected_city_cases(cases, '刈谷市')
     #case_graph_anjo.add_selected_city_cases(cases, '清須市')
@@ -1709,13 +2056,20 @@ def main():
     case_graph_aichi = CaseGraph('Aichi_kids')
     case_graph_aichi.add_only_aichi_kids_cases(cases)
     case_graph_aichi.gv_graph.view()
+
+    '''
+    reader = TSVReader()
+    cases = reader.make_aichi_gifu_cases()
+    case_graph_elder = CaseGraph('Aichi_elder')
+    case_graph_elder.add_only_elder_cases(cases)
+    case_graph_elder.gv_graph.view()
     '''
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     case_graph_aichi = CaseGraph('Aichi_returning')
     case_graph_aichi.add_only_aichi_returning_cases(cases)
     case_graph_aichi.gv_graph.view()
-    '''    
+
     reader = TSVReader()
     cases = reader.make_aichi_gifu_cases()
     case_graph_aichi = CaseGraph('Aichi_20s')
@@ -1741,6 +2095,9 @@ def before_2021(date):
 
 def before_4th_wave(date):
     return before_2021(date) or str(date)[:-3] in ('2021-01', '2021-02')
+
+def before_5th_wave(date):
+    return before_2021(date) or str(date)[:-3] in ('2021-01', '2021-02', '2021-03', '2021-04', '2021-05', '2021-06',)
 
 if __name__ == '__main__':
     main()

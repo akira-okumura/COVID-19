@@ -14,7 +14,7 @@ df = pandas.read_html(url)[0]
 
 for i in range(len(df)):
     if i == 0:
-        if df[0][i] == '発生番号':
+        if df[0][i] in ('発生番号', '発生 番号'):
             continue
         else:
             raise BaseException(df[0][i])
