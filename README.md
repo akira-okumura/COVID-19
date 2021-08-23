@@ -22,11 +22,11 @@ https://github.com/akira-okumura/COVID-19/raw/master/PDF/Aichi2021-08-22_cluster
 https://github.com/akira-okumura/COVID-19/raw/master/PDF/Aichi2021-08-22_kids.pdf
 
 - 2021-08-22（岐阜）\
-https://github.com/akira-okumura/COVID-19/raw/master/PDF/Gifu2021-08-22.pdf
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Gifu2021-08-22.pdf \
 ※ 2021/8/20 から岐阜県は接触経路の公表を取りやめ、接触の有無のみを公開するようになった
 
 - 2021-08-22（愛知・岐阜、経路図に県外居住者もしくは県外陽性事例との接触者を含むもののみを表示）\
-https://github.com/akira-okumura/COVID-19/raw/master/PDF/Returning2021-08-22.pdf
+https://github.com/akira-okumura/COVID-19/raw/master/PDF/Returning2021-08-22.pdf \
 ※ 帰省や東京圏・大阪圏との接触による状況を見るのに適している
 
 ### 2021-05-01 以降（第 4 波ピーク直前から）のみ表示した PDF
