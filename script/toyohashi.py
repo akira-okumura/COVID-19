@@ -11,9 +11,16 @@ print('症例番号\t年代\t性別\t居住地\t海外渡航歴\t発症日\t陽�
 lines = sys.stdin.readlines()
 
 for line in lines:
+    if line.find('患者例		年代	性	発症日	採取日		現在の症状等	療養	備考') >= 0:
+        continue
+
     line = re.sub(' ', '', line)
+    line = line.replace('知人が陽性者と知り検査を実施	', '知人が陽性者')
+    line = re.sub('\t\t', '\t', line)
     line = re.sub('\tー', '\t', line)
     line = re.sub('(\d+?)歳代', '\\1', line)
+    line = line.replace('―	', '')
+    line = line.replace('者	', '者')
     line = re.sub('(男|女)\t', '\\1\t豊橋市\t\t', line)
     line = re.sub('日\t(抗原|PCR)', '日', line)
     line = re.sub('(自宅|宿泊予定)\t', '', line)

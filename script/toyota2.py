@@ -28,6 +28,7 @@ for i in range(len(df)):
 
     if df[6][i].find('発症') >= 0:
         day2 = re.sub('(.*)（.*曜日）発症', '\\1', df[6][i])
+        day2 = re.sub('(.*)発症', '\\1', day2)
         note = ''
     else:
         day2 = ''

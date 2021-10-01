@@ -65,7 +65,12 @@ aichi_gifu_contact_tuple = (
     '感染者が発生した市内高等学校部活動の関係者', '県外189',
     '感染者が発生した市内医療機関の感染者', '県外197の接触者',
     '8月13日発表の集団感染発生施設の関係者', '8/13発表のクラスター発生施設の患者',
-    'クラスター9P', 'クラスター9G', '8/13発表のクラスター発生施設の学生',)
+    'クラスター9P', 'クラスター9G', '8/13発表のクラスター発生施設の学生',
+    '愛知県事例の濃厚接触者', '感染者が発生した市内警察署留置施設の関係者',
+    '8月30日発表の集団感染発生施設の関係者', '9/1発表のクラスター発生施設(1)の',
+    '9/1発表のクラスター発生施設(2)の', '豊橋市事例の濃厚接触者', '豊田市事例の濃厚接触者',
+    '9/8発表のクラスター発生事業所の', '感染者が発生した市内幼児教育・保育施設の関係者',
+    'クラスター(新規)', '9月15日発表の集団感染発生施設の関係者')
 
 non_aichi_gifu_contact_tuple = (
     '新宿区の劇場利用', '新宿区内の劇場を利用', 'さいたま市発表の陽性患者の家族',
@@ -141,7 +146,9 @@ non_aichi_gifu_contact_tuple = (
     '鹿児島県陽性者の接触者', '兵庫県陽性者の接触者', '茨城県発表患者の濃厚接触者',
     '富山県発表患者の濃厚接触者', '千葉県発表患者の濃厚接触者', '鹿児島県事例と接触',
     '愛媛県事例の濃厚接触者', '静岡市事例と接触', '大分県事例の濃厚接触者',
-    '滋賀県事例の濃厚接触者', '滋賀県発表8552')
+    '滋賀県事例の濃厚接触者', '滋賀県発表8552', '福岡県52364', '尼崎市事例と接触',
+    '福岡県事例の濃厚接触者', '北海道事例の濃厚接触者', '兵庫県事例の濃厚接触者',
+    '山口県事例の濃厚接触者')
 
 # 再感染 or 再陽性
 repos_dict = {'aichi8896': 'aichi3783',
@@ -150,6 +157,7 @@ repos_dict = {'aichi8896': 'aichi3783',
               'aichi20403': 'aichi15384',
               'aichi21078': 'aichi13970',
               'aichi21939': 'aichi18198',
+              'aichi23650': 'aichi14691',
               'aichi24064': 'aichi5599',
               'aichi25477': 'aichi22968',
               'aichi25582': 'aichi21139',
@@ -247,6 +255,7 @@ repos_dict = {'aichi8896': 'aichi3783',
               'aichi65766': 'aichi37188',
               'aichi65920': 'aichi6474',
               'aichi66257': 'aichi1124',
+              'aichi66768': 'aichi6111',
               'aichi67209': 'aichi50075',
               'aichi67210': 'aichi255',
               'aichi67211': 'aichi3104',
@@ -255,6 +264,119 @@ repos_dict = {'aichi8896': 'aichi3783',
               'aichi68001': 'aichi29702',
               'aichi68026': 'aichi6261',
               'aichi68413': 'aichi21069',
+              'aichi68480': 'aichi29591',
+              'aichi68621': 'aichi40842',
+              'aichi68860': 'aichi50316',
+              'aichi68922': 'aichi34871',
+              'aichi68968': 'aichi9744',
+              'aichi71088': 'aichi1253',
+              'aichi71089': 'aichi20651',
+              'aichi71703': 'aichi49747',
+              'aichi72902': 'aichi50752',
+              'aichi72903': 'aichi8598',
+              'aichi72904': 'aichi10888',
+              'aichi73778': 'aichi33299',
+              'aichi75044': 'aichi19400',
+              'aichi75045': 'aichi1777',
+              'aichi75910': 'aichi10225',
+              'aichi76052': 'aichi17723',
+              'aichi77388': 'aichi927',
+              'aichi77389': 'aichi3716',
+              'aichi77390': 'aichi12713',
+              'aichi77391': 'aichi1963',
+              'aichi77392': 'aichi26081',
+              'aichi78020': 'aichi23830',
+              'aichi79280': 'aichi28686',
+              'aichi79281': 'aichi1395',
+              'aichi79282': 'aichi1956',
+              'aichi79283': 'aichi2512',
+              'aichi79636': 'aichi59295',
+              'aichi80667': 'aichi13476',
+              'aichi80668': 'aichi2053',
+              'aichi80762': 'aichi15239',
+              'aichi82175': 'aichi8635',
+              'aichi82176': 'aichi635',
+              'aichi82177': 'aichi26273',
+              'aichi82189': 'aichi37775',
+              'aichi82560': 'aichi58689',
+              'aichi82934': 'aichi1353',
+              'aichi83784': 'aichi8983',
+              'aichi83785': 'aichi34716',
+              'aichi83786': 'aichi1596',
+              'aichi83787': 'aichi2368',
+              'aichi83788': 'aichi10281',
+              'aichi85664': 'aichi45753',
+              'aichi85663': 'aichi26564',
+              'aichi85662': 'aichi9014',
+              'aichi85830': 'aichi43626',
+              'aichi86218': 'aichi53961',
+              'aichi87382': 'aichi3548',
+              'aichi87383': 'aichi769',
+              'aichi87392': 'aichi41696',
+              'aichi89102': 'aichi2527',
+              'aichi89103': 'aichi36206',
+              'aichi89549': 'aichi6180',
+              'aichi89289': 'aichi22986',
+              'aichi90877': 'aichi7256',
+              'aichi90878': 'aichi23893',
+              'aichi90879': 'aichi27479',
+              'aichi91408': 'aichi64935',
+              'aichi91418': 'aichi25543',
+              'aichi91498': 'aichi28434',
+              'aichi92254': 'aichi1759',
+              'aichi92255': 'aichi34152',
+              'aichi93443': 'aichi12674',
+              'aichi93444': 'aichi2800',
+              'aichi93445': 'aichi14825',
+              'aichi93920': 'aichi29457',
+              'aichi94661': 'aichi19326',
+              'aichi94662': 'aichi7277',
+              # 'aichi94663': 'aichiY', 東京都事例
+              'aichi97123': 'aichi638',
+              'aichi97313': 'aichi32870',
+              'aichi97315': 'aichi27643',
+              'aichi98152': 'aichi36240',
+              'aichi98153': 'aichi32637',
+              'aichi98154': 'aichi20045',
+              'aichi99121': 'aichi2094',
+              'aichi99122': 'aichi12988',
+              'aichi99123': 'aichi28932',
+              'aichi99124': 'aichi12038',
+              'aichi99381': 'aichi86343',
+              'aichi99976': 'aichi18625',
+              'aichi99977': 'aichi44796',
+              'aichi99978': 'aichi2791',
+              'aichi99979': 'aichi3554',
+              'aichi100530': 'aichi16493',
+              'aichi100531': 'aichi7417',
+              'aichi100532': 'aichi3120',
+              'aichi100533': 'aichi51084',
+              'aichi101780': 'aichi33873',
+              'aichi101779': 'aichi26272',
+              'aichi101144': 'aichi80811',
+              'aichi102414': 'aichi63275',
+              'aichi102442': 'aichi79511',
+              'aichi102374': 'aichi931',
+              'aichi102375': 'aichi36155',
+              'aichi103329': 'aichi27038',
+              'aichi103385': 'aichi73328',
+              'aichi103789': 'aichi67456',
+              'aichi104053': 'aichi99351',
+              'aichi104210': 'aichi60805',
+              'aichi104569': 'aichi12635',
+              'aichi104742': 'aichi97002',
+              'aichi105129': 'aichi31496',
+              'aichi105333': 'aichi34948',
+              'aichi105410': 'aichi51183',
+              'aichi105486': 'aichi3140',
+              'aichi105487': 'aichi28844',
+              'aichi105488': 'aichi45023',
+              'aichiX': 'aichiY',
+              'aichiX': 'aichiY',
+              'aichiX': 'aichiY',
+              'aichiX': 'aichiY',
+              'aichiX': 'aichiY',
+              'aichiX': 'aichiY',
               'aichiX': 'aichiY',
               'aichiX': 'aichiY',
               'aichiX': 'aichiY',
@@ -780,23 +902,61 @@ note_dict = {'gifu708': '岐阜市\n芸能事務所',
              'aichi52116': '豊橋市\n高校部活（9F）', # confirmed 11 (Jul 20)
              'aichi53016': '蒲郡市\n高齢者施設（9G）', # confirmed 10 (Jul 31), 13 (Aug 16), 14 (Aug 20)
              'aichiX': '名古屋市\n飲食店（9H）', # 15 (Aug 1)
-             'aichi56174': '豊橋市\n医療機関（9I）', # confirmed 15 (Aug 8), 19 (Aug 9), 22 (Aug 12), 28 (Aug 13), 29 (Aug 14), 31 (Aug 20)
+             'aichi56174': '豊橋市\n医療機関（9I）', # confirmed 15 (Aug 8), 19 (Aug 9), 22 (Aug 12), 28 (Aug 13), 29 (Aug 14), 31 (Aug 20), 32 (Aug 24), 33 (Aug 26), 34 (Aug 31), 35 (Sep 1), 36 (Sep 3), 37 (Sep 5), 39 (Sep 6)
              'aichi55404': '名古屋市\n高齢者施設（9J）', # confirmed 10 (Aug 8), 11 (Aug 9), 12 (Aug 13)
              'aichi55260': '美浜町\n日本福祉大学運動部（9K）', # confirmed 10 (Aug 9)
              'aichi55230': '名古屋市\n保育施設（9L）', # confirmed 10 (Aug 9), 12 (Aug 12)
              'aichi53996': '小牧市\n職場（9M）', # confirmed 11 (Aug 12), 13 (Aug 13), 14 (Aug 16), 16 (Aug 17), 17 (Aug 19), 18 (Aug 20)
              'aichi56375': '名古屋市\n保育施設（9N）', # confirmed 11 (Aug 12), 12 (Aug 14), 15 (Au 15), 16 (Aug 18), 17 (Aug 19)
              'aichi54662': '豊田市\n大学運動部（9O）', # confirmed 10 (Aug 13), 12 (Aug 14) 中京大ラクビー部
-             'aichi55136': '一宮市\n事業所（9P）', # confirmed 10 (Aug 13), 12 (Aug 14), 14 (Aug 15), 16 (Aug 18), 17 (Aug 19), 18 (Aug 20), 19 (Aug 21), 22 (Aug 22)
-             'aichi54702': '岡崎市\n大学運動部（9Q）', # confirmed 18 (Aug 13), 20 (Aug 18), 21 (Aug 19)
-             'aichi57413': '常滑市\n保育施設（9R）', # 10 (Aug 14), 11 (Aug 18), 12 (Aug 21)
-             'aichi54832': '小牧市\n職場?（9S?)', # 10 (Aug 15), 11 (Aug 16)
+             'aichi55136': '一宮市\n事業所（9P）', # confirmed 10 (Aug 13), 12 (Aug 14), 14 (Aug 15), 16 (Aug 18), 17 (Aug 19), 18 (Aug 20), 19 (Aug 21), 22 (Aug 22), 23 (Aug 23), 24 (Aug 24), 25 (Sep 7)
+             'aichi54702': '岡崎市\n大学運動部（9Q）', # confirmed 18 (Aug 13), 20 (Aug 18), 21 (Aug 19), 23 (Aug 23)
+             'aichi57413': '常滑市\n学童（9R）', # 10 (Aug 14), 11 (Aug 18), 12 (Aug 21), 15 (Sep 1)
+             'aichi54832': '小牧市\n職場?（9S?）', # 10 (Aug 15), 11 (Aug 16)
              'aichi57266': '名古屋市\n職場?（9T?）', # 12 (Aug 16), 13 (Aug 17), 14 (Aug 20)
-             'aichiX': '飲食店（9U）', # 21 (Aug 22)
-             'aichiX': '', # 
-             'aichiX': '', # 
-             'aichiX': '', # 
-             'aichiX': '', # 
+             'aichi61758': '田原市\n飲食店（9U）', # 21 (Aug 22), 22 (Aug 25)
+             'aichi61318': '東海市\n飲食店?（9V?）', # 12 (Aug 23) 従業員が 11 名, 13 (Aug 25), 14 (Aug 26), 15 (Aug 28)
+             'aichiX': '名古屋市\n大学運動部（9W）', # 13 (Aug 26), 16 (Aug 27), 22 (Aug 29), 23 (Aug 30), 24 (Sep 7), 25 (Sep 8)
+             'aichiX': '稲沢市\n医療機関（9X）', # 11 (Aug 27), 12 (Aug 28), 13 (Aug 29), 14 (Aug 30), 15 (Sep 1), 16 (Sep 2), 17 (Sep 4), 18 (Sep 8)
+             'aichi60036': 'みよし市\n名古屋刑務所?（9Y?）', # 10 (Aug 28), 11 (Sep 1), 12 (Sep 5)
+             'aichi64457': '瀬戸市\n大学運動部?（9Z?）', # 10 (Aug 28), 11 (Sep 1), 13 (Sep 4), 14 (Sep 5)
+             'aichi63863': '豊田市\n大学運動部（10A）', # 12 (Aug 30), 15 (Sep 1), 16 (Sep 2), 29 (Sep 3), 30 (Sep 5)
+             'aichi79921': '豊橋市\n警察署留置施設（10B）', # 11 (Aug 30)　警官 2、留置者 9, 12 (Sep 6)
+             'aichiX': '名古屋市\n高校運動部（10C）', # 15 (Aug 31), 16 (Sep 1), 17 (Sep 2), 18 (Sep 6)
+             'aichi63419': '犬山市\n医療機関?（10D?）', # 10 (Sep 1)
+             'aichi72153': '岡崎市\n公立小学校（10E）', # 10 + 1　(Sep 1), 12 (Sep 2)
+             'aichi80119': '岡崎市\n私立保育施設（10F）', # 13 (Sep 1)
+             'aichi78443': '未就学児', # 
+             'aichiX': '名古屋市\n職場（10G）', # 12 (Sep 3)
+             'aichiX': '名古屋市\n障碍者施設（10H）', # 17 (Sep 4), 24 (Sep 7)
+             'aichiX': '名古屋市\n職場（10I）', # 13 (Sep 4), 14 (Sep 10)
+             'aichiX': '名古屋市\n学校（10J）', # 14 (Sep 4), 15 (Sep 6), 16 (Sep 7), 17 (Sep 8)
+             'aichiX': '常滑市\n障碍者施設（10K）', # 11 (Sep 6), 14 (Sep 7)
+             'aichi84054': '波物語（10L）', # 14 (Sep 6), 18 (Sep 7), 20 (Sep 8), 21 (Sep 9), 24 (Sep 10), 26 (Sep 12), 27 (Sep 14)
+             'aichiX': '名古屋市\n学習塾（10M）', # 24 (Sep 6), 25 (Sep 8)
+             'aichiX': '名古屋市\n障碍者施設（10N）', # 11 (Sep 7)
+             'aichiX': '名古屋市\n高校運動部（10O）', # 10 (Sep 7), 14 (Sep 8), 15 (Sep 9)
+             'aichi92496': '蟹江町\n高齢者施設（10P）', # 10 (Sep 8), 12 (Sep 9), 14 (Sep 11), 15 (Sep 13)
+             'aichiX': '名古屋市\n医療機関（10Q）', # 12 (Sep 8), 17 (Sep 9), 19 (Sep 10), 22 (Sep 11), 25 (Sep 12), 27 (Sep 13), 28 (Sep 15), 29 (Sep 17), 30 (Sep 20)
+             'aichi95314': '岡崎市\n事業所（）', # 
+             'aichi90153': '豊橋市\n保育施設（10R）', # 15 (Sep 9)
+             'aichi88299': '一宮市\n事業所寮（10S）', # 10 (Sep 11)
+             'aichiX': '名古屋市\n高齢者施設（10T）', # 10 (Sep 10), 11 (Sep 18)
+             'aichiX': '名古屋市\n医療機関（10U）', # 12 (Sep 11), 13 (Sep 12), 14 (Sep 14), 15 (Sep 17), 16 (Sep 18), 17 (Sep 20), 18 (Sep 24)
+             'aichi92794': '豊田市\n医療機関（10V）', # 10 (Sep 15)
+             'aichi83121': '豊橋市\n高齢者施設（10W）', # 40 (Sep 16), 41 (Sep 19), 46 (Sep 23), 47 (Sep 25)
+             'aichiX': '名古屋市\n医療機関（10X）', # 12 (Sep 16), 13 (Sep 22)
+             'aichi102539': '扶桑町\n高校運動部?（10Y?）', # 13 (Sep 19), 14 (Sep 20), 17 (Sep 22)
+             'aichi103609': '瀬戸市\n高齢者施設?（10Z?）', # 11 (Sep 20)
+             'aichiX': '名古屋市\n保育施設（11A)', # 11 (Sep 21), 12 (Sep 23)
+             'aichi103851': '未就学児', # 
+             'aichiX': '名古屋市\n高齢者施設（11B）', # 12 (Sep 24), 13 (Sep 26), 14 (Sep 28)
+             'aichiX': '名古屋市\n医療機関（11C）', # 10 (Sep 24)
+             'aichiX': '名古屋市\n職場（11D）', # 10 (Sep 27), 11 (Sep 28)
+             'aichiX': '豊川市\n高校運動部（11E）', # 12 (Sep 28), 18 (Sep 29), 19 (Sep 30)
+             'aichi99485': '一宮市\n工場（11F)', # 15 (Sep 28), 16 (Sep 29)
+             'aichiX': '',
+             'aichiX': '',
              'aichiX': ''}
 
 from enum import Enum
@@ -835,6 +995,7 @@ class Case:
         elif self.node_name not in ('aichi1402', 'aichi1435', 'aichi1722', 'aichi3768', 'aichi3775') and \
              (len([x for x in aichi_gifu_contact_tuple if self.note.find(x) >= 0]) > 0 or \
               self.note == 'あり' or \
+              self.note == '陽性者と接触' or \
               self.node_name == 'gifu151' or \
               self.node_name == 'aichi521' or \
               self.node_name in ('gifu210', 'gifu211', 'gifu215', 'gifu216')): # 7/24 Gifu cases not reflected in CTV data
@@ -1516,7 +1677,7 @@ class TSVReader():
                 # 7/23 の 1 人は再陽性（再感染？）とのことなので 52660 が該当
                 connected_nodes.append('aichi52116')
             elif (note.find('感染者が発生した市内医療機関の関係者') >= 0 or note.find('感染者が発生した市内医療機関の感染者') >= 0) and \
-                 int(node_name.split('aichi')[1]) > 56000: # 豊橋 8/8
+                 90000 > int(node_name.split('aichi')[1]) > 56000: # 豊橋 8/8
                 connected_nodes.append('aichi56174')
             elif note.find('8/13発表のクラスター発生施設の患者') >= 0 or\
                  note.find('8/13発表のクラスター発生施設の学生') >= 0: # 岡崎 大学
@@ -1532,6 +1693,44 @@ class TSVReader():
                 # 長久手市の20代の男性は、クラスターとなっている小牧市の職場の従業員で、
                 # このクラスターは14人となりました。この男性は再感染だということです。
                 connected_nodes.append('aichi53996')
+            elif note.find('感染者が発生した市内警察署留置施設の関係者') >= 0:
+                connected_nodes.append('aichi79921')
+            elif note.find('8月30日発表の集団感染発生施設の関係者') >= 0: # 豊田
+                connected_nodes.append('aichi63863')
+            elif note.find('9/1発表のクラスター発生施設(1)の') >= 0: # 岡崎 小学校
+                connected_nodes.append('aichi72153')
+            elif note.find('9/1発表のクラスター発生施設(2)の') >= 0: # 岡崎 保育施設
+                connected_nodes.append('aichi80119')
+            elif node_name in ('aichi85952', 'aichi85974', 'aichi87614', 'aichi89526',
+                               'aichi89855', 'aichi90050', 'aichi90147', 'aichi90304', 'aichi90928',
+                               'aichi91273', 'aichi92759', 'aichi92926', 'aichi92928', 'aichi93461',
+                               'aichi93966', 'aichi93974', 'aichi94370', 'aichi95526', 'aichi95527',
+                               'aichi96639', 'aichi97354', 'aichi97787', 'aichi97788', 'aichi99414',
+                               'aichi99555', 'aichi100915',): # 10L
+                # + 名古屋 1 件、愛知 3 件が無料 PCR （9/8 現在）
+                connected_nodes.append('aichi84054')
+            elif node_name in ('aichi92497', 'aichi93719', 'aichi93720', 'aichi93721', 'aichi93723',
+                               'aichi93724', 'aichi93725', # 9/8 に一度に 8 例が経路不明ではなくなった
+                               'aichi96201', 'aichi96205', 'aichi98301', 'aichi98302'): # この 4 事例は推測
+                connected_nodes.append('aichi92496') # 10P
+            elif note.find('9/8発表のクラスター発生事業所の') >= 0: # 岡崎 事業所
+                connected_nodes.append('aichi95314')
+            elif note.find('感染者が発生した市内幼児教育・保育施設の関係者') >= 0 or \
+                 node_name in ('aichi95368',): # 豊橋市 幼保
+                connected_nodes.append('aichi90153')
+            elif note.find('クラスター(新規)') >= 0: # 一宮市
+                connected_nodes.append('aichi88299')
+            elif note.find('9月15日発表の集団感染発生施設の関係者') >= 0:
+                connected_nodes.append('aichi92794') # 豊田市医療機関
+            elif (note.find('感染者が発生した市内高齢者施設の関係者') >= 0 and int(node_name.split('aichi')[1]) > 83000):
+                connected_nodes.append('aichi83121') # 豊橋市高齢者施設 9/16
+            elif node_name in ('aichi103610', 'aichi103611', 'aichi103612', 'aichi103613', 'aichi103614', 'aichi103615'):
+                connected_nodes.append('aichi103609') # 10Z
+            elif node_name in ('aichi100847', 'aichi100853', 'aichi100854', 'aichi101479',
+                               'aichi102609', 'aichi103111', 'aichi104337', 'aichi104635',
+                               'aichi104841', 'aichi105033', ): # 11F
+            # 105033 は 9/29 に「あり」に他の事例と一緒に変更になっただけなので、確信はない
+                connected_nodes.append('aichi99485')
             # Gifu
             elif node_name in ('gifu4783', 'gifu4778', 'gifu4769', 'gifu4766'): # クラスター157
                 connected_nodes.append('gifu4747')
@@ -1713,7 +1912,7 @@ class TSVReader():
             else:
                 age, sex = person.split('代')
 
-            if n in (65765, 68413, 67943): # ex. 一宮市事例と接触、再感染（No.9533）
+            if note.find('陽性者と接触、再感染（') >= 0 or n in (65765, 68413, 67943, 71088): # ex. 一宮市事例と接触、再感染（No.9533）
                 pass
             elif note.find('No.') >= 0 and note.find('と接触') >= 0 and n != 51355:
                 try:
@@ -1771,11 +1970,11 @@ class ROOTPlotter:
         self.can = [ROOT.ExactSizeCanvas('can%d' % i, 'can%d' % i, 800, 600) for i in range(4)]
 
         t0 = ROOT.TDatime(2020, 7, 1, 0, 0, 0).Convert()
-        nweeks, nweeks2 = 60, 10
+        nweeks, nweeks2 = 70, 10
         ndays, ndays2 = nweeks * 7, nweeks2 * 7
         dt, dt2 = ndays * 3600 * 24, ndays2 * 3600 * 24
         t1 = t0 + dt
-        t02 = t1 - dt
+        t02 = t1 - dt2
 
         self.h_aichi_wo_nagoya = ROOT.TH1D('h_aichi_wo_nagoya', ';Date;Number of Cases / Day', ndays, t0, t1)
         self.h_nagoya = ROOT.TH1D('h_nagoya', ';Date;Number of Cases / Day', ndays, t0, t1)
@@ -1787,7 +1986,7 @@ class ROOTPlotter:
         self.h_age = ROOT.TH2D('h_age', ';Date;Age;Number of Cases / Day / Generation', ndays, t0, t1, 11, 0, 110)
         self.h_age.GetXaxis().SetTimeDisplay(1)
         self.h_age.GetXaxis().SetTimeFormat('%b %d')
-        self.h_age.GetXaxis().SetNdivisions(600 + int(ndays/7/6), 0)
+        self.h_age.GetXaxis().SetNdivisions(700 + int(ndays/7/7), 0)
 
         max_bin = 0
         for case in cases.values():
@@ -1810,7 +2009,7 @@ class ROOTPlotter:
             elif case.node_name.find('gifu') == 0:
                 self.h_gifu.Fill(t)
 
-            if len(case.connected_nodes) > 0 or case.note == 'あり':
+            if len(case.connected_nodes) > 0 or case.note in ('あり', '陽性者と接触'):
                 self.h_traced.Fill(t)
             else:
                 self.h_untraced.Fill(t)
@@ -1844,6 +2043,13 @@ class ROOTPlotter:
                         self.h_ave7[-1].Fill(t, h.GetBinContent(i))
 
             self.h_ave7[-1].Scale(1/7.)
+
+            if h == self.h_gifu:
+                # give up calculating 7-day average for Gifu
+                for d in range(24, 31):
+                    b = self.h_ave7[hi].FindBin(ROOT.TDatime(2021, 8, d, 0, 0, 0).Convert())
+                    self.h_ave7[2].SetBinContent(b, 0)
+
             self.stack_ave7.Add(self.h_ave7[-1])
 
         n1 = int(ROOT.h_aichi_wo_nagoya.GetBinContent(max_bin) + ROOT.h_nagoya.GetBinContent(max_bin))
@@ -1869,8 +2075,8 @@ class ROOTPlotter:
         self.px_age.SetLineWidth(3)
         self.px_age.Draw('same e')
 
-        #for i in (1, 3):
-        for i in (1, ):
+        for i in (1, 3):
+        #for i in (1, ):
             self.can[i].cd()
             self.can[i].SetGridx()
             self.can[i].SetGridy()
@@ -1884,7 +2090,8 @@ class ROOTPlotter:
 
                 self.stack.Draw()
             else:
-                self.clone = self.stack.DrawClone('stack_clone')
+                self.clone = self.stack.Clone('stack_clone')
+                self.clone.Draw()
 
             self.stack_ave7.Draw('hist l same noclear')
             self.can[i].Modified()
@@ -1896,8 +2103,9 @@ class ROOTPlotter:
             h.GetXaxis().SetTimeDisplay(1)
             h.GetXaxis().SetTimeFormat('%b %d')
             if i == 1:
-                h.GetXaxis().SetNdivisions(600 + int(ndays/7/6), 0)
+                h.GetXaxis().SetNdivisions(700 + int(ndays/7/7), 0)
             else:
+                h.GetXaxis().SetRangeUser(t02 - 4 * 7 * 3600 * 24, t1 - 4 * 7 * 3600 * 24)
                 h.GetXaxis().SetNdivisions(100 + int(ndays2/7/1), 0)
             h.GetYaxis().SetNdivisions(110, 1)
             h.SetTitle(';Date;Number of Cases / Day')
@@ -1927,7 +2135,7 @@ class ROOTPlotter:
         self.can[2].Modified()
         self.stack2.GetXaxis().SetTimeDisplay(1)
         self.stack2.GetXaxis().SetTimeFormat('%b %d')
-        self.stack2.GetXaxis().SetNdivisions(600 + int(ndays/7/6), 0)
+        self.stack2.GetXaxis().SetNdivisions(700 + int(ndays/7/7), 0)
         self.stack2.GetYaxis().SetNdivisions(110, 1)
         self.stack2.SetTitle(';Date;Number of Cases / Day')
 
@@ -2024,8 +2232,11 @@ def main():
     cases.update(reader.make_gifu_cases())
     case_graph_anjo = CaseGraph('Anjo')
     #case_graph_anjo.add_selected_city_cases(cases, '安城市')
-    case_graph_anjo.add_selected_city_cases(cases, '岡崎市')
-    #case_graph_anjo.add_selected_city_cases(cases, '一宮市')
+    #case_graph_anjo.add_selected_city_cases(cases, '岡崎市')
+    #case_graph_anjo.add_selected_city_cases(cases, '南知多町')
+    #case_graph_anjo.add_selected_city_cases(cases, '常滑市')
+    #case_graph_anjo.add_selected_city_cases(cases, '半田市')
+    case_graph_anjo.add_selected_city_cases(cases, '一宮市')
     #case_graph_anjo.add_selected_city_cases(cases, '尾張旭市')
     #case_graph_anjo.add_selected_city_cases(cases, '愛西市')
     #case_graph_anjo.add_selected_city_cases(cases, '蟹江町')

@@ -15,7 +15,10 @@ def main(fin1, fin2):
     data2= []
     lines = open(fin2).readlines()[1:]
     for line in lines:
-        n, date, person, nationality, city, note, another_index = line[:-1].split('\t')
+        try:
+            n, date, person, nationality, city, note, another_index = line[:-1].split('\t')
+        except:
+            print(line)
         data2.append((n, date, person, nationality, city, note, another_index))
     
     data12 = data1 + data2
